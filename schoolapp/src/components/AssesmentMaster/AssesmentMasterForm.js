@@ -80,7 +80,7 @@ const AssesmentMasterForm = () => {
         await assesmentMasterService.create(submitData);
       }
 
-      navigate('/assesmentMaster');
+      navigate('/assessments');
     } catch (err) {
       setError(err.message || `Failed to ${isEditing ? 'update' : 'create'} assessment`);
     } finally {
@@ -129,7 +129,7 @@ const AssesmentMasterForm = () => {
           <i className="bi bi-clipboard-check me-2 text-primary"></i>
           {isEditing ? 'Edit Assessment' : 'Create New Assessment'}
         </h2>
-        <Link to="/assesmentMaster" className="btn btn-outline-secondary">
+        <Link to="/assessments" className="btn btn-outline-secondary">
           <i className="bi bi-arrow-left me-2"></i>
           Back to Assessments
         </Link>
@@ -243,7 +243,7 @@ const AssesmentMasterForm = () => {
             </div>
 
             <div className="d-flex justify-content-end gap-2">
-              <Link to="/assesmentMaster" className="btn btn-outline-secondary">
+              <Link to="/assessments" className="btn btn-outline-secondary">
                 <i className="bi bi-x-circle me-2"></i>Cancel
               </Link>
               <button type="submit" className="btn btn-primary" disabled={loading}>

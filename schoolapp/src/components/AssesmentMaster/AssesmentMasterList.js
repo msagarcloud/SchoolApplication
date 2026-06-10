@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { assesmentMasterService } from '../../services/assessmentsService';
+import { assesmentMasterService } from '../../services/assesmentMasterService';
 import { authService } from '../../services/authService';
 
 const AssesmentMasterList = () => {

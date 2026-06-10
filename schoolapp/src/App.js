@@ -1652,16 +1652,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route 
-            path="/assessments" 
-            element={
-              <ProtectedRoute>
-                <MainTemplate>
-                  <PlaceholderPage title="Assessments" description="This assessments page is pending implementation." />
-                </MainTemplate>
-              </ProtectedRoute>
-            } 
-          />
+          {/* Real Assessments routes are defined below under Assessment Master Routes */}
           <Route 
             path="/attendencerecord" 
             element={

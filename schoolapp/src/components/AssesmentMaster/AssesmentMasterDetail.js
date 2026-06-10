@@ -29,7 +29,7 @@ const AssesmentMasterDetail = () => {
   const handleDelete = async () => {
     try {
       await assesmentMasterService.delete(id);
-      navigate('/assesmentMaster');
+      navigate('/assessments');
     } catch (err) {
       setError(err.message || 'Failed to delete assessment');
     }
@@ -52,7 +52,7 @@ const AssesmentMasterDetail = () => {
           <i className="bi bi-exclamation-triangle me-2"></i>
           {error}
         </div>
-        <Link to="/assesmentMaster" className="btn btn-outline-secondary">
+        <Link to="/assessments" className="btn btn-outline-secondary">
           <i className="bi bi-arrow-left me-2"></i>Back to Assessments
         </Link>
       </div>
@@ -93,10 +93,10 @@ const AssesmentMasterDetail = () => {
           Assessment Details
         </h2>
         <div className="d-flex gap-2">
-          <Link to="/assesmentMaster" className="btn btn-outline-secondary">
+          <Link to="/assessments" className="btn btn-outline-secondary">
             <i className="bi bi-arrow-left me-2"></i>Back
           </Link>
-          <Link to={`/assesmentMaster/${id}/edit`} className="btn btn-primary">
+          <Link to={`/assessments/${id}/edit`} className="btn btn-primary">
             <i className="bi bi-pencil me-2"></i>Edit
           </Link>
           <button className="btn btn-danger" onClick={() => setDeleteConfirm(true)}>

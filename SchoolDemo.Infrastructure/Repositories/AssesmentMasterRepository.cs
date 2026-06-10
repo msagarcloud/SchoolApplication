@@ -56,7 +56,7 @@ public class AssesmentMasterRepository : IAssesmentMasterRepository
         existing.SchoolId = entity.SchoolId;
         existing.IsActive = entity.IsActive;
         existing.ModifiedDate = DateTime.UtcNow;
-        existing.Status = entity.Status;
+        existing.Status = entity.Status ?? "Active";
         existing.StatusMessage = entity.StatusMessage;
         existing.ModifiedBy = await ResolveUserAsync(
             entity.ModifiedBy ?? entity.CreatedBy,
