@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using SchoolDemo.Domain.Entities;
@@ -3243,15 +3243,14 @@ public partial class SchoolDbContext : DbContext
             entity.Property(e => e.Description)
                 .HasMaxLength(250)
                 .IsUnicode(false);
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsActive);
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             entity.Property(e => e.Name)
                 .HasMaxLength(150)
                 .IsUnicode(false);
             entity.Property(e => e.Status)
                 .HasMaxLength(10)
-                .IsUnicode(false)
-                .HasDefaultValue("INC");
+                .IsUnicode(false);
             entity.Property(e => e.StatusMessage)
                 .HasMaxLength(250)
                 .IsUnicode(false);

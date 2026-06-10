@@ -148,6 +148,9 @@ import {
   DiscountCategoryList,
   DiscountCategoryForm,
   DiscountCategoryDetail,
+  AssesmentMasterList,
+  AssesmentMasterForm,
+  AssesmentMasterDetail,
   PlaceholderPage,
   NavigationDemo
 } from './lazyPages';
@@ -2141,6 +2144,54 @@ function App() {
               </ProtectedRoute>
             } 
           />
+
+          {/* Assessment Master Routes - accessible via both /assessments and /assesmentMaster */}
+          <Route path="/assesmentMaster" element={<Navigate replace to="/assessments" />} />
+          <Route path="/assesmentMaster/create" element={<Navigate replace to="/assessments/create" />} />
+          <Route path="/assesmentMaster/:id/edit" element={<Navigate replace to="/assessments/:id/edit" />} />
+          <Route path="/assesmentMaster/:id" element={<Navigate replace to="/assessments/:id" />} />
+
+          <Route 
+            path="/assessments" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <AssesmentMasterList />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/assessments/create" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <AssesmentMasterForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/assessments/:id" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <AssesmentMasterDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/assessments/:id/edit" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <AssesmentMasterForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+
           <Route 
             path="/navigation-demo" 
             element={

@@ -1,30 +1,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolDemo.Domain.Interfaces;
+
 namespace SchoolDemo.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-
-public class FeesDiscountCategoryController : ControllerBase
+public class AssesmentMasterController : ControllerBase
 {
-    private readonly IFeesDiscountCategoryService _service;
+    private readonly IAssesmentMasterService _service;
 
-    public FeesDiscountCategoryController(IFeesDiscountCategoryService service)
+    public AssesmentMasterController(IAssesmentMasterService service)
     {
         _service = service;
-    }
-
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(Guid id)
-    {
-        var entity = await _service.GetByIdAsync(id);
-        if (entity == null)
-        {
-            return NotFound($"Fees discount category with ID {id} not found.");
-        }
-        return Ok(entity);
     }
 
     [HttpGet]
@@ -34,13 +23,20 @@ public class FeesDiscountCategoryController : ControllerBase
         return Ok(entities);
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var entity = await _service.GetByIdAsync(id);
+        if (entity == null)
+            return NotFound($"Assessment with ID {id} not found.");
+        return Ok(entity);
+    }
+
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] FeesDiscountCategoryRequest request)
+    public async Task<IActionResult> Create([FromBody] AssesmentMasterRequest request)
     {
         if (!ModelState.IsValid)
-        {
             return BadRequest(ModelState);
-        }
 
         try
         {
@@ -50,31 +46,27 @@ public class FeesDiscountCategoryController : ControllerBase
         catch (Exception ex)
         {
             var detailedMessage = ex.InnerException?.Message ?? ex.Message;
-            return StatusCode(500, $"An error occurred while creating fees discount category: {detailedMessage}");
+            return StatusCode(500, $"An error occurred while creating assessment: {detailedMessage}");
         }
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, [FromBody] FeesDiscountCategoryRequest request)
+    public async Task<IActionResult> Update(Guid id, [FromBody] AssesmentMasterRequest request)
     {
         if (!ModelState.IsValid)
-        {
             return BadRequest(ModelState);
-        }
 
         try
         {
             var entity = await _service.UpdateAsync(id, request);
             if (entity == null)
-            {
-                return NotFound($"Fees discount category with ID {id} not found.");
-            }
+                return NotFound($"Assessment with ID {id} not found.");
             return Ok(entity);
         }
         catch (Exception ex)
         {
             var detailedMessage = ex.InnerException?.Message ?? ex.Message;
-            return StatusCode(500, $"An error occurred while updating fees discount category: {detailedMessage}");
+            return StatusCode(500, $"An error occurred while updating assessment: {detailedMessage}");
         }
     }
 
@@ -85,15 +77,13 @@ public class FeesDiscountCategoryController : ControllerBase
         {
             var result = await _service.DeleteAsync(id);
             if (!result)
-            {
-                return NotFound($"Fees discount category with ID {id} not found.");
-            }
+                return NotFound($"Assessment with ID {id} not found.");
             return NoContent();
         }
         catch (Exception ex)
         {
             var detailedMessage = ex.InnerException?.Message ?? ex.Message;
-            return StatusCode(500, $"An error occurred while deleting fees discount category: {detailedMessage}");
+            return StatusCode(500, $"An error occurred while deleting assessment: {detailedMessage}");
         }
     }
 }

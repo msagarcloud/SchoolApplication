@@ -1,35 +1,34 @@
 using Microsoft.EntityFrameworkCore;
-using SchoolDemo.Domain.Entities;
 using SchoolDemo.Domain.Interfaces;
 using SchoolDemo.Infrastructure.Data;
 
 namespace SchoolDemo.Infrastructure.Repositories;
 
-public class FeesDiscountCategoryRepository : IFeesDiscountCategoryRepository
+public class AssesmentMasterRepository : IAssesmentMasterRepository
 {
     private readonly SchoolDbContext _context;
 
-    public FeesDiscountCategoryRepository(SchoolDbContext context)
+    public AssesmentMasterRepository(SchoolDbContext context)
     {
         _context = context;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster?> GetByIdAsync(Guid id)
+    public async Task<SchoolDemo.Domain.Entities.AssesmentMaster?> GetByIdAsync(Guid id)
     {
-        var entity = await _context.FeesDiscountCategoryMasters
-            .FirstOrDefaultAsync(f => f.Id == id && !f.IsDeleted);
+        var entity = await _context.AssesmentMasters
+            .FirstOrDefaultAsync(a => a.Id == id && !a.IsDeleted);
         return MapToDomainEntity(entity);
     }
 
-    public async Task<IEnumerable<SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster>> GetAllAsync()
+    public async Task<IEnumerable<SchoolDemo.Domain.Entities.AssesmentMaster>> GetAllAsync()
     {
-        var entities = await _context.FeesDiscountCategoryMasters
-            .Where(f => !f.IsDeleted)
+        var entities = await _context.AssesmentMasters
+            .Where(a => !a.IsDeleted)
             .ToListAsync();
         return entities.Select(MapToDomainEntity).Where(e => e != null)!;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster> AddAsync(SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster entity)
+    public async Task<SchoolDemo.Domain.Entities.AssesmentMaster> AddAsync(SchoolDemo.Domain.Entities.AssesmentMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
         infraEntity.CreatedBy = await ResolveUserAsync(entity.CreatedBy, entity.CompanyId, entity.SchoolId);
@@ -37,28 +36,40 @@ public class FeesDiscountCategoryRepository : IFeesDiscountCategoryRepository
         {
             infraEntity.ModifiedBy = await ResolveUserAsync(entity.ModifiedBy.Value, entity.CompanyId, entity.SchoolId);
         }
-        await _context.FeesDiscountCategoryMasters.AddAsync(infraEntity);
+        await _context.AssesmentMasters.AddAsync(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster> UpdateAsync(SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster entity)
+    public async Task<SchoolDemo.Domain.Entities.AssesmentMaster> UpdateAsync(SchoolDemo.Domain.Entities.AssesmentMaster entity)
     {
-        var infraEntity = MapToInfrastructureEntity(entity);
-        infraEntity.CreatedBy = await ResolveUserAsync(entity.CreatedBy, entity.CompanyId, entity.SchoolId);
-        if (entity.ModifiedBy.HasValue && entity.ModifiedBy.Value != Guid.Empty)
-        {
-            infraEntity.ModifiedBy = await ResolveUserAsync(entity.ModifiedBy.Value, entity.CompanyId, entity.SchoolId);
-        }
-        _context.FeesDiscountCategoryMasters.Update(infraEntity);
+        var existing = await _context.AssesmentMasters.FindAsync(entity.Id);
+        if (existing == null)
+            throw new InvalidOperationException($"AssesmentMaster with id {entity.Id} not found.");
+
+        existing.Name = entity.Name;
+        existing.Description = entity.Description;
+        existing.PercentageWeightage = entity.PercentageWeightage;
+        existing.FromPeriod = entity.FromPeriod;
+        existing.ToPeriod = entity.ToPeriod;
+        existing.CompanyId = entity.CompanyId;
+        existing.SchoolId = entity.SchoolId;
+        existing.IsActive = entity.IsActive;
+        existing.ModifiedDate = DateTime.UtcNow;
+        existing.Status = entity.Status;
+        existing.StatusMessage = entity.StatusMessage;
+        existing.ModifiedBy = await ResolveUserAsync(
+            entity.ModifiedBy ?? entity.CreatedBy,
+            entity.CompanyId,
+            entity.SchoolId);
+
         await _context.SaveChangesAsync();
-        return MapToDomainEntity(infraEntity)!;
+        return MapToDomainEntity(existing)!;
     }
 
     public async Task DeleteAsync(Guid id)
     {
-        var entity = await _context.FeesDiscountCategoryMasters
-            .FirstOrDefaultAsync(f => f.Id == id);
+        var entity = await _context.AssesmentMasters.FirstOrDefaultAsync(a => a.Id == id);
         if (entity != null)
         {
             entity.IsDeleted = true;
@@ -67,17 +78,17 @@ public class FeesDiscountCategoryRepository : IFeesDiscountCategoryRepository
         }
     }
 
-    private static SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster? MapToDomainEntity(SchoolDemo.Infrastructure.Data.FeesDiscountCategoryMaster? entity)
+    private static SchoolDemo.Domain.Entities.AssesmentMaster? MapToDomainEntity(SchoolDemo.Infrastructure.Data.AssesmentMaster? entity)
     {
         if (entity == null) return null;
-        return new SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster
+        return new SchoolDemo.Domain.Entities.AssesmentMaster
         {
             Id = entity.Id,
             Name = entity.Name,
             Description = entity.Description,
-            FeeCategoryId = entity.FeeCategoryId,
-            IsPercentAge = entity.IsPercentAge,
-            Amount = entity.Amount,
+            PercentageWeightage = entity.PercentageWeightage,
+            FromPeriod = entity.FromPeriod,
+            ToPeriod = entity.ToPeriod,
             CompanyId = entity.CompanyId,
             SchoolId = entity.SchoolId,
             IsActive = entity.IsActive,
@@ -91,16 +102,16 @@ public class FeesDiscountCategoryRepository : IFeesDiscountCategoryRepository
         };
     }
 
-    private static SchoolDemo.Infrastructure.Data.FeesDiscountCategoryMaster MapToInfrastructureEntity(SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster entity)
+    private static SchoolDemo.Infrastructure.Data.AssesmentMaster MapToInfrastructureEntity(SchoolDemo.Domain.Entities.AssesmentMaster entity)
     {
-        return new SchoolDemo.Infrastructure.Data.FeesDiscountCategoryMaster
+        return new SchoolDemo.Infrastructure.Data.AssesmentMaster
         {
             Id = entity.Id,
             Name = entity.Name,
             Description = entity.Description,
-            FeeCategoryId = entity.FeeCategoryId,
-            IsPercentAge = entity.IsPercentAge,
-            Amount = entity.Amount,
+            PercentageWeightage = entity.PercentageWeightage,
+            FromPeriod = entity.FromPeriod,
+            ToPeriod = entity.ToPeriod,
             CompanyId = entity.CompanyId,
             SchoolId = entity.SchoolId,
             IsActive = entity.IsActive,
@@ -109,7 +120,7 @@ public class FeesDiscountCategoryRepository : IFeesDiscountCategoryRepository
             CreatedDate = entity.CreatedDate,
             ModifiedBy = entity.ModifiedBy,
             ModifiedDate = entity.ModifiedDate,
-            Status = entity.Status!,
+            Status = entity.Status ?? "Active",
             StatusMessage = entity.StatusMessage
         };
     }

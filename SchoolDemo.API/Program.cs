@@ -278,6 +278,7 @@ builder.Services.AddScoped<IVoucherRepository, VoucherRepository>();
 builder.Services.AddScoped<IVendorRepository, VendorRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ISystemParameterRepository, SystemParameterRepository>();
+builder.Services.AddScoped<IAssesmentMasterRepository, AssesmentMasterRepository>();
 
 // Transport entity repositories
 builder.Services.AddScoped<IRouteMasterRepository, RouteMasterRepository>();
@@ -356,6 +357,7 @@ builder.Services.AddScoped<ITransportHelpService, TransportHelpService>();
 builder.Services.AddScoped<IVendorService, VendorService>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<ISystemParameterService, SystemParameterService>();
+builder.Services.AddScoped<IAssesmentMasterService, AssesmentMasterService>();
 
 var app = builder.Build();
 

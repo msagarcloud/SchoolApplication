@@ -141,5 +141,8 @@ export const FeeCategoryDetail = lazy(() => import('./components/FeeCategory/Fee
 export const DiscountCategoryList = lazy(() => import('./components/DiscountCategory/DiscountCategoryList'));
 export const DiscountCategoryForm = lazy(() => import('./components/DiscountCategory/DiscountCategoryForm'));
 export const DiscountCategoryDetail = lazy(() => import('./components/DiscountCategory/DiscountCategoryDetail'));
+export const AssesmentMasterList = lazy(() => import('./components/AssesmentMaster/AssesmentMasterList'));
+export const AssesmentMasterForm = lazy(() => import('./components/AssesmentMaster/AssesmentMasterForm'));
+export const AssesmentMasterDetail = lazy(() => import('./components/AssesmentMaster/AssesmentMasterDetail'));
 export const PlaceholderPage = lazy(() => import('./components/Placeholder/PlaceholderPage'));
 export const NavigationDemo = lazy(() => import('./pages/NavigationDemo'));

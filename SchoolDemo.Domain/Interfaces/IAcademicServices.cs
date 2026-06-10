@@ -1196,6 +1196,56 @@ public interface IStudentService
     Task<bool> DeleteAsync(Guid id);
 }
 
+// ============================================================
+// AssesmentMaster
+// ============================================================
+
+public interface IAssesmentMasterRepository
+{
+    Task<SchoolDemo.Domain.Entities.AssesmentMaster?> GetByIdAsync(Guid id);
+    Task<IEnumerable<SchoolDemo.Domain.Entities.AssesmentMaster>> GetAllAsync();
+    Task<SchoolDemo.Domain.Entities.AssesmentMaster> AddAsync(SchoolDemo.Domain.Entities.AssesmentMaster entity);
+    Task<SchoolDemo.Domain.Entities.AssesmentMaster> UpdateAsync(SchoolDemo.Domain.Entities.AssesmentMaster entity);
+    Task DeleteAsync(Guid id);
+}
+
+public interface IAssesmentMasterService
+{
+    Task<AssesmentMasterResponse?> GetByIdAsync(Guid id);
+    Task<IEnumerable<AssesmentMasterResponse>> GetAllAsync();
+    Task<AssesmentMasterResponse> CreateAsync(AssesmentMasterRequest request);
+    Task<AssesmentMasterResponse?> UpdateAsync(Guid id, AssesmentMasterRequest request);
+    Task<bool> DeleteAsync(Guid id);
+}
+
+public class AssesmentMasterRequest
+{
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public decimal? PercentageWeightage { get; set; }
+    public DateTime? FromPeriod { get; set; }
+    public DateTime? ToPeriod { get; set; }
+    public Guid CompanyId { get; set; }
+    public Guid SchoolId { get; set; }
+}
+
+public class AssesmentMasterResponse
+{
+    public Guid Id { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public decimal? PercentageWeightage { get; set; }
+    public DateTime? FromPeriod { get; set; }
+    public DateTime? ToPeriod { get; set; }
+    public Guid CompanyId { get; set; }
+    public Guid SchoolId { get; set; }
+    public bool IsActive { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime? ModifiedDate { get; set; }
+    public string? Status { get; set; }
+    public string? StatusMessage { get; set; }
+}
+
 public class StudentRequest
 {
     public Guid RollNumber { get; set; }
