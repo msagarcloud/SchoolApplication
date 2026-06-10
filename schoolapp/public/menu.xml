@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus>
+  <role name="User">
+    <item id="dashboard" label="Dashboard" path="/dashboard" icon="bi-speedometer2" category="dashboard" />
+    <item id="profile" label="My Profile" path="/profile" icon="bi-person" category="personal" />
+    <item id="settings" label="Settings" path="/settings" icon="bi-gear" category="personal" />
+  </role>
+
+  <role name="Super Administrator">
+    <item id="dashboard" label="Dashboard" path="/dashboard" icon="bi-speedometer2" category="dashboard" />
+    <item id="general" label="General" icon="bi-people" category="administrative">
+        <item id="companies" label="Companies" path="/companies" icon="bi-person" />
+        <item id="schools" label="Schools" path="/schools" icon="bi-mortarboard" />
+        <item id="users" label="Users" path="/users" icon="bi-people-fill" />          
+        <item id="roles" label="Roles &amp; Permissions" path="/roles" icon="bi-shield-lock" />
+        <item id="parameters" label="System Parameters" path="/system-parameters" icon="bi-gear" />
+        <item id="tasks" label="Task Schedule" path="/tasks" icon="bi-journal-text" />
+        <item id="holidays" label="Holidays" path="/holidays" icon="bi-calendar-event" />
+    </item>
+    <item id="masters" label="Masters" icon="bi-people" category="administrative">
+        <item id="category" label="Category" path="/Categories" icon="bi-flag" />
+        <item id="class" label="Class" path="/classes" icon="bi-geo-alt" />
+        <item id="section" label="Section" path="/sections" icon="bi-grid-3x3-gap" />
+        <item id="subject" label="Subject" path="/subjects" icon="bi-journal-bookmark" />
+        <item id="grade" label="Grade" path="/grades" icon="bi-journal-text" />
+        <item id="profession" label="Profession" path="/profession" icon="bi-assignment" />
+        <item id="qualification" label="Qualification" path="/qualification" icon="bi-award" />
+        <item id="feecategory" label="Fee Category" path="/feecategory" icon="bi-briefcase" />
+        <item id="discountCategory" label="Discount Category" path="/discountCategory" icon="bi-currency-dollar" />
+        <item id="assessments" label="Assessments" path="/assessments" icon="bi-journal-check" />
+        <item id="attendencerecord" label="Attendence Record" path="/attendencerecord" icon="bi-calendar-event" />
+    </item>
+    <item id="students" label="Students" icon="bi-people" category="administrative">
+        <item id="students" label="View Students" path="/students" icon="bi-mortarboard" />
+        <item id="parents" label="View Parents" path="/parent" icon="bi-person-plus" />
+        <item id="attendence" label="Attendence" path="/attendence" icon="bi-calendar-event" />
+        <item id="absent" label="Absent" path="/absent" icon="bi-calendar-x" />
+    </item>
+    <item id="Teachers" label="Teachers" icon="bi-people" category="administrative">
+        <item id="teachers" label="View Teachers" path="/teachers" icon="bi-mortarboard" />
+        <item id="addTeacher" label="Add Teacher" path="/add-teacher" icon="bi-person-plus" />
+        <item id="attendence" label="Attendence" path="/attendence" icon="bi-calendar-event" />
+        <item id="absent" label="Absent" path="/absent" icon="bi-calendar-x" />
+    </item>
+    <item id="examination" label="Examination" icon="bi-people" category="administrative">
+      <item id="datesheet" label="DateSheet" path="/datesheet" icon="bi-people" />
+      <item id="markentry" label="Mark Entry" path="/markentry" icon="bi-people" />
+      <item id="result" label="Result" path="/result" icon="bi-people" />
+      <item id="reportcard" label="Report Card" path="/reportcard" icon="bi-people" />
+    </item>
+    <item id="timetable" label="Time Table" icon="bi-people" category="administrative">
+      <item id="setup" label="Time Table Setup" path="/timetable-setup" icon="bi-people" />
+      <item id="viewperiods" label="View Periods" path="/periods" icon="bi-people" />
+      <item id="setupclassperiod" label="Setup Class Periods" path="/classperiods" icon="bi-people" />
+      <item id="generatetimetable" label="Generate Time Table" path="/generatetimetable" icon="bi-people" />
+      <item id="viewtimetablebyclass" label="View Time Table by Class" path="/viewtimetablebyclass" icon="bi-people" />
+      <item id="viewtimetablebyteacher" label="View Time Table by Teacher" path="/viewtimetablebyteacher" icon="bi-people" />
+      <item id="viewtimetablebysubject" label="View Time Table by Subject" path="/viewtimetablebysubject" icon="bi-people" />
+      <item id="viewtimetablebyroom" label="View Time Table by Room" path="/viewtimetablebyroom" icon="bi-people" />
+      <item id="viewtimetablebyday" label="View Time Table by Day" path="/viewtimetablebyday" icon="bi-people" />
+      <item id="viewtimetablebyperiod" label="View Time Table by Period" path="/viewtimetablebyperiod" icon="bi-people" />
+      <item id="viewsubstitution" label="View Substitution" path="/viewsubstitution" icon="bi-people" />
+    </item>
+    <item id="bills" label="Bills" icon="bi-people" category="administrative">
+      <item id="expensecategory" label="Expense Category" path="/expensecategory" icon="bi-person" />
+      <item id="vendors" label="Vendors" path="/vendors" icon="bi-mortarboard" />
+      <item id="bills" label="Bills" path="/bills" icon="bi-people-fill" />
+      <item id="vouchers" label="Vouchers" path="/vouchers" icon="bi-people-fill" />
+      <item id="payments" label="Payments" path="/payments" icon="bi-people-fill" />
+    </item>
+    <item id="fees" label="Fees" icon="bi-building" category="administrative">
+      <item id="fees" label="Fees" path="/fees" icon="bi-book" />
+      <item id="feesstructure" label="Fees Structure" path="/feesstructure" icon="bi-grid-3x3-gap" />
+      <item id="feesdiscounts" label="Fees Discounts" path="/feesdiscounts" icon="bi-grid-3x3-gap" />
+      <item id="generatefeesdata" label="Generate Fees Data" path="/generatefeesdata" icon="bi-grid-3x3-gap" />
+      <item id="viewfeepayments" label="Fees Payments" path="/feespayments" icon="bi-grid-3x3-gap" />
+      <item id="feesreceipts" label="Fees Receipts" path="/feesreceipts" icon="bi-journal-bookmark" />
+    </item>
+    <item id="transport" label="Transport" icon="bi-building" category="administrative">
+      <item id="viewlocations" label="View Locations" path="/locations" icon="bi-book" />
+      <item id="viewroutes" label="View Routes" path="/routes" icon="bi-book" />
+      <item id="viewvehicles" label="View Vehicles" path="/vehicles" icon="bi-book" />
+      <item id="viewdrivers" label="View Drivers" path="/drivers" icon="bi-book" />
+    </item>
+    <item id="inventory" label="Inventory" icon="bi-building" category="administrative">
+      <item id="itemTypes" label="Item Types" path="/itemtypes" icon="bi-book" />
+      <item id="inventoryitems" label="Inventory Items" path="/inventoryitems" icon="bi-book" />
+      <item id="inventorylocations" label="Inventory Locations" path="/inventorylocations" icon="bi-book" />
+      <item id="inventorytransactions" label="Inventory Transactions" path="/inventorytransactions" icon="bi-book" />
+    </item>
+    <item id="library" label="Library" icon="bi-building" category="administrative">
+      <item id="booktypes" label="Book Types" path="/booktypes" icon="bi-book" />
+      <item id="bookcategories" label="Book Categories" path="/bookcategories" icon="bi-book" />
+      <item id="authors" label="Authors" path="/authors" icon="bi-book" />
+      <item id="publishers" label="Publishers" path="/publishers" icon="bi-book" />
+      <item id="books" label="View Books" path="/books" icon="bi-book" />     
+      <item id="booktransactions" label="Book Transactions" path="/booktransactions" icon="bi-book" />
+    </item>
+    <item id="payroll" label="Payroll" icon="bi-building" category="administrative">
+      <item id="depts" label="Departments" path="/departments" icon="bi-book" />
+      <item id="designation" label="Designations" path="/designations" icon="bi-book" />
+      <item id="paymentmode" label="Payment Mode" path="/paymentmode" icon="bi-book" />
+      <item id="grades" label="Grades" path="/grades" icon="bi-book" />
+      <item id="emptypes" label="Employee Types" path="/emptypes" icon="bi-book" />
+      <item id="empcategory" label="Employee Category" path="/empcategory" icon="bi-book" />
+    </item>
+    <item id="Employee" label="Employee" icon="bi-building" category="administrative">
+      <item id="employees" label="List Employees" path="/employees" icon="bi-book" />
+      <item id="employeeattendance" label="Employee Attendance" path="/employeeattendance" icon="bi-book" />
+    </item>
+    <item id="Leaves" label="Leaves" icon="bi-building" category="administrative">
+      <item id="leaves" label="Leaves" path="/leaves" icon="bi-book" />
+      <item id="applyleaves" label="Apply Leaves" path="/applyleaves" icon="bi-book" />
+      <item id="aproveleaves" label="Approve Leave" path="/approveleaves" icon="bi-book" />
+    </item>
+    <item id="Reports" label="Reports" icon="bi-building" category="administrative">
+      <item id="reports" label="Reports" path="/reports" icon="bi-book" />
+    </item>
+  </role>
+
+  <role name="Teachers">
+    <item id="dashboard" label="Dashboard" path="/dashboard" icon="bi-speedometer2" />
+    <item id="academics" label="Academic" icon="bi-mortarboard" category="academic">
+      <item id="grades" label="Grade Management" path="/grades" icon="bi-journal-text" />
+      <item id="schedule" label="Class Schedule" path="/schedule" icon="bi-calendar-event" />
+      <item id="assignments" label="Assignments" path="/assignments" icon="bi-assignment" />
+    </item>
+  </role>
+</menus>
