@@ -359,6 +359,9 @@ builder.Services.AddScoped<ISystemParameterService, SystemParameterService>();
 
 var app = builder.Build();
 
+// Register global exception middleware early in the pipeline
+app.UseMiddleware<SchoolDemo.API.Middleware.ExceptionMiddleware>();
+
 // Configure middleware pipeline
 if (app.Environment.IsDevelopment())
 {

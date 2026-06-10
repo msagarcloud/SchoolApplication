@@ -145,6 +145,9 @@ import {
   FeeCategoryList,
   FeeCategoryForm,
   FeeCategoryDetail,
+  DiscountCategoryList,
+  DiscountCategoryForm,
+  DiscountCategoryDetail,
   PlaceholderPage,
   NavigationDemo
 } from './lazyPages';
@@ -1611,10 +1614,40 @@ function App() {
             element={
               <ProtectedRoute>
                 <MainTemplate>
-                  <PlaceholderPage title="Discount Category" description="This discount category page is pending implementation." />
+                  <DiscountCategoryList />
                 </MainTemplate>
               </ProtectedRoute>
             } 
+          />
+          <Route
+            path="/discountCategory/create"
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <DiscountCategoryForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/discountCategory/:id"
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <DiscountCategoryDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/discountCategory/:id/edit"
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <DiscountCategoryForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
           />
           <Route 
             path="/assessments" 

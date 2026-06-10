@@ -135,5 +135,11 @@ export const StudyMaterialDetail = lazy(() => import('./components/StudyMaterial
 export const VisitorList = lazy(() => import('./components/Visitor/VisitorList'));
 export const VisitorForm = lazy(() => import('./components/Visitor/VisitorForm'));
 export const VisitorDetail = lazy(() => import('./components/Visitor/VisitorDetail'));
+export const FeeCategoryList = lazy(() => import('./components/FeeCategory/FeeCategoryList'));
+export const FeeCategoryForm = lazy(() => import('./components/FeeCategory/FeeCategoryForm'));
+export const FeeCategoryDetail = lazy(() => import('./components/FeeCategory/FeeCategoryDetail'));
+export const DiscountCategoryList = lazy(() => import('./components/DiscountCategory/DiscountCategoryList'));
+export const DiscountCategoryForm = lazy(() => import('./components/DiscountCategory/DiscountCategoryForm'));
+export const DiscountCategoryDetail = lazy(() => import('./components/DiscountCategory/DiscountCategoryDetail'));
 export const PlaceholderPage = lazy(() => import('./components/Placeholder/PlaceholderPage'));
 export const NavigationDemo = lazy(() => import('./pages/NavigationDemo'));
