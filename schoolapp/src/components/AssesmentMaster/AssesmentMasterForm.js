@@ -72,6 +72,7 @@ const AssesmentMasterForm = () => {
         toPeriod: formData.toPeriod || null,
         companyId: sessionData.companyId,
         schoolId: sessionData.schoolId,
+        isActive: true
       };
 
       if (isEditing) {

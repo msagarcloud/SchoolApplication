@@ -35,6 +35,26 @@ const normalizeAssesmentMasterItem = (item) => {
   };
 };
 
+const normalizeAssesmentMasterForApi = (data) => {
+  if (!data || typeof data !== 'object') return data;
+
+  return {
+    id: data.id ?? data.Id,
+    name: data.name ?? data.Name ?? '',
+    description: data.description ?? data.Description ?? '',
+    percentageWeightage: data.percentageWeightage ?? data.PercentageWeightage ?? null,
+    fromPeriod: data.fromPeriod ?? data.FromPeriod ?? null,
+    toPeriod: data.toPeriod ?? data.ToPeriod ?? null,
+    companyId: data.companyId ?? data.CompanyId ?? '',
+    schoolId: data.schoolId ?? data.SchoolId ?? '',
+    isActive: data.isActive ?? data.IsActive ?? true,
+    createdDate: data.createdDate ?? data.CreatedDate ?? null,
+    modifiedDate: data.modifiedDate ?? data.ModifiedDate ?? null,
+    status: data.status ?? data.Status ?? null,
+    statusMessage: data.statusMessage ?? data.StatusMessage ?? null,
+  };
+};
+
 const normalizeAssesmentMasterResponse = (response) => {
   if (Array.isArray(response)) {
     return response.map(normalizeAssesmentMasterItem);
@@ -70,18 +90,22 @@ export const assesmentMasterService = {
 
   async create(data) {
     try {
-      const response = await apiService.post('/AssesmentMaster', data);
+      const normalizedData = normalizeAssesmentMasterForApi(data);
+      const response = await apiService.post('/AssesmentMaster', normalizedData);
       return normalizeAssesmentMasterItem(response);
     } catch (error) {
+      console.error('Create assessment error:', error);
       throw new Error(error.message || 'Failed to create assessment');
     }
   },
 
   async update(id, data) {
     try {
-      const response = await apiService.put(`/AssesmentMaster/${id}`, data);
+      const normalizedData = normalizeAssesmentMasterForApi(data);
+      const response = await apiService.put(`/AssesmentMaster/${id}`, normalizedData);
       return normalizeAssesmentMasterItem(response);
     } catch (error) {
+      console.error('Update assessment error:', error);
       throw new Error(error.message || 'Failed to update assessment');
     }
   },
@@ -91,6 +115,7 @@ export const assesmentMasterService = {
       await apiService.delete(`/AssesmentMaster/${id}`);
       return true;
     } catch (error) {
+      console.error('Delete assessment error:', error);
       throw new Error(error.message || 'Failed to delete assessment');
     }
   },

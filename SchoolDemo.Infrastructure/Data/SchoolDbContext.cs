@@ -383,7 +383,8 @@ public partial class SchoolDbContext : DbContext
                 .HasMaxLength(250)
                 .IsUnicode(false);
             entity.Property(e => e.FromPeriod).HasColumnType("datetime");
-            entity.Property(e => e.IsActive).HasDefaultValue(true);
+            entity.Property(e => e.IsActive).ValueGeneratedNever();
+            entity.Property(e => e.IsDeleted).ValueGeneratedNever();
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             entity.Property(e => e.Name)
                 .HasMaxLength(150)
