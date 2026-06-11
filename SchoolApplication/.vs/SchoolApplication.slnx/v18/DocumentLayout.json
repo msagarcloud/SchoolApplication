@@ -3,6 +3,9 @@
   "WorkspaceRootPath": "C:\\Sagar\\School-Application\\SchoolApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\controllers\\desigcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\controllers\\deptcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -48,6 +51,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "DesigController.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\DesigController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\DesigController.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\DesigController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\DesigController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T12:20:23.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "DeptController.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\DeptController.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\DeptController.cs",
@@ -60,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "ItemRepository.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\ItemRepository.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\ItemRepository.cs",
@@ -73,7 +89,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "ItemTypeController.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\ItemTypeController.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\ItemTypeController.cs",
@@ -86,7 +102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ItemTypeRepository.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\ItemTypeRepository.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\ItemTypeRepository.cs",
@@ -99,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ItemMaster.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
@@ -112,7 +128,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "ItemTypeMaster.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\ItemTypeMaster.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\ItemTypeMaster.cs",
@@ -125,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "IItemRepository.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Interfaces\\IItemRepository.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IItemRepository.cs",
@@ -138,7 +154,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "IItemTypeRepository.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Interfaces\\IItemTypeRepository.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IItemTypeRepository.cs",
@@ -151,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "SchoolDemo.API",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\SchoolDemo.API.csproj",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\SchoolDemo.API.csproj",
@@ -164,7 +180,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Program.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Program.cs",
@@ -177,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ItemController.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\ItemController.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\ItemController.cs",
