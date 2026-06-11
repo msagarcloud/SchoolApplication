@@ -21,6 +21,12 @@ export const BloodGroupDetail = lazy(() => import('./components/BloodGroup/Blood
 export const CategoryList = lazy(() => import('./components/Category/CategoryList'));
 export const CategoryForm = lazy(() => import('./components/Category/CategoryForm'));
 export const CategoryDetail = lazy(() => import('./components/Category/CategoryDetail'));
+export const ItemTypeList = lazy(() => import('./components/ItemType/ItemTypeList'));
+export const ItemTypeForm = lazy(() => import('./components/ItemType/ItemTypeForm'));
+export const ItemTypeDetail = lazy(() => import('./components/ItemType/ItemTypeDetail'));
+export const ItemList = lazy(() => import('./components/Item/ItemList'));
+export const ItemForm = lazy(() => import('./components/Item/ItemForm'));
+export const ItemDetail = lazy(() => import('./components/Item/ItemDetail'));
 export const CountryList = lazy(() => import('./components/Country/CountryList'));
 export const CountryForm = lazy(() => import('./components/Country/CountryForm'));
 export const CountryDetail = lazy(() => import('./components/Country/CountryDetail'));

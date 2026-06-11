@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { studentService } from '../../services/studentService';
 import { parentService } from '../../services/parentService';
@@ -31,30 +31,7 @@ const StudentList = () => {
     fetchDropdownData();
   }, []);
 
-  useEffect(() => {
-    applyFilters();
-  }, [students, parents, filters]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [filters]);
-
-  // Pagination calculations
-  const totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedStudents = filteredStudents.slice(startIndex, endIndex);
-
-  // Helper function to get display name from dropdown data
-  const getDisplayName = (id, dataArray, fallback = 'N/A') => {
-    if (!id || !dataArray || dataArray.length === 0) {
-      return id || fallback;
-    }
-    const item = dataArray.find(item => item.id === id);
-    return item ? item.name : id || fallback;
-  };
-
-  const getFatherName = (studentId) => {
+  const getFatherName = useCallback((studentId) => {
     const father = parents.find(
       parent => parent.studentGuid === studentId && parent.relationTypeId === 'father-relation-type-id'
     );
@@ -62,9 +39,9 @@ const StudentList = () => {
       return 'N/A';
     }
     return `${father.parentFirstName || ''} ${father.parentLastName || ''}`.trim() || 'N/A';
-  };
+  }, [parents]);
 
-  const applyFilters = () => {
+  const applyFilters = useCallback(() => {
     let filtered = students;
 
     if (filters.firstName) {
@@ -92,7 +69,32 @@ const StudentList = () => {
     }
 
     setFilteredStudents(filtered);
+  }, [students, filters, getFatherName]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [applyFilters]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filters]);
+
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedStudents = filteredStudents.slice(startIndex, endIndex);
+
+  // Helper function to get display name from dropdown data
+  const getDisplayName = (id, dataArray, fallback = 'N/A') => {
+    if (!id || !dataArray || dataArray.length === 0) {
+      return id || fallback;
+    }
+    const item = dataArray.find(item => item.id === id);
+    return item ? item.name : id || fallback;
   };
+
+
 
   const handleFilterChange = (field, value) => {
     setFilters(prev => ({

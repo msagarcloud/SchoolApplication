@@ -1,90 +1,54 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { departmentService } from '../../services/departmentService';
+import { itemService } from '../../services/itemService';
+import { itemTypeService } from '../../services/itemTypeService';
 import { authService } from '../../services/authService';
 
-const getDeptValue = (dept, key) => {
-  // Try exact match first
-  if (dept?.[key] !== undefined && dept[key] !== null) return dept[key];
-  
-  // Try PascalCase
-  const pascalKey = key.charAt(0).toUpperCase() + key.slice(1);
-  if (dept?.[pascalKey] !== undefined && dept[pascalKey] !== null) return dept[pascalKey];
-  
-  // Try snake_case
-  const snakeKey = key.replace(/([A-Z])/g, '_$1').toLowerCase();
-  if (dept?.[snakeKey] !== undefined && dept[snakeKey] !== null) return dept[snakeKey];
-  
-  // Try UPPER_SNAKE_CASE
-  const upperSnakeKey = snakeKey.toUpperCase();
-  if (dept?.[upperSnakeKey] !== undefined && dept[upperSnakeKey] !== null) return dept[upperSnakeKey];
-  
-  // Try all lowercase
-  const lowerKey = key.toLowerCase();
-  if (dept?.[lowerKey] !== undefined && dept[lowerKey] !== null) return dept[lowerKey];
-  
-  // Try matching with "Dept" prefix variations
-  const deptPrefixVariations = [
-    `dept${pascalKey}`,
-    `Dept${pascalKey}`,
-    `department${pascalKey}`,
-    `Department${pascalKey}`
-  ];
-  
-  for (const variant of deptPrefixVariations) {
-    if (dept?.[variant] !== undefined && dept[variant] !== null) return dept[variant];
-  }
-  
-  return undefined;
+const getItemValue = (item, key) => item?.[key] ?? item?.[key.charAt(0).toUpperCase() + key.slice(1)];
+const formatItemDate = (value) => {
+  if (!value) return 'N/A';
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? 'N/A' : date.toLocaleDateString();
 };
 
-const DepartmentList = () => {
-  const [departments, setDepartments] = useState([]);
-  const [filteredDepartments, setFilteredDepartments] = useState([]);
+const ItemList = () => {
+  const [items, setItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [itemTypes, setItemTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   // Filter states
-  const [filters, setFilters] = useState({
-    departmentName: '',
-    hodName: '',
-    status: ''
-  });
+  const [filters, setFilters] = useState({ itemName: '', itemTypeId: '', status: '' });
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  const applyFilters = useCallback(() => {
-    let filtered = departments;
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    if (filters.departmentName) {
-      filtered = filtered.filter(dept => {
-        const deptName = getDeptValue(dept, 'departmentName');
-        return deptName?.toLowerCase().includes(filters.departmentName.toLowerCase());
-      });
+  const applyFilters = useCallback(() => {
+    let filtered = items;
+
+    if (filters.itemName) {
+      filtered = filtered.filter(item =>
+        item.name?.toLowerCase().includes(filters.itemName.toLowerCase())
+      );
     }
 
-    if (filters.hodName) {
-      filtered = filtered.filter(dept => {
-        const hod = getDeptValue(dept, 'hodName');
-        return hod?.toLowerCase().includes(filters.hodName.toLowerCase());
-      });
+    if (filters.itemTypeId) {
+      filtered = filtered.filter(item => String(item.itemTypeId) === String(filters.itemTypeId));
     }
 
     if (filters.status) {
-      filtered = filtered.filter(dept => {
-        const isActive = getDeptValue(dept, 'isActive');
-        return isActive?.toString() === (filters.status === 'Active' ? 'true' : 'false');
-      });
+      const isActive = filters.status === 'active';
+      filtered = filtered.filter(item => item.isActive === isActive);
     }
 
-    setFilteredDepartments(filtered);
-  }, [departments, filters]);
-
-  useEffect(() => {
-    fetchDepartments();
-  }, []);
+    setFilteredItems(filtered);
+  }, [items, filters]);
 
   useEffect(() => {
     applyFilters();
@@ -95,10 +59,24 @@ const DepartmentList = () => {
   }, [filters]);
 
   // Pagination calculations
-  const totalPages = Math.ceil(filteredDepartments.length / itemsPerPage);
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedDepartments = filteredDepartments.slice(startIndex, endIndex);
+  const paginatedItems = filteredItems.slice(startIndex, endIndex);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const [itemsData, typesData] = await Promise.all([itemService.getAll(), itemTypeService.getAll()]);
+      setItems(itemsData);
+      setFilteredItems(itemsData);
+      setItemTypes(typesData);
+    } catch (err) {
+      setError(err.message || 'Failed to fetch items');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleFilterChange = (field, value) => {
     setFilters(prev => ({
@@ -108,11 +86,7 @@ const DepartmentList = () => {
   };
 
   const clearFilters = () => {
-    setFilters({
-      departmentName: '',
-      hodName: '',
-      status: ''
-    });
+    setFilters({ itemName: '', itemTypeId: '', status: '' });
   };
 
   const handlePageChange = (page) => {
@@ -151,53 +125,18 @@ const DepartmentList = () => {
     return rangeWithDots;
   };
 
-  const fetchDepartments = async () => {
+  const handleDelete = async (id, name) => {
+    if (!window.confirm(`Delete "${name}"?`)) return;
     try {
-      setLoading(true);
-      let data = await departmentService.getAll();
-      
-      // Handle wrapped responses
-      if (data?.data && Array.isArray(data.data)) {
-        data = data.data;
-      } else if (data?.result && Array.isArray(data.result)) {
-        data = data.result;
-      }
-      
-      console.log('Departments API Response:', data);
-      if (Array.isArray(data) && data.length > 0) {
-        console.log('First department keys:', Object.keys(data[0]));
-      }
-      
-      setDepartments(data);
-      setFilteredDepartments(data);
+      await itemService.delete(id);
+      setItems(items.filter(i => i.id !== id));
+      setFilteredItems(filteredItems.filter(i => i.id !== id));
     } catch (err) {
-      setError(err.message || 'Failed to fetch departments');
-    } finally {
-      setLoading(false);
+      setError(err.message || 'Failed to delete');
     }
   };
 
-  const handleDelete = async (id, departmentName) => {
-    if (window.confirm(`Are you sure you want to delete "${departmentName}"?`)) {
-      try {
-        await departmentService.delete(id);
-        // Refresh the departments list after successful deletion
-        await fetchDepartments();
-      } catch (err) {
-        setError(err.message || 'Failed to delete department');
-      }
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="d-flex justify-content-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <div className="d-flex justify-content-center"><div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div></div>;
 
   return (
     <div className="container-fluid">
@@ -225,10 +164,10 @@ const DepartmentList = () => {
       </div>
 
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Departments</h2>
-        <Link to="/departments/create" className="btn btn-primary">
+        <h2>Inventory Items Management</h2>
+        <Link to="/inventoryitems/create" className="btn btn-primary">
           <i className="bi bi-plus-circle me-2"></i>
-          Add New Department
+          Add New Item
         </Link>
       </div>
 
@@ -246,24 +185,25 @@ const DepartmentList = () => {
         <div className="card-body">
           <div className="row g-2 align-items-end">
             <div className="col">
-              <label className="form-label small">Department Name</label>
+              <label className="form-label small">Item Name</label>
               <input
                 type="text"
                 className="form-control form-control-sm"
-                placeholder="Search department..."
-                value={filters.departmentName}
-                onChange={(e) => handleFilterChange('departmentName', e.target.value)}
+                placeholder="Search item..."
+                value={filters.itemName}
+                onChange={(e) => handleFilterChange('itemName', e.target.value)}
               />
             </div>
             <div className="col">
-              <label className="form-label small">HOD Name</label>
-              <input
-                type="text"
-                className="form-control form-control-sm"
-                placeholder="Search HOD..."
-                value={filters.hodName}
-                onChange={(e) => handleFilterChange('hodName', e.target.value)}
-              />
+              <label className="form-label small">Item Type</label>
+              <select
+                className="form-select form-select-sm"
+                value={filters.itemTypeId}
+                onChange={(e) => handleFilterChange('itemTypeId', e.target.value)}
+              >
+                <option value="">All Types</option>
+                {itemTypes.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
+              </select>
             </div>
             <div className="col">
               <label className="form-label small">Status</label>
@@ -273,8 +213,8 @@ const DepartmentList = () => {
                 onChange={(e) => handleFilterChange('status', e.target.value)}
               >
                 <option value="">All Status</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
               </select>
             </div>
             <div className="col-auto">
@@ -291,18 +231,18 @@ const DepartmentList = () => {
 
       <div className="card">
         <div className="card-header d-flex justify-content-between align-items-center">
-          <h5 className="mb-0">All Departments</h5>
+          <h5 className="mb-0">All Items</h5>
           <span className="badge bg-secondary">
-            Showing {paginatedDepartments.length} of {filteredDepartments.length} departments
+            Showing {paginatedItems.length} of {filteredItems.length} items
           </span>
         </div>
         <div className="card-body">
-          {filteredDepartments.length === 0 ? (
+          {filteredItems.length === 0 ? (
             <div className="text-center py-4">
-              <i className="bi bi-building display-4 text-muted"></i>
-              <p className="text-muted mt-3">No departments found</p>
-              <Link to="/departments/create" className="btn btn-outline-primary">
-                Create First Department
+              <i className="bi bi-box display-4 text-muted"></i>
+              <p className="text-muted mt-3">No items found</p>
+              <Link to="/inventoryitems/create" className="btn btn-outline-primary">
+                Create First Item
               </Link>
             </div>
           ) : (
@@ -311,45 +251,49 @@ const DepartmentList = () => {
                 <table className="table table-striped table-hover">
                   <thead>
                     <tr>
-                      <th>Department Code</th>
-                      <th>Department Name</th>
+                      <th>Name</th>
+                      <th>Type</th>
                       <th>Status</th>
+                      <th>Created Date</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {paginatedDepartments.map((dept) => {
-                      const deptId = getDeptValue(dept, 'id');
-                      const deptName = getDeptValue(dept, 'departmentName') || 'N/A';
-                      const deptCode = getDeptValue(dept, 'departmentCode') || 'N/A';
-                      const isActive = getDeptValue(dept, 'isActive');
+                    {paginatedItems.map((item) => {
+                      const itemId = getItemValue(item, 'id');
+                      const itemName = getItemValue(item, 'name') || 'N/A';
+                      const itemTypeId = getItemValue(item, 'itemTypeId');
+                      const itemIsActive = getItemValue(item, 'isActive');
+                      const itemCreatedDate = getItemValue(item, 'createdDate');
+                      const typeName = itemTypes.find(t => String(t.id) === String(itemTypeId))?.name || 'N/A';
 
                       return (
-                        <tr key={deptId}>
+                        <tr key={itemId || itemName}>
                           <td>
-                            <span className="badge bg-info">{deptCode}</span>
-                          </td>
-                          <td>
-                            <Link to={`/departments/${deptId}`} className="text-decoration-none">
-                              <strong>{deptName}</strong>
+                            <Link to={`/inventoryitems/${itemId}`} className="text-decoration-none">
+                              {itemName}
                             </Link>
                           </td>
+                          <td>{typeName}</td>
                           <td>
-                            <span className={`badge bg-${isActive ? 'success' : 'danger'}`}>
-                              {isActive ? 'Active' : 'Inactive'}
+                            <span className={`badge ${itemIsActive ? 'bg-success' : 'bg-danger'}`}>
+                              {itemIsActive ? 'Active' : 'Inactive'}
                             </span>
                           </td>
                           <td>
+                            {formatItemDate(itemCreatedDate)}
+                          </td>
+                          <td>
                             <div className="btn-group" role="group">
-                              <Link 
-                                to={`/departments/${deptId}`} 
+                              <Link
+                                to={`/inventoryitems/${itemId}`}
                                 className="btn btn-sm btn-outline-primary"
                                 title="View"
                               >
                                 <i className="bi bi-eye"></i>
                               </Link>
-                              <Link 
-                                to={`/departments/${deptId}/edit`} 
+                              <Link
+                                to={`/inventoryitems/${itemId}/edit`}
                                 className="btn btn-sm btn-outline-warning"
                                 title="Edit"
                               >
@@ -357,7 +301,7 @@ const DepartmentList = () => {
                               </Link>
                               <button
                                 className="btn btn-sm btn-outline-danger"
-                                onClick={() => handleDelete(deptId, deptName)}
+                                onClick={() => handleDelete(itemId, itemName)}
                                 title="Delete"
                               >
                                 <i className="bi bi-trash"></i>
@@ -438,4 +382,4 @@ const DepartmentList = () => {
   );
 };
 
-export default DepartmentList;
+export default ItemList;

@@ -28,6 +28,12 @@ import {
   CategoryList,
   CategoryForm,
   CategoryDetail,
+  ItemTypeList,
+  ItemTypeForm,
+  ItemTypeDetail,
+  ItemList,
+  ItemForm,
+  ItemDetail,
   CountryList,
   CountryForm,
   CountryDetail,
@@ -480,6 +486,86 @@ function App() {
               <ProtectedRoute>
                 <MainTemplate>
                   <CategoryForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/itemtypes" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemTypeList />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/itemtypes/create" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemTypeForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/itemtypes/:id" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemTypeDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/itemtypes/:id/edit" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemTypeForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inventoryitems" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemList />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inventoryitems/create" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inventoryitems/:id" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inventoryitems/:id/edit" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemForm />
                 </MainTemplate>
               </ProtectedRoute>
             } 

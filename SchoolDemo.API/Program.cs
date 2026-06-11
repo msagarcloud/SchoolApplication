@@ -279,6 +279,9 @@ builder.Services.AddScoped<IVendorRepository, VendorRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<ISystemParameterRepository, SystemParameterRepository>();
 builder.Services.AddScoped<IAssesmentMasterRepository, AssesmentMasterRepository>();
+builder.Services.AddScoped<SchoolDemo.Domain.Interfaces.IItemRepository, SchoolDemo.Infrastructure.Repositories.ItemRepository>();
+// Item type repository
+builder.Services.AddScoped<SchoolDemo.Domain.Interfaces.IItemTypeRepository, SchoolDemo.Infrastructure.Repositories.ItemTypeRepository>();
 
 // Transport entity repositories
 builder.Services.AddScoped<IRouteMasterRepository, RouteMasterRepository>();
