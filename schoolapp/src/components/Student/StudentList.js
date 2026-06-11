@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { studentService } from '../../services/studentService';
+import { parentService } from '../../services/parentService';
 import { classService } from '../../services/classService';
 import { sectionService } from '../../services/sectionService';
 
@@ -11,13 +12,14 @@ const StudentList = () => {
   const [error, setError] = useState('');
   const [classes, setClasses] = useState([]);
   const [sections, setSections] = useState([]);
+  const [parents, setParents] = useState([]);
 
   // Filter states
   const [filters, setFilters] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    rollNumber: ''
+    fathersName: ''
   });
 
   // Pagination states
@@ -31,7 +33,7 @@ const StudentList = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [students, filters]);
+  }, [students, parents, filters]);
 
   useEffect(() => {
     setCurrentPage(1);
@@ -50,6 +52,16 @@ const StudentList = () => {
     }
     const item = dataArray.find(item => item.id === id);
     return item ? item.name : id || fallback;
+  };
+
+  const getFatherName = (studentId) => {
+    const father = parents.find(
+      parent => parent.studentGuid === studentId && parent.relationTypeId === 'father-relation-type-id'
+    );
+    if (!father) {
+      return 'N/A';
+    }
+    return `${father.parentFirstName || ''} ${father.parentLastName || ''}`.trim() || 'N/A';
   };
 
   const applyFilters = () => {
@@ -73,9 +85,9 @@ const StudentList = () => {
       );
     }
 
-    if (filters.rollNumber) {
+    if (filters.fathersName) {
       filtered = filtered.filter(student =>
-        student.rollNumber?.toString().toLowerCase().includes(filters.rollNumber.toLowerCase())
+        getFatherName(student.id).toLowerCase().includes(filters.fathersName.toLowerCase())
       );
     }
 
@@ -94,7 +106,7 @@ const StudentList = () => {
       firstName: '',
       lastName: '',
       email: '',
-      rollNumber: ''
+      fathersName: ''
     });
   };
 
@@ -137,9 +149,13 @@ const StudentList = () => {
   const fetchStudents = async () => {
     try {
       setLoading(true);
-      const data = await studentService.getAll();
-      setStudents(data);
-      setFilteredStudents(data);
+      const [studentsData, parentsData] = await Promise.all([
+        studentService.getAll(),
+        parentService.getAll().catch(() => [])
+      ]);
+      setStudents(studentsData);
+      setFilteredStudents(studentsData);
+      setParents(parentsData);
     } catch (err) {
       setError(err.message || 'Failed to fetch students');
     } finally {
@@ -236,13 +252,13 @@ const StudentList = () => {
               />
             </div>
             <div className="col">
-              <label className="form-label small">Roll Number</label>
+              <label className="form-label small">Father's Name</label>
               <input
                 type="text"
                 className="form-control form-control-sm"
-                placeholder="Search roll number..."
-                value={filters.rollNumber}
-                onChange={(e) => handleFilterChange('rollNumber', e.target.value)}
+                placeholder="Search father's name..."
+                value={filters.fathersName}
+                onChange={(e) => handleFilterChange('fathersName', e.target.value)}
               />
             </div>
             <div className="col-auto">
@@ -280,10 +296,10 @@ const StudentList = () => {
                   <thead>
                     <tr>
                       <th>Name</th>
-                      <th>Roll Number</th>
+                      <th>Father's Name</th>
                       <th>Registration Number</th>
                       <th>Email</th>
-                      <th>Contact</th>
+                      <th>Contact Number</th>
                       <th>Class</th>
                       <th>Section</th>
                       <th>Status</th>
@@ -298,7 +314,7 @@ const StudentList = () => {
                             {`${student.firstName || ''} ${student.lastName || ''}`.trim() || 'N/A'}
                           </Link>
                         </td>
-                        <td>{student.rollNumber || 'N/A'}</td>
+                        <td>{getFatherName(student.id)}</td>
                         <td>{student.registrationNumber || 'N/A'}</td>
                         <td>{student.email || 'N/A'}</td>
                         <td>{student.contactNumber || 'N/A'}</td>
