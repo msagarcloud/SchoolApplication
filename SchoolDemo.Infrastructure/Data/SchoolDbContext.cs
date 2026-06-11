@@ -6626,6 +6626,10 @@ public partial class SchoolDbContext : DbContext
         {
             entity.ToTable("StudentMaster");
 
+            // FathersName is a runtime-only/domain property and not stored in the DB.
+            // Explicitly ignore it so EF Core does not expect a corresponding column.
+            entity.Ignore(e => e.FathersName);
+
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.AdditionalNotes)
                 .HasMaxLength(500)

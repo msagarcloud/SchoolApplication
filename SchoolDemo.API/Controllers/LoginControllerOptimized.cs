@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Memory;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using SchoolDemo.Domain.Interfaces;
 using SchoolDemo.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolDemo.API.Controllers;
 
@@ -25,6 +27,7 @@ public class LoginControllerOptimized : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         // Rate limiting check

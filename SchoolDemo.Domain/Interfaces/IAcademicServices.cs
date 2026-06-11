@@ -1294,6 +1294,7 @@ public class StudentRequest
     public Guid? ClassTeacherId { get; set; }
     public bool? RoutePickAndDrop { get; set; }
     public Guid? FeesDiscountCategoryMasterId { get; set; }
+    public string? FathersName { get; set; }
     public decimal? TutionFees { get; set; }
     public decimal? AnnualFees { get; set; }
     public decimal? TransportFees { get; set; }
@@ -1368,6 +1369,7 @@ public class StudentResponse
     public string? StatusMessage { get; set; }
     public Guid? HouseAllotted { get; set; }
     public string? AdditionalNotes { get; set; }
+    public string? FathersName { get; set; }
 }
 
 // Vendor Service

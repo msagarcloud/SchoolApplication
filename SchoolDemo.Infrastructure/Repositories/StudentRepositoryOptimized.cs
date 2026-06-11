@@ -36,14 +36,26 @@ public class StudentRepositoryOptimized : IStudentRepository
             .Include(s => s.School)
             .Include(s => s.Company)
             .FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted);
-        
+
         var student = MapToDomainEntity(entity);
-        
+
+        // If parent info exists, prefer parent's record for father's name
         if (student != null)
         {
+            var father = await _context.ParentMasters
+                .AsNoTracking()
+                .Include(p => p.RelationType)
+                .FirstOrDefaultAsync(p => p.StudentGuid == entity.Id && !p.IsDeleted && p.RelationType != null && p.RelationType.Name == "Father");
+
+            if (father != null)
+            {
+                var parts = new[] { father.ParentFirstName, father.ParentLastName };
+                student.FathersName = string.Join(" ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
+            }
+
             _cache.Set(cacheKey, student, TimeSpan.FromMinutes(30));
         }
-        
+
         return student;
     }
 
@@ -71,8 +83,11 @@ public class StudentRepositoryOptimized : IStudentRepository
             .Select(e => e!)
             .ToList();
 
+        // Assign fathers' names from ParentMaster table
+        await AssignFatherNamesAsync(students);
+
         _cache.Set(cacheKey, students, TimeSpan.FromMinutes(10));
-        
+
         return students;
     }
 
@@ -196,6 +211,8 @@ public class StudentRepositoryOptimized : IStudentRepository
             .Select(e => e!)
             .ToList();
 
+        await AssignFatherNamesAsync(students);
+
         var result = new PagedResponse<DomainStudentMaster>
         {
             Data = students,
@@ -240,13 +257,17 @@ public class StudentRepositoryOptimized : IStudentRepository
             .Take(pageSize)
             .ToListAsync();
 
+        var mapped = entities
+            .Select(MapToDomainEntity)
+            .Where(e => e != null)
+            .Select(e => e!)
+            .ToList();
+
+        await AssignFatherNamesAsync(mapped);
+
         var result = new PagedResponse<DomainStudentMaster>
         {
-            Data = entities
-                .Select(MapToDomainEntity)
-                .Where(e => e != null)
-                .Select(e => e!)
-                .ToList(),
+            Data = mapped,
             TotalCount = totalCount,
             Page = page,
             PageSize = pageSize,
@@ -331,7 +352,8 @@ public class StudentRepositoryOptimized : IStudentRepository
             Status = entity.Status,
             StatusMessage = entity.StatusMessage,
             HouseAllotted = entity.HouseAllotted,
-            AdditionalNotes = entity.AdditionalNotes
+            AdditionalNotes = entity.AdditionalNotes,
+            FathersName = entity.FathersName
         };
     }
 
@@ -403,6 +425,33 @@ public class StudentRepositoryOptimized : IStudentRepository
             StatusMessage = entity.StatusMessage,
             HouseAllotted = entity.HouseAllotted,
             AdditionalNotes = entity.AdditionalNotes
+            ,FathersName = entity.FathersName
         };
+    }
+
+    private async Task AssignFatherNamesAsync(List<DomainStudentMaster> students)
+    {
+        if (students == null || students.Count == 0) return;
+
+        var studentIds = students.Select(s => s.Id).ToList();
+
+        var parents = await _context.ParentMasters
+            .AsNoTracking()
+            .Where(p => studentIds.Contains(p.StudentGuid) && !p.IsDeleted)
+            .Include(p => p.RelationType)
+            .ToListAsync();
+
+        var fatherRelationIds = parents.Where(p => p.RelationType != null && p.RelationType.Name == "Father")
+            .GroupBy(p => p.StudentGuid)
+            .ToDictionary(g => g.Key, g => g.First());
+
+        foreach (var s in students)
+        {
+            if (fatherRelationIds.TryGetValue(s.Id, out var father))
+            {
+                var parts = new[] { father.ParentFirstName, father.ParentLastName };
+                s.FathersName = string.Join(" ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
+            }
+        }
     }
 }

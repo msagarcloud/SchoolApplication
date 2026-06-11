@@ -191,6 +191,7 @@ public class StudentService : IStudentService
 		existingEntity.SchoolId = request.SchoolId != Guid.Empty ? request.SchoolId : existingEntity.SchoolId;
 		existingEntity.HouseAllotted = request.HouseAllotted ?? existingEntity.HouseAllotted;
 		existingEntity.AdditionalNotes = request.AdditionalNotes ?? existingEntity.AdditionalNotes;
+		existingEntity.FathersName = request.FathersName ?? existingEntity.FathersName;
 		existingEntity.ModifiedBy = Guid.NewGuid();
 		existingEntity.ModifiedDate = DateTime.UtcNow;
 		existingEntity.Status = "Updated";
@@ -276,7 +277,8 @@ public class StudentService : IStudentService
 			Status = entity.Status,
 			StatusMessage = entity.StatusMessage,
 			HouseAllotted = entity.HouseAllotted,
-			AdditionalNotes = entity.AdditionalNotes
+			AdditionalNotes = entity.AdditionalNotes,
+			FathersName = entity.FathersName
 		};
 	}
 }

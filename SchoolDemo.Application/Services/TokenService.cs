@@ -31,7 +31,7 @@ namespace SchoolDemo.Application.Services
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var jwtKey = _configuration["Jwt:Key"] ?? "YourSecretKeyHere123456789012345678901234567890";
+                var jwtKey = _configuration["Jwt:Key"] ?? "YourSuperSecretKeyHere123456789012345678901234567890";
                 var jwtIssuer = _configuration["Jwt:Issuer"] ?? "SchoolPortalAPI";
                 var jwtAudience = _configuration["Jwt:Audience"] ?? "SchoolPortalUsers";
 
@@ -61,7 +61,7 @@ namespace SchoolDemo.Application.Services
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var jwtKey = _configuration["Jwt:Key"] ?? "YourSecretKeyHere123456789012345678901234567890";
+                var jwtKey = _configuration["Jwt:Key"] ?? "YourSuperSecretKeyHere123456789012345678901234567890";
                 var jwtIssuer = _configuration["Jwt:Issuer"] ?? "SchoolPortalAPI";
                 var jwtAudience = _configuration["Jwt:Audience"] ?? "SchoolPortalUsers";
 

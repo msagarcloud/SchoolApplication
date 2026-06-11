@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+// Swagger configuration
 using SchoolDemo.Application.Services;
-using SchoolDemo.Domain.Entities;
 using SchoolDemo.Domain.Interfaces;
 using SchoolDemo.Infrastructure.Data;
 using SchoolDemo.Infrastructure.Data.SeedData;
@@ -120,8 +120,9 @@ string BuildConnectionString()
 }
 
 // Configure logging
-builder.Logging.SetMinimumLevel(LogLevel.Warning);
 builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Information);
 
 // Add services to the container
 builder.Services.AddControllers()
@@ -139,18 +140,17 @@ builder.Services.AddOutputCache(options =>
     options.AddPolicy("LongCachePolicy", builder => builder.Expire(TimeSpan.FromMinutes(5)));
 });
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddAuthorization();
 // Swagger configuration
+
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() 
-    { 
-        Title = "School Demo API", 
+    c.SwaggerDoc("v1", new()
+    {
+        Title = "School Demo API",
         Version = "v1",
         Description = "API documentation for School Demo application"
     });
-
-    // JWT Swagger configuration will be added later
-    // TODO: Add JWT Authentication to Swagger when correct package is available
 });
 
 // CORS configuration
@@ -367,6 +367,7 @@ app.UseMiddleware<SchoolDemo.API.Middleware.ExceptionMiddleware>();
 // Configure middleware pipeline
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {

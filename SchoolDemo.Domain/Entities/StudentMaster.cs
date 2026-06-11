@@ -70,4 +70,6 @@ public class StudentMaster
     public string? StatusMessage { get; set; }
     public Guid? HouseAllotted { get; set; }
     public string? AdditionalNotes { get; set; }
+    [NotMapped]
+    public string? FathersName { get; set; }
 }

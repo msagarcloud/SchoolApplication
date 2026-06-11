@@ -6,7 +6,7 @@ namespace SchoolDemo.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[AllowAnonymous]
 public class AssesmentMasterController : ControllerBase
 {
     private readonly IAssesmentMasterService _service;
