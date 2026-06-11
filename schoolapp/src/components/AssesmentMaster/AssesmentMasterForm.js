@@ -2,13 +2,24 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { assesmentMasterService } from '../../services/assesmentMasterService';
 import { authService } from '../../services/authService';
-import { useSessionData } from '../../hooks/useSessionData';
+
+const ZERO_GUID = '00000000-0000-0000-0000-000000000000';
+
+const isValidGuid = (value) =>
+  typeof value === 'string' && /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(value);
 
 const AssesmentMasterForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = Boolean(id);
-  const sessionData = useSessionData();
+
+  const getSessionData = useCallback(() => {
+    const currentUser = authService.getCurrentUser();
+    return {
+      companyId: currentUser?.companyId || currentUser?.CompanyId || null,
+      schoolId: currentUser?.schoolId || currentUser?.SchoolId || null,
+    };
+  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -64,15 +75,28 @@ const AssesmentMasterForm = () => {
         return;
       }
 
+      const { companyId, schoolId } = getSessionData();
+
+      if (!isValidGuid(companyId) || companyId === ZERO_GUID) {
+        setError('Company information is missing. Please log in again.');
+        setLoading(false);
+        return;
+      }
+
+      if (!isValidGuid(schoolId) || schoolId === ZERO_GUID) {
+        setError('School information is missing. Please log in again.');
+        setLoading(false);
+        return;
+      }
+
       const submitData = {
         name: formData.name,
         description: formData.description,
         percentageWeightage: formData.percentageWeightage !== '' ? parseFloat(formData.percentageWeightage) : null,
         fromPeriod: formData.fromPeriod || null,
         toPeriod: formData.toPeriod || null,
-        companyId: sessionData.companyId,
-        schoolId: sessionData.schoolId,
-        isActive: true
+        companyId,
+        schoolId,
       };
 
       if (isEditing) {
