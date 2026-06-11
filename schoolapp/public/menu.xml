@@ -23,6 +23,8 @@
         <item id="section" label="Section" path="/sections" icon="bi-grid-3x3-gap" />
         <item id="subject" label="Subject" path="/subjects" icon="bi-journal-bookmark" />
         <item id="grade" label="Grade" path="/grades" icon="bi-journal-text" />
+        <item id="depts" label="Departments" path="/departments" icon="bi-book" />
+        <item id="designation" label="Designations" path="/designations" icon="bi-book" />  
         <item id="profession" label="Profession" path="/profession" icon="bi-assignment" />
         <item id="qualification" label="Qualification" path="/qualification" icon="bi-award" />
         <item id="feecategory" label="Fee Category" path="/feecategory" icon="bi-briefcase" />
@@ -124,6 +126,16 @@
       <item id="grades" label="Grade Management" path="/grades" icon="bi-journal-text" />
       <item id="schedule" label="Class Schedule" path="/schedule" icon="bi-calendar-event" />
       <item id="assignments" label="Assignments" path="/assignments" icon="bi-assignment" />
+      <item id="communication" label="Parent Communication" path="/communication" icon="bi-chat-dots" category="communication" />
+      <item id="materials" label="Study Materials" path="/materials" icon="bi-book" category="academic" />
+    </item>
+    <item id="Leaves" label="Leaves" icon="bi-building" category="administrative">
+      <item id="leaves" label="Leaves" path="/leaves" icon="bi-book" />
+      <item id="applyleaves" label="Apply Leaves" path="/applyleaves" icon="bi-book" />
+      <item id="aproveleaves" label="Approve Leave" path="/approveleaves" icon="bi-book" />
+    </item>
+    <item id="Reports" label="Reports" icon="bi-building" category="administrative">
+      <item id="reports" label="Reports" path="/reports" icon="bi-book" />
     </item>
   </role>
 </menus>

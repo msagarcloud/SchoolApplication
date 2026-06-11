@@ -58,6 +58,7 @@ export const menuConfig = {
         { icon: 'bi-people', label: 'Employee Management', path: '/employees', id: 'employees', category: 'users' },
         { icon: 'bi-mortarboard', label: 'Student Management', path: '/students', id: 'students', category: 'academic' },
         { icon: 'bi-people-fill', label: 'Parent Management', path: '/parent', id: 'parent', category: 'users' },
+        { icon: 'bi-person-badge', label: 'Designations', path: '/designations', id: 'designations', category: 'employee' },
         { icon: 'bi-clock', label: 'Time Table Periods', path: '/timetableperiods', id: 'timetableperiods', category: 'academic' },
         { icon: 'bi-building', label: 'Company Management', path: '/companies', id: 'companies', category: 'administrative' },
         { icon: 'bi-calendar-event', label: 'Holiday Management', path: '/holidays', id: 'holidays', category: 'events' },
@@ -159,6 +160,7 @@ export const menuConfig = {
       items: [
         { icon: 'bi-mortarboard', label: 'Student Management', path: '/students', id: 'students', category: 'academic' },
         { icon: 'bi-people-fill', label: 'Parent Management', path: '/parents', id: 'parents', category: 'users' },
+        { icon: 'bi-person-badge', label: 'Designations', path: '/designations', id: 'designations', category: 'employee' },
         { icon: 'bi-shield-check', label: 'Role Management', path: '/roles', id: 'roles', category: 'system' },
         { icon: 'bi-sliders', label: 'System Parameters', path: '/system-parameters', id: 'systemparameters', category: 'systemParameters' },
         { icon: 'bi-shield', label: 'Privilege Management', path: '/privileges', id: 'privileges', category: 'system' },

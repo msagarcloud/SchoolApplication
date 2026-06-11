@@ -13,6 +13,9 @@ import {
   CompanyList,
   CompanyForm,
   CompanyDetail,
+  DesignationList,
+  DesignationForm,
+  DesignationDetail,
   HolidayList,
   HolidayForm,
   HolidayDetail,
@@ -280,6 +283,46 @@ function App() {
               <ProtectedRoute>
                 <MainTemplate>
                   <CompanyForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/designations" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <DesignationList />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/designations/create" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <DesignationForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/designations/:id" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <DesignationDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/designations/:id/edit" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <DesignationForm />
                 </MainTemplate>
               </ProtectedRoute>
             } 

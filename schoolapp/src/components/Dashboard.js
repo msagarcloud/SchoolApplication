@@ -221,7 +221,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <h5>Quick Actions</h5>
         <div className="d-flex gap-2 flex-wrap">
           <button 
@@ -316,7 +316,7 @@ const Dashboard = () => {
             Add New Routes
           </button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
