@@ -13,7 +13,7 @@ public interface ITimeTableService
     Task<bool> DeleteAsync(Guid id);
     
     // Timetable generation methods
-    Task<TimeTable> GenerateTimeTableAsync(Guid classId, Guid academicYearId, Guid createdBy);
+    Task<TimeTable?> GenerateTimeTableAsync(Guid classId, Guid academicYearId, Guid createdBy);
     Task<IEnumerable<TimeTable>> GenerateTimeTablesForAllClassesAsync(Guid academicYearId, Guid createdBy);
     Task<bool> ValidateTimeTableAsync(Guid classId, Guid academicYearId);
     

@@ -2,6 +2,7 @@ using SchoolDemo.Domain.Entities;
 using SchoolDemo.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using SchoolDemo.Infrastructure.Data;
+using System.Globalization;
 
 namespace SchoolDemo.Infrastructure.Repositories;
 
@@ -154,9 +155,9 @@ public class TimeTableRepository : ITimeTableRepository
         var setupDetail = new TimeTableSetupDetail
         {
             Id = timetable.Id,
-            SchoolStartTime = TimeOnly.Parse("08:00"),
-            SchoolEndTime = TimeOnly.Parse("15:00"),
-            PeriodStartTime = TimeOnly.Parse("08:00"),
+            SchoolStartTime = TimeOnly.Parse("08:00", CultureInfo.InvariantCulture),
+            SchoolEndTime = TimeOnly.Parse("15:00", CultureInfo.InvariantCulture),
+            PeriodStartTime = TimeOnly.Parse("08:00", CultureInfo.InvariantCulture),
             TotalPeriods = 8,
             PeriodDuration = 45,
             RecessDuration = 30,
@@ -283,7 +284,7 @@ public class TimeTableRepository : ITimeTableRepository
             Id = detail.Id,
             ClassId = detail.ClassId,
             SubjectId = detail.SubjectId,
-            TeacherId = detail.TeacherId,
+            TeacherId = detail.TeacherId == Guid.Empty ? null : detail.TeacherId,
             DayOfWeek = detail.DayOfWeek,
             PeriodNumber = detail.PeriodNumber,
             SessionId = detail.TimeTableId,
@@ -297,9 +298,19 @@ public class TimeTableRepository : ITimeTableRepository
             StatusMessage = detail.StatusMessage
         };
 
-        await _context.TimeTableClassPeriodDetails.AddAsync(periodDetail);
-        await _context.SaveChangesAsync();
-        return detail;
+        try
+        {
+            Console.WriteLine($"[TimeTableRepository] Adding period detail: ClassId={periodDetail.ClassId}, SessionId={periodDetail.SessionId}, Day={periodDetail.DayOfWeek}, Period={periodDetail.PeriodNumber}, SubjectId={periodDetail.SubjectId}, TeacherId={periodDetail.TeacherId}");
+            await _context.TimeTableClassPeriodDetails.AddAsync(periodDetail);
+            var saved = await _context.SaveChangesAsync();
+            Console.WriteLine($"[TimeTableRepository] SaveChangesAsync returned: {saved}");
+            return detail;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[TimeTableRepository] Failed to add period detail: {ex}");
+            throw;
+        }
     }
 
     public async Task<TimeTableDetail> UpdateTimeTableDetailAsync(TimeTableDetail detail)

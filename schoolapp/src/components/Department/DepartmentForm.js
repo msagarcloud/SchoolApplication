@@ -128,9 +128,11 @@ const DepartmentForm = () => {
   if (loading && isEdit) {
     return (
       <div className="d-flex justify-content-center">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
+        <output aria-live="polite">
+          <div className="spinner-border" aria-hidden="true">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </output>
       </div>
     );
   }
@@ -141,7 +143,7 @@ const DepartmentForm = () => {
         <h2>{isEdit ? 'Edit Department' : 'Create New Department'}</h2>
         <div>
           <Link to="/departments" className="btn btn-outline-secondary me-2">
-            <i className="bi bi-x-lg me-2"></i>
+            <i className="bi bi-x-lg me-2"></i>{" "}
             Cancel
           </Link>
           <button 
@@ -150,8 +152,14 @@ const DepartmentForm = () => {
             className="btn btn-primary"
             disabled={loading}
           >
-            <i className="bi bi-check-lg me-2"></i>
-            {loading ? 'Saving...' : (isEdit ? 'Update' : 'Create')}
+            <i className="bi bi-check-lg me-2"></i>{" "}
+            {/** Extract nested ternary to improve readability */}
+            {(() => {
+              let submitLabel;
+              if (loading) submitLabel = 'Saving...';
+              else submitLabel = isEdit ? 'Update' : 'Create';
+              return submitLabel;
+            })()}
           </button>
         </div>
       </div>

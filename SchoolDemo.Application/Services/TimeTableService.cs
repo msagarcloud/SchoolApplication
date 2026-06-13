@@ -60,7 +60,7 @@ public class TimeTableService : ITimeTableService
         return await _timeTableRepository.DeleteAsync(id);
     }
 
-    public async Task<TimeTable> GenerateTimeTableAsync(Guid classId, Guid academicYearId, Guid createdBy)
+    public async Task<TimeTable?> GenerateTimeTableAsync(Guid classId, Guid academicYearId, Guid createdBy)
     {
         // Check if timetable already exists
         if (await _timeTableRepository.TimeTableExistsAsync(classId, academicYearId))
@@ -79,10 +79,13 @@ public class TimeTableService : ITimeTableService
         var classSubjects = await _classSubjectRepository.GetByClassIdAsync(classId);
         if (!classSubjects.Any())
         {
-            throw new ArgumentException($"No subjects assigned to class {classInfo.Name}");
+            // No subjects assigned - log and continue so placeholder details can be created
+            Console.WriteLine($"[TimeTableService] No subjects assigned for class {classInfo.Name} ({classId}). Creating placeholder timetable and slots.");
         }
 
         // Create timetable
+        Console.WriteLine($"[TimeTableService] Creating timetable for class {classInfo.Name} ({classId}) for academicYear {academicYearId}");
+
         var timetable = new TimeTable
         {
             Id = Guid.NewGuid(),
@@ -103,9 +106,19 @@ public class TimeTableService : ITimeTableService
         };
 
         var createdTimetable = await _timeTableRepository.CreateAsync(timetable);
+        Console.WriteLine($"[TimeTableService] Created timetable with Id {createdTimetable.Id} for class {classInfo.Name}");
 
         // Generate timetable details
-        await GenerateTimeTableDetailsAsync(createdTimetable.Id, classId, classInfo.CompanyId, classInfo.SchoolId, createdBy);
+        try
+        {
+            await GenerateTimeTableDetailsAsync(createdTimetable.Id, classId, classInfo.CompanyId, classInfo.SchoolId, createdBy);
+            Console.WriteLine($"[TimeTableService] Generated details for timetable {createdTimetable.Id}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[TimeTableService] Error generating details for timetable {createdTimetable.Id}: {ex}");
+            throw;
+        }
 
         return createdTimetable;
     }
@@ -113,19 +126,25 @@ public class TimeTableService : ITimeTableService
     public async Task<IEnumerable<TimeTable>> GenerateTimeTablesForAllClassesAsync(Guid academicYearId, Guid createdBy)
     {
         var classes = await _classRepository.GetAllAsync();
+        Console.WriteLine($"[TimeTableService] Generating timetables for {classes.Count()} classes for academicYear {academicYearId}");
         var generatedTimetables = new List<TimeTable>();
 
         foreach (var classInfo in classes.Where(c => c.IsActive && !c.IsDeleted))
         {
             try
             {
+                Console.WriteLine($"[TimeTableService] Processing class: {classInfo.Name} ({classInfo.Id})");
                 var timetable = await GenerateTimeTableAsync(classInfo.Id, academicYearId, createdBy);
-                generatedTimetables.Add(timetable);
+                if (timetable != null)
+                {
+                    generatedTimetables.Add(timetable);
+                    Console.WriteLine($"[TimeTableService] Added timetable {timetable.Id} to generated list");
+                }
             }
             catch (Exception ex)
             {
                 // Log error and continue with next class
-                Console.WriteLine($"Failed to generate timetable for class {classInfo.Name}: {ex.Message}");
+                Console.WriteLine($"[TimeTableService] Failed to generate timetable for class {classInfo.Name}: {ex}");
             }
         }
 
@@ -235,52 +254,69 @@ public class TimeTableService : ITimeTableService
     {
         // Get subjects assigned to this class
         var classSubjects = await _classSubjectRepository.GetByClassIdAsync(classId);
-        
-        // Get teacher assignments for these subjects
-        var subjectIds = classSubjects.Select(cs => cs.SubjectId).ToList();
-        var teacherAssignments = new List<(Guid SubjectId, Guid TeacherId, int PeriodsPerWeek)>();
 
-        foreach (var subjectId in subjectIds)
-        {
-            var assignments = await _teacherSubjectRepository.GetBySubjectIdAsync(subjectId);
-            var subject = await _subjectRepository.GetByIdAsync(subjectId);
-            
-            if (assignments.Any() && subject != null)
-            {
-                var assignment = assignments.First(); // Take first available teacher
-                teacherAssignments.Add((subjectId, assignment.TeacherId, subject.PeriodsPerWeek ?? 1));
-            }
-        }
-
-        // Generate timetable for 6 days (Monday to Saturday)
+        // Prepare schedule container and common settings
         var daysOfWeek = Enumerable.Range(1, 6); // 1=Monday, 6=Saturday
         var periodsPerDay = 8;
         var currentSchedule = new List<(int Day, int Period, Guid SubjectId, Guid TeacherId)>();
 
-        // Distribute subjects across the week
-        foreach (var (subjectId, teacherId, periodsPerWeek) in teacherAssignments)
+        if (!classSubjects.Any())
         {
-            var scheduledPeriods = 0;
-            var attempts = 0;
-            var maxAttempts = 100;
-
-            while (scheduledPeriods < periodsPerWeek && attempts < maxAttempts)
+            // No subjects assigned - create placeholder slots so table gets populated
+            Console.WriteLine($"[TimeTableService] No subjects assigned for class {classId}. Creating placeholder slots.");
+            foreach (var day in daysOfWeek)
             {
-                attempts++;
-                
-                // Random day and period
-                var day = daysOfWeek.ElementAt(Random.Shared.Next(daysOfWeek.Count()));
-                var period = Random.Shared.Next(1, periodsPerDay + 1);
-
-                // Check if this slot is available
-                var isSlotAvailable = !currentSchedule.Any(s => s.Day == day && s.Period == period) &&
-                                    await IsTeacherAvailableAsync(teacherId, day, period) &&
-                                    await IsClassAvailableAsync(classId, day, period);
-
-                if (isSlotAvailable)
+                for (var period = 1; period <= periodsPerDay; period++)
                 {
-                    currentSchedule.Add((day, period, subjectId, teacherId));
-                    scheduledPeriods++;
+                    currentSchedule.Add((day, period, Guid.Empty, Guid.Empty));
+                }
+            }
+        }
+        else
+        {
+            // Get teacher assignments for these subjects
+            var subjectIds = classSubjects.Select(cs => cs.SubjectId).ToList();
+            var teacherAssignments = new List<(Guid SubjectId, Guid TeacherId, int PeriodsPerWeek)>();
+
+            foreach (var subjectId in subjectIds)
+            {
+                var assignments = await _teacherSubjectRepository.GetBySubjectIdAsync(subjectId);
+                var subject = await _subjectRepository.GetByIdAsync(subjectId);
+
+                if (subject == null)
+                    continue;
+
+                // If no teacher assignments exist, schedule with empty teacher (unassigned)
+                var teacherId = assignments.FirstOrDefault()?.TeacherId ?? Guid.Empty;
+                var periodsPerWeek = subject.PeriodsPerWeek ?? 1;
+                teacherAssignments.Add((subjectId, teacherId, periodsPerWeek));
+            }
+
+            // Distribute subjects across the week
+            foreach (var (subjectId, teacherId, periodsPerWeek) in teacherAssignments)
+            {
+                var scheduledPeriods = 0;
+                var attempts = 0;
+                var maxAttempts = 100;
+
+                while (scheduledPeriods < periodsPerWeek && attempts < maxAttempts)
+                {
+                    attempts++;
+
+                    // Random day and period
+                    var day = daysOfWeek.ElementAt(Random.Shared.Next(daysOfWeek.Count()));
+                    var period = Random.Shared.Next(1, periodsPerDay + 1);
+
+                    // Check if this slot is available
+                    var isSlotAvailable = !currentSchedule.Any(s => s.Day == day && s.Period == period) &&
+                                        await IsTeacherAvailableAsync(teacherId, day, period) &&
+                                        await IsClassAvailableAsync(classId, day, period);
+
+                    if (isSlotAvailable)
+                    {
+                        currentSchedule.Add((day, period, subjectId, teacherId));
+                        scheduledPeriods++;
+                    }
                 }
             }
         }
