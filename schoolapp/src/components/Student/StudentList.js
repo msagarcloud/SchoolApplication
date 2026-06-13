@@ -33,7 +33,7 @@ const StudentList = () => {
 
   const getFatherName = useCallback((studentId) => {
     const father = parents.find(
-      parent => parent.studentGuid === studentId && parent.relationTypeId === 'father-relation-type-id'
+      parent => parent.studentGuid === studentId && parent.relationTypeName === 'Father'
     );
     if (!father) {
       return 'N/A';
@@ -316,7 +316,7 @@ const StudentList = () => {
                             {`${student.firstName || ''} ${student.lastName || ''}`.trim() || 'N/A'}
                           </Link>
                         </td>
-                        <td>{getFatherName(student.id)}</td>
+                        <td>{student.fathersName || 'N/A'}</td>
                         <td>{student.registrationNumber || 'N/A'}</td>
                         <td>{student.email || 'N/A'}</td>
                         <td>{student.contactNumber || 'N/A'}</td>

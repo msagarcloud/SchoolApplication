@@ -43,8 +43,8 @@ const DepartmentForm = () => {
   const isEdit = Boolean(id);
   
   const [department, setDepartment] = useState({
-    departmentName: '',
-    departmentCode: '',
+    deptName: '',
+    deptCode: '',
     description: '',
     isActive: true
   });
@@ -68,8 +68,8 @@ const DepartmentForm = () => {
       console.log('Available keys:', Object.keys(data || {}));
       
       setDepartment({
-        departmentName: getDeptValue(data, 'departmentName') || '',
-        departmentCode: getDeptValue(data, 'departmentCode') || '',
+        deptName: getDeptValue(data, 'deptName') || '',
+        deptCode: getDeptValue(data, 'deptCode') || '',
         description: getDeptValue(data, 'description') || '',
         isActive: getDeptValue(data, 'isActive') !== false
       });
@@ -100,13 +100,13 @@ const DepartmentForm = () => {
       setLoading(true);
       setError('');
       
-      if (!department.departmentName || !department.departmentCode) {
+      if (!department.deptName || !department.deptCode) {
         setError('Department name and code are required');
         setLoading(false);
         return;
       }
       
-      if (!/^[A-Z]{2,4}$/.test(department.departmentCode)) {
+      if (!/^[A-Z]{2,4}$/.test(department.deptCode)) {
         setError('Department code should be 2-4 uppercase letters');
         setLoading(false);
         return;
@@ -174,9 +174,9 @@ const DepartmentForm = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="departmentName"
-                    name="departmentName"
-                    value={department.departmentName}
+                    id="deptName"
+                    name="deptName"
+                    value={department.deptName}
                     onChange={handleInputChange}
                     placeholder="e.g., Computer Science"
                     required
@@ -191,9 +191,9 @@ const DepartmentForm = () => {
                   <input
                     type="text"
                     className="form-control"
-                    id="departmentCode"
-                    name="departmentCode"
-                    value={department.departmentCode}
+                    id="deptCode"
+                    name="deptCode"
+                    value={department.deptCode}
                     onChange={handleInputChange}
                     placeholder="e.g., CS"
                     pattern="[A-Z]{2,4}"
@@ -201,25 +201,6 @@ const DepartmentForm = () => {
                     required
                   />
                   <small className="form-text text-muted">2-4 uppercase letters (e.g., CS, EC, ME)</small>
-                </div>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-12">
-                <div className="mb-3">
-                  <label htmlFor="description" className="form-label">
-                    Description
-                  </label>
-                  <textarea
-                    className="form-control"
-                    id="description"
-                    name="description"
-                    rows="3"
-                    value={department.description}
-                    onChange={handleInputChange}
-                    placeholder="Enter department description..."
-                  />
                 </div>
               </div>
             </div>

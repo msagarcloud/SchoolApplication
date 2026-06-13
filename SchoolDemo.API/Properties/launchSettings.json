@@ -7,7 +7,8 @@
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5260",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SCHOOLDEMO_DB_CONNECTION": "Server=SAGAR\\SQL2025;Database=SchoolWebPortal;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True;"
       }
     },
     "https": {
@@ -17,7 +18,8 @@
       "launchUrl": "https://localhost:7200/swagger/index.html",
       "applicationUrl": "https://localhost:7200;http://localhost:5260",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SCHOOLDEMO_DB_CONNECTION": "Server=SAGAR\\SQL2025;Database=SchoolWebPortal;Trusted_Connection=True;Encrypt=True;TrustServerCertificate=True;"
       }
     }
   }

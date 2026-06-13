@@ -97,7 +97,7 @@ string BuildConnectionString()
     // Map machine names to SQL server instances
     if (machineName.Contains("SAGAR"))
     {
-        serverName = "SAGAR";
+        serverName = "SAGAR\\SQL2025";
     }
     else if (machineName.Contains("DESKTOP-NSCVSLM"))
     {

@@ -7,7 +7,6 @@ using System.Security.Claims;
 using System.Text;
 using SchoolDemo.Domain.Interfaces;
 using SchoolDemo.Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolDemo.API.Controllers;
 

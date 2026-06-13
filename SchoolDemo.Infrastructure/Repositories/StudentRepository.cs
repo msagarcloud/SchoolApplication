@@ -36,7 +36,34 @@ public class StudentRepository : IStudentRepository
             .Include(s => s.Company)
             .Where(s => !s.IsDeleted)
             .ToListAsync();
-        return entities.Select(MapToDomainEntity).Where(e => e != null)!;
+
+        var studentIds = entities.Select(e => e.Id).ToList();
+        var parents = await _context.ParentMasters
+            .AsNoTracking()
+            .Include(p => p.RelationType)
+            .Where(p => studentIds.Contains(p.StudentGuid) && !p.IsDeleted)
+            .ToListAsync();
+
+        var fatherRelationIds = parents.Where(p => p.RelationType != null && p.RelationType.Name == "Father")
+            .GroupBy(p => p.StudentGuid)
+            .ToDictionary(g => g.Key, g => g.First());
+
+        var result = new List<SchoolDemo.Domain.Entities.StudentMaster>();
+        foreach (var entity in entities)
+        {
+            var domainEntity = MapToDomainEntity(entity);
+            if (domainEntity != null)
+            {
+                if (fatherRelationIds.TryGetValue(entity.Id, out var father))
+                {
+                    var parts = new[] { father.ParentFirstName, father.ParentLastName };
+                    domainEntity.FathersName = string.Join(" ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
+                }
+                result.Add(domainEntity);
+            }
+        }
+
+        return result;
     }
 
     public async Task<IEnumerable<SchoolDemo.Domain.Entities.StudentMaster>> GetMinimalAsync()

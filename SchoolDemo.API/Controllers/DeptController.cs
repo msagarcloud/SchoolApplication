@@ -5,6 +5,7 @@ namespace SchoolDemo.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Route("api/departments")]
 [AllowAnonymous]
 
 public class DeptController : ControllerBase

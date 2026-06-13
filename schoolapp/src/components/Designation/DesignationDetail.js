@@ -8,11 +8,11 @@ const DesignationDetail = () => {
   const navigate = useNavigate();
 
   const [designation, setDesignation] = useState(null);
-  const [department, setDepartment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   const getDesignationName = (item) => item?.designationName || item?.name || item?.DesignationName || item?.Name || 'Untitled';
+  const getDesignationCode = (item) => item?.designationCode || item?.code || item?.DesignationCode || item?.Code || '-';
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -20,12 +20,6 @@ const DesignationDetail = () => {
         setLoading(true);
         const data = await designationService.getById(id);
         setDesignation(data);
-
-        const departmentId = data?.departmentId || data?.DepartmentId || data?.department?.id;
-        if (departmentId) {
-          const dept = await departmentService.getById(departmentId);
-          setDepartment(dept);
-        }
       } catch (err) {
         setError(err.message || 'Failed to load designation details');
       } finally {
@@ -112,21 +106,16 @@ const DesignationDetail = () => {
           <h5 className="mb-0">Information</h5>
         </div>
         <div className="card-body">
+
+
           <div className="row mb-3">
             <div className="col-sm-3 fw-bold">Designation Name:</div>
             <div className="col-sm-9">{getDesignationName(designation)}</div>
           </div>
-
+    
           <div className="row mb-3">
-            <div className="col-sm-3 fw-bold">Department:</div>
-            <div className="col-sm-9">
-              {department?.departmentName || department?.name || department?.DepartmentName || department?.Name || 'N/A'}
-            </div>
-          </div>
-
-          <div className="row mb-3">
-            <div className="col-sm-3 fw-bold">Description:</div>
-            <div className="col-sm-9">{designation.description || designation.Description || 'N/A'}</div>
+            <div className="col-sm-3 fw-bold">Designation Code:</div>
+            <div className="col-sm-9">{getDesignationCode(designation)}</div>
           </div>
 
           <div className="row mb-3">

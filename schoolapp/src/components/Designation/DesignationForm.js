@@ -36,8 +36,7 @@ const DesignationForm = () => {
       const data = await designationService.getById(id);
       setFormData({
         designationName: data.designationName || data.name || data.DesignationName || data.Name || '',
-        departmentId: data.departmentId || data.DepartmentId || data.department?.id || '',
-        description: data.description || data.Description || '',
+        designationCode: data.designationCode || data.code || data.DesignationCode || data.Code || '',
         isActive: data.isActive !== undefined ? data.isActive : true
       });
     } catch (err) {
@@ -130,6 +129,22 @@ const DesignationForm = () => {
           <form onSubmit={handleSubmit}>
             <div className="row gy-3">
               <div className="col-md-6">
+                <label htmlFor="designationCode" className="form-label">
+                  Designation Code <span className="text-danger">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="designationCode"
+                  name="designationCode"
+                  className="form-control"
+                  value={formData.designationCode || ''}
+                  onChange={handleChange}
+                  placeholder="Enter designation code"
+                  required
+                />
+              </div>
+
+              <div className="col-md-6">
                 <label htmlFor="designationName" className="form-label">
                   Designation Name <span className="text-danger">*</span>
                 </label>
@@ -142,41 +157,6 @@ const DesignationForm = () => {
                   onChange={handleChange}
                   placeholder="Enter designation name"
                   required
-                />
-              </div>
-
-              <div className="col-md-6">
-                <label htmlFor="departmentId" className="form-label">
-                  Department
-                </label>
-                <select
-                  id="departmentId"
-                  name="departmentId"
-                  className="form-select"
-                  value={formData.departmentId}
-                  onChange={handleChange}
-                >
-                  <option value="">Select department</option>
-                  {departments.map((department) => (
-                    <option key={department.id} value={department.id}>
-                      {department.departmentName || department.name || department.DepartmentName || department.Name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="col-12">
-                <label htmlFor="description" className="form-label">
-                  Description
-                </label>
-                <textarea
-                  id="description"
-                  name="description"
-                  className="form-control"
-                  value={formData.description}
-                  onChange={handleChange}
-                  rows="4"
-                  placeholder="Enter an optional description"
                 />
               </div>
 

@@ -320,8 +320,8 @@ const DepartmentList = () => {
                   <tbody>
                     {paginatedDepartments.map((dept) => {
                       const deptId = getDeptValue(dept, 'id');
-                      const deptName = getDeptValue(dept, 'departmentName') || 'N/A';
-                      const deptCode = getDeptValue(dept, 'departmentCode') || 'N/A';
+                      const deptName = getDeptValue(dept, 'deptName') || 'N/A';
+                      const deptCode = getDeptValue(dept, 'deptCode') || 'N/A';
                       const isActive = getDeptValue(dept, 'isActive');
 
                       return (

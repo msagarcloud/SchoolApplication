@@ -164,6 +164,7 @@ public class ParentService : IParentService
             OfficePhone = entity.OfficePhone,
             Image = entity.Image,
             RelationTypeId = entity.RelationTypeId,
+            RelationTypeName = entity.RelationType?.Name,
             SchoolId = entity.SchoolId,
             CompanyId = entity.CompanyId,
             IsActive = entity.IsActive,

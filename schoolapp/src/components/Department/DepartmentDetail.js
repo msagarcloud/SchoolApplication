@@ -128,10 +128,9 @@ const DepartmentDetail = () => {
   }
 
   const deptId = getDeptValue(department, 'id');
-  const deptName = getDeptValue(department, 'departmentName') || 'N/A';
-  const deptCode = getDeptValue(department, 'departmentCode') || 'N/A';
+  const deptName = getDeptValue(department, 'deptName') || 'N/A';
+  const deptCode = getDeptValue(department, 'deptCode') || 'N/A';
   const deptIsActive = getDeptValue(department, 'isActive');
-  const deptDescription = getDeptValue(department, 'description') || '';
   const deptCreatedDate = getDeptValue(department, 'createdDate');
   const deptModifiedDate = getDeptValue(department, 'modifiedDate') ?? getDeptValue(department, 'ModifiedDate');
 
@@ -176,13 +175,6 @@ const DepartmentDetail = () => {
                   <span className="badge bg-info">{deptCode}</span>
                 </div>
               </div>
-
-              {deptDescription && (
-                <div className="row mb-3">
-                  <div className="col-sm-3 fw-bold">Description:</div>
-                  <div className="col-sm-9">{deptDescription}</div>
-                </div>
-              )}
             </div>
           </div>
         </div>

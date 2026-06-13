@@ -69,6 +69,7 @@ public class ParentResponse
     public string? OfficePhone { get; set; }
     public string? Image { get; set; }
     public Guid RelationTypeId { get; set; }
+    public string? RelationTypeName { get; set; }
     public Guid SchoolId { get; set; }
     public Guid CompanyId { get; set; }
     public bool IsActive { get; set; }
