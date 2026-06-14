@@ -17,109 +17,109 @@ var builder = WebApplication.CreateBuilder(args);
 
 string BuildConnectionString()
 {
-    static string EnsureConnectTimeout(string connectionString, int seconds)
-    {
-        if (string.IsNullOrWhiteSpace(connectionString))
-        {
-            return connectionString;
-        }
+	static string EnsureConnectTimeout(string connectionString, int seconds)
+	{
+		if (string.IsNullOrWhiteSpace(connectionString))
+		{
+			return connectionString;
+		}
 
-        var timeoutToken = "Connect Timeout=";
-        if (connectionString.Contains(timeoutToken, StringComparison.OrdinalIgnoreCase) ||
-            connectionString.Contains("Connection Timeout=", StringComparison.OrdinalIgnoreCase))
-        {
-            return connectionString;
-        }
+		var timeoutToken = "Connect Timeout=";
+		if (connectionString.Contains(timeoutToken, StringComparison.OrdinalIgnoreCase) ||
+			connectionString.Contains("Connection Timeout=", StringComparison.OrdinalIgnoreCase))
+		{
+			return connectionString;
+		}
 
-        return connectionString.TrimEnd(';') + $";Connect Timeout={seconds};";
-    }
+		return connectionString.TrimEnd(';') + $";Connect Timeout={seconds};";
+	}
 
-    static string ReplaceServer(string connectionString, string serverName)
-    {
-        var builder = new SqlConnectionStringBuilder(connectionString)
-        {
-            DataSource = serverName
-        };
+	static string ReplaceServer(string connectionString, string serverName)
+	{
+		var builder = new SqlConnectionStringBuilder(connectionString)
+		{
+			DataSource = serverName
+		};
 
-        return builder.ConnectionString;
-    }
+		return builder.ConnectionString;
+	}
 
-    static bool CanOpen(string connectionString)
-    {
-        try
-        {
-            using var connection = new SqlConnection(connectionString);
-            connection.Open();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+	static bool CanOpen(string connectionString)
+	{
+		try
+		{
+			using var connection = new SqlConnection(connectionString);
+			connection.Open();
+			return true;
+		}
+		catch
+		{
+			return false;
+		}
+	}
 
-    // Highest priority: explicit value from configuration/environment.
-    var configuredConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-    if (!string.IsNullOrWhiteSpace(configuredConnection) &&
-        !configuredConnection.Contains("Auto-detected", StringComparison.OrdinalIgnoreCase))
-    {
-        var safeConfiguredConnection = EnsureConnectTimeout(configuredConnection, 5);
-        if (CanOpen(safeConfiguredConnection))
-        {
-            return safeConfiguredConnection;
-        }
+	// Highest priority: explicit value from configuration/environment.
+	var configuredConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+	if (!string.IsNullOrWhiteSpace(configuredConnection) &&
+		!configuredConnection.Contains("Auto-detected", StringComparison.OrdinalIgnoreCase))
+	{
+		var safeConfiguredConnection = EnsureConnectTimeout(configuredConnection, 5);
+		if (CanOpen(safeConfiguredConnection))
+		{
+			return safeConfiguredConnection;
+		}
 
-        // Configured SQL host may be machine-specific from another checkout; avoid dead-ending on it.
-        var sqlExpressFallback = EnsureConnectTimeout(ReplaceServer(safeConfiguredConnection, @".\SQLEXPRESS"), 5);
-        if (CanOpen(sqlExpressFallback))
-            return sqlExpressFallback;
+		// Configured SQL host may be machine-specific from another checkout; avoid dead-ending on it.
+		var sqlExpressFallback = EnsureConnectTimeout(ReplaceServer(safeConfiguredConnection, @".\SQLEXPRESS"), 5);
+		if (CanOpen(sqlExpressFallback))
+			return sqlExpressFallback;
 
-        var localDbFallback = EnsureConnectTimeout(ReplaceServer(safeConfiguredConnection, @"(localdb)\MSSQLLocalDB"), 5);
-        if (CanOpen(localDbFallback))
-            return localDbFallback;
+		var localDbFallback = EnsureConnectTimeout(ReplaceServer(safeConfiguredConnection, @"(localdb)\MSSQLLocalDB"), 5);
+		if (CanOpen(localDbFallback))
+			return localDbFallback;
 
-        Console.WriteLine("Warning: DefaultConnection failed to open or fall back locally; continuing with automatic server detection.");
+		Console.WriteLine("Warning: DefaultConnection failed to open or fall back locally; continuing with automatic server detection.");
 
-        // Do not return `safeConfiguredConnection` here — EF would stall every request behind long SQL timeouts / retries.
-    }
+		// Do not return `safeConfiguredConnection` here — EF would stall every request behind long SQL timeouts / retries.
+	}
 
-    // Optional override via env var when running on new machines.
-    var envConnection = Environment.GetEnvironmentVariable("SCHOOLDEMO_DB_CONNECTION");
-    if (!string.IsNullOrWhiteSpace(envConnection))
-    {
-        return EnsureConnectTimeout(envConnection, 5);
-    }
+	// Optional override via env var when running on new machines.
+	var envConnection = Environment.GetEnvironmentVariable("SCHOOLDEMO_DB_CONNECTION");
+	if (!string.IsNullOrWhiteSpace(envConnection))
+	{
+		return EnsureConnectTimeout(envConnection, 5);
+	}
 
-    string machineName = Environment.MachineName.ToUpper();
-    string serverName;
-    string databaseName = builder.Configuration["SqlServerSettings:DatabaseName"] ?? "SchoolWebPortal";
-    bool useTrustedConnection = bool.Parse(builder.Configuration["SqlServerSettings:UseTrustedConnection"] ?? "true");
-    bool trustServerCertificate = bool.Parse(builder.Configuration["SqlServerSettings:TrustServerCertificate"] ?? "true");
+	string machineName = Environment.MachineName.ToUpper();
+	string serverName;
+	string databaseName = builder.Configuration["SqlServerSettings:DatabaseName"] ?? "SchoolWebPortal";
+	bool useTrustedConnection = bool.Parse(builder.Configuration["SqlServerSettings:UseTrustedConnection"] ?? "true");
+	bool trustServerCertificate = bool.Parse(builder.Configuration["SqlServerSettings:TrustServerCertificate"] ?? "true");
 
-    //DESKTOP-NSCVSLM
-    // Map machine names to SQL server instances
-    if (machineName.Contains("SAGAR"))
-    {
-        serverName = "SAGAR\\SQL2025";
-    }
-    else if (machineName.Contains("DESKTOP-NSCVSLM"))
-    {
-        serverName = "DESKTOP-NSCVSLM";
-    }
-    else
-    {
-        // Use local default SQL instance for non-listed machines.
-        serverName = ".\\SQLEXPRESS";
-    }
+	//DESKTOP-NSCVSLM
+	// Map machine names to SQL server instances
+	if (machineName.Contains("SAGAR"))
+	{
+		serverName = "SAGAR\\SQL2025";
+	}
+	else if (machineName.Contains("DESKTOP-NSCVSLM"))
+	{
+		serverName = "DESKTOP-NSCVSLM";
+	}
+	else
+	{
+		// Use local default SQL instance for non-listed machines.
+		serverName = ".\\SQLEXPRESS";
+	}
 
-    string connectionString = $"Server={serverName};Database={databaseName};Trusted_Connection={useTrustedConnection};TrustServerCertificate={trustServerCertificate};Connect Timeout=5;";
+	string connectionString = $"Server={serverName};Database={databaseName};Trusted_Connection={useTrustedConnection};TrustServerCertificate={trustServerCertificate};Connect Timeout=5;";
 
-    // Log the connection details (remove sensitive info in production)
-    Console.WriteLine($"Machine Name: {machineName}");
-    Console.WriteLine($"SQL Server: {serverName}");
-    Console.WriteLine($"Database: {databaseName}");
+	// Log the connection details (remove sensitive info in production)
+	Console.WriteLine($"Machine Name: {machineName}");
+	Console.WriteLine($"SQL Server: {serverName}");
+	Console.WriteLine($"Database: {databaseName}");
 
-    return connectionString;
+	return connectionString;
 }
 
 // Configure logging
@@ -129,85 +129,78 @@ builder.Logging.SetMinimumLevel(LogLevel.Information);
 
 // Add services to the container
 builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
-        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-    });
+	.AddJsonOptions(options =>
+	{
+		options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+		options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+	});
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy("DefaultPolicy", builder => builder.Expire(TimeSpan.FromSeconds(60)));
-    options.AddPolicy("LongCachePolicy", builder => builder.Expire(TimeSpan.FromMinutes(5)));
+	options.AddPolicy("DefaultPolicy", builder => builder.Expire(TimeSpan.FromSeconds(60)));
+	options.AddPolicy("LongCachePolicy", builder => builder.Expire(TimeSpan.FromMinutes(5)));
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAuthorization();
-// AutoMapper
-// AutoMapper
-builder.Services.AddAutoMapper(cfg =>
-{
-    cfg.AddProfile<SchoolDemo.Application.Mapping.StudentAttendanceProfile>();
-    cfg.AddProfile<SchoolDemo.Infrastructure.Mapping.InfrastructureToDomainProfile>();
-});
 // Swagger configuration
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new()
-    {
-        Title = "School Demo API",
-        Version = "v1",
-        Description = "API documentation for School Demo application"
-    });
-    // Include XML comments (generated by project) for richer Swagger documentation
-    var xmlFile = ($"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    if (File.Exists(xmlPath))
-    {
-        c.IncludeXmlComments(xmlPath);
-    }
-    // Add JWT bearer auth to Swagger
-    //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    //{
-    //    Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
-    //    Name = "Authorization",
-    //    In = ParameterLocation.Header,
-    //    Type = SecuritySchemeType.Http,
-    //    Scheme = "bearer",
-    //    BearerFormat = "JWT"
-    //});
+	c.SwaggerDoc("v1", new()
+	{
+		Title = "School Demo API",
+		Version = "v1",
+		Description = "API documentation for School Demo application"
+	});
+	// Include XML comments (generated by project) for richer Swagger documentation
+	var xmlFile = ($"{Assembly.GetExecutingAssembly().GetName().Name}.xml");
+	var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+	if (File.Exists(xmlPath))
+	{
+		c.IncludeXmlComments(xmlPath);
+	}
+	// Add JWT bearer auth to Swagger
+	//c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+	//{
+	//    Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+	//    Name = "Authorization",
+	//    In = ParameterLocation.Header,
+	//    Type = SecuritySchemeType.Http,
+	//    Scheme = "bearer",
+	//    BearerFormat = "JWT"
+	//});
 
-    //c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    //{
-    //    {
-    //        new OpenApiSecurityScheme
-    //        {
-    //            Reference = new OpenApiReference
-    //            {
-    //                Type = ReferenceType.SecurityScheme,
-    //                Id = "Bearer"
-    //            }
-    //        },
-    //        Array.Empty<string>()
-    //    }
-    //});
+	//c.AddSecurityRequirement(new OpenApiSecurityRequirement
+	//{
+	//    {
+	//        new OpenApiSecurityScheme
+	//        {
+	//            Reference = new OpenApiReference
+	//            {
+	//                Type = ReferenceType.SecurityScheme,
+	//                Id = "Bearer"
+	//            }
+	//        },
+	//        Array.Empty<string>()
+	//    }
+	//});
 });
 
 // CORS configuration
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp", policy =>
-    {
-        policy.WithOrigins("http://localhost:3000", "https://localhost:3000", 
-                          "http://localhost:5173", "https://localhost:5173",
-                          "http://127.0.0.1:3000", "https://127.0.0.1:3000")
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials()
-              .SetIsOriginAllowedToAllowWildcardSubdomains();
-    });
+	options.AddPolicy("AllowReactApp", policy =>
+	{
+		policy.WithOrigins("http://localhost:3000", "https://localhost:3000", 
+						  "http://localhost:5173", "https://localhost:5173",
+						  "http://127.0.0.1:3000", "https://127.0.0.1:3000")
+			  .AllowAnyHeader()
+			  .AllowAnyMethod()
+			  .AllowCredentials()
+			  .SetIsOriginAllowedToAllowWildcardSubdomains();
+	});
 });
 
 // JWT Authentication
@@ -217,47 +210,47 @@ var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "SchoolPortalUsers";
 
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtIssuer,
-        ValidAudience = jwtAudience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
-        ClockSkew = TimeSpan.Zero
-    };
+	options.TokenValidationParameters = new TokenValidationParameters
+	{
+		ValidateIssuer = true,
+		ValidateAudience = true,
+		ValidateLifetime = true,
+		ValidateIssuerSigningKey = true,
+		ValidIssuer = jwtIssuer,
+		ValidAudience = jwtAudience,
+		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+		ClockSkew = TimeSpan.Zero
+	};
 });
 
 // Database context (factory enables parallel read-only queries, e.g. cascaded location data)
 var connectionString = BuildConnectionString();
 builder.Services.AddDbContextPool<SchoolDbContext>(
-    options => options.UseSqlServer(connectionString, sqlOptions =>
-    {
-        sqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 3,
-            maxRetryDelay: TimeSpan.FromSeconds(2),
-            errorNumbersToAdd: null);
-        sqlOptions.CommandTimeout(30);
-    }),
-    poolSize: 128);
+	options => options.UseSqlServer(connectionString, sqlOptions =>
+	{
+		sqlOptions.EnableRetryOnFailure(
+			maxRetryCount: 3,
+			maxRetryDelay: TimeSpan.FromSeconds(2),
+			errorNumbersToAdd: null);
+		sqlOptions.CommandTimeout(30);
+	}),
+	poolSize: 128);
 
 builder.Services.AddPooledDbContextFactory<SchoolDbContext>(
-    options => options.UseSqlServer(connectionString, sqlOptions =>
-    {
-        sqlOptions.EnableRetryOnFailure(
-            maxRetryCount: 3,
-            maxRetryDelay: TimeSpan.FromSeconds(2),
-            errorNumbersToAdd: null);
-        sqlOptions.CommandTimeout(30);
-    }),
-    poolSize: 64);
+	options => options.UseSqlServer(connectionString, sqlOptions =>
+	{
+		sqlOptions.EnableRetryOnFailure(
+			maxRetryCount: 3,
+			maxRetryDelay: TimeSpan.FromSeconds(2),
+			errorNumbersToAdd: null);
+		sqlOptions.CommandTimeout(30);
+	}),
+	poolSize: 64);
 
 // Repository registrations
 builder.Services.AddScoped<IUserRepository, UserRepositoryOptimized>();
@@ -417,13 +410,13 @@ app.UseMiddleware<SchoolDemo.API.Middleware.ExceptionMiddleware>();
 // Configure middleware pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "School Demo API V1");
-        c.RoutePrefix = "swagger";
-    });
+	app.UseDeveloperExceptionPage();
+	app.UseSwagger();
+	app.UseSwaggerUI(c =>
+	{
+		c.SwaggerEndpoint("/swagger/v1/swagger.json", "School Demo API V1");
+		c.RoutePrefix = "swagger";
+	});
 }
 
 app.UseCors("AllowReactApp");
@@ -435,22 +428,22 @@ app.UseAuthorization();
 // Seed menu data
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
-    try
-    {
-        await MenuMasterSeed.SeedMenuDataAsync(context);
-        Console.WriteLine("Menu data seeded successfully.");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error seeding menu data: {ex.Message}");
-    }
+	var context = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
+	try
+	{
+		await MenuMasterSeed.SeedMenuDataAsync(context);
+		Console.WriteLine("Menu data seeded successfully.");
+	}
+	catch (Exception ex)
+	{
+		Console.WriteLine($"Error seeding menu data: {ex.Message}");
+	}
 }
 
 app.MapControllers();
 
 app.MapGet("/api/health", () =>
-    Results.Json(new { status = "healthy", utc = DateTime.UtcNow }))
-    .WithTags("Diagnostics");
+	Results.Json(new { status = "healthy", utc = DateTime.UtcNow }))
+	.WithTags("Diagnostics");
 
 await app.RunAsync();
