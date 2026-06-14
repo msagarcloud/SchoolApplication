@@ -22,7 +22,7 @@ public class StudentAttendanceRepository : IStudentAttendanceRepository
     public async Task<IEnumerable<SchoolDemo.Domain.Entities.StudentAttendanceDetail>> GetAllAsync()
     {
         var list = await _context.StudentAttendanceDetails.Where(e => !e.IsDeleted).ToListAsync();
-        return list.Select(MapToDomainEntity);
+        return list.Select(MapToDomainEntity).Where(e => e != null)!;
     }
 
     public async Task<SchoolDemo.Domain.Entities.StudentAttendanceDetail> AddAsync(SchoolDemo.Domain.Entities.StudentAttendanceDetail entity)

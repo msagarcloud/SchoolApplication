@@ -36,6 +36,13 @@ public class ParentController : ControllerBase
         return Ok(entities);
     }
 
+    [HttpGet("student/{studentId}")]
+    public async Task<IActionResult> GetByStudentId(Guid studentId)
+    {
+        var entities = await _service.GetByStudentIdAsync(studentId);
+        return Ok(entities);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] ParentRequest request)
     {

@@ -70,7 +70,9 @@ const StudentDetail = () => {
       // Try to fetch parents separately, but don't fail if it doesn't work
       let parentsData = [];
       try {
+        console.log('Fetching parents for student:', id);
         parentsData = await parentService.getByStudentId(id);
+        console.log('Parents data received:', parentsData);
       } catch (parentError) {
         console.warn('Failed to fetch parents for student:', parentError.message);
         // Continue without parents data
@@ -101,7 +103,9 @@ const StudentDetail = () => {
       return id || fallback;
     }
     const item = dataArray.find(item => item.id === id);
-    return item ? item.name : id || fallback; // Return ID if not found in dropdown
+    if (!item) return id || fallback;
+    // Handle different property names for different entities
+    return item.name || item.cityName || item.stateName || item.countryName || id || fallback;
   };
 
   // Helper function to format gender display
@@ -114,8 +118,8 @@ const StudentDetail = () => {
   };
 
   // Helper function to get parent by relation type
-  const getParentByRelation = (relationType) => {
-    return parents.find(parent => parent.relationTypeId === relationType);
+  const getParentByRelation = (relationTypeName) => {
+    return parents.find(parent => parent.relationTypeName === relationTypeName);
   };
 
   if (loading) {
@@ -154,11 +158,12 @@ const StudentDetail = () => {
     );
   }
 
-  const father = getParentByRelation('father-relation-type-id') || {};
-  const mother = getParentByRelation('mother-relation-type-id') || {};
+  const father = getParentByRelation('Father') || {};
+  const mother = getParentByRelation('Mother') || {};
 
   // Debug: Log the data to understand structure
   console.log('Student data:', student);
+  console.log('Parents data:', parents);
   console.log('Dropdown data:', {
     bloodGroups: bloodGroups.length,
     countries: countries.length,

@@ -102,6 +102,9 @@ public class TimeTableController : ControllerBase
                 academicYearId, 
                 Guid.Parse(createdBy));
 
+            if (timetable == null)
+                return BadRequest("Failed to generate timetable");
+
             return CreatedAtAction(nameof(GetById), new { id = timetable.Id }, timetable);
         }
         catch (ArgumentException ex)

@@ -153,5 +153,8 @@ export const DiscountCategoryDetail = lazy(() => import('./components/DiscountCa
 export const AssesmentMasterList = lazy(() => import('./components/AssesmentMaster/AssesmentMasterList'));
 export const AssesmentMasterForm = lazy(() => import('./components/AssesmentMaster/AssesmentMasterForm'));
 export const AssesmentMasterDetail = lazy(() => import('./components/AssesmentMaster/AssesmentMasterDetail'));
+export const StudentAttendanceList = lazy(() => import('./components/StudentAttendance/StudentAttendanceList'));
+export const StudentAttendanceForm = lazy(() => import('./components/StudentAttendance/StudentAttendanceForm'));
+export const StudentAttendanceDetail = lazy(() => import('./components/StudentAttendance/StudentAttendanceDetail'));
 export const PlaceholderPage = lazy(() => import('./components/Placeholder/PlaceholderPage'));
 export const NavigationDemo = lazy(() => import('./pages/NavigationDemo'));

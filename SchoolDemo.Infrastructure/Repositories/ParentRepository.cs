@@ -52,6 +52,25 @@ public class ParentRepository : IParentRepository
         return entities.Select(MapToDomainEntity).Where(e => e != null)!;
     }
 
+    public async Task<IEnumerable<DomainEntity.ParentMaster>> GetByStudentIdAsync(Guid studentId)
+    {
+        var entities = await _context.ParentMasters
+            .Include(p => p.City)
+            .Include(p => p.State)
+            .Include(p => p.Country)
+            .Include(p => p.OfficeCity)
+            .Include(p => p.OfficeState)
+            .Include(p => p.OfficeCountry)
+            .Include(p => p.Qualification)
+            .Include(p => p.Designation)
+            .Include(p => p.RelationType)
+            .Include(p => p.School)
+            .Include(p => p.Company)
+            .Where(p => p.StudentGuid == studentId && !p.IsDeleted)
+            .ToListAsync();
+        return entities.Select(e => MapToDomainEntity(e)).Where(e => e != null)!;
+    }
+
     public async Task<DomainEntity.ParentMaster> AddAsync(DomainEntity.ParentMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
@@ -163,6 +182,19 @@ public class ParentRepository : IParentRepository
             OfficePhone = infraEntity.OfficePhone,
             Image = infraEntity.Image,
             RelationTypeId = infraEntity.RelationTypeId,
+            RelationType = infraEntity.RelationType != null ? new DomainEntity.RelationTypeMaster
+            {
+                Id = infraEntity.RelationType.Id,
+                Name = infraEntity.RelationType.Name,
+                IsActive = infraEntity.RelationType.IsActive,
+                IsDeleted = infraEntity.RelationType.IsDeleted,
+                CreatedBy = infraEntity.RelationType.CreatedBy,
+                CreatedDate = infraEntity.RelationType.CreatedDate,
+                ModifiedBy = infraEntity.RelationType.ModifiedBy,
+                ModifiedDate = infraEntity.RelationType.ModifiedDate,
+                Status = infraEntity.RelationType.Status,
+                StatusMessage = infraEntity.RelationType.StatusMessage
+            } : null,
             SchoolId = infraEntity.SchoolId,
             CompanyId = infraEntity.CompanyId,
             IsActive = infraEntity.IsActive,

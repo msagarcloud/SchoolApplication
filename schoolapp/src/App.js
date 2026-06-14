@@ -160,6 +160,9 @@ import {
   AssesmentMasterList,
   AssesmentMasterForm,
   AssesmentMasterDetail,
+  StudentAttendanceList,
+  StudentAttendanceForm,
+  StudentAttendanceDetail,
   PlaceholderPage,
   NavigationDemo
 } from './lazyPages';
@@ -2310,6 +2313,64 @@ function App() {
                 </MainTemplate>
               </ProtectedRoute>
             } 
+          />
+
+          {/* Student Attendance Routes */}
+          <Route 
+            path="/attendence" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <StudentAttendanceList />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/attendence/create" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <StudentAttendanceForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/attendence/:id" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <StudentAttendanceDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/attendence/:id/edit" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <StudentAttendanceForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/student-attendance" 
+            element={<Navigate replace to="/attendence" />}
+          />
+          <Route 
+            path="/student-attendance/create" 
+            element={<Navigate replace to="/attendence/create" />}
+          />
+          <Route 
+            path="/student-attendance/:id" 
+            element={<Navigate replace to="/attendence/:id" />}
+          />
+          <Route 
+            path="/student-attendance/:id/edit" 
+            element={<Navigate replace to="/attendence/:id/edit" />}
           />
 
           <Route 

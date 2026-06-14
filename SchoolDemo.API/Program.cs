@@ -2,9 +2,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using AutoMapper;
-using AutoMapper.Extensions.Microsoft.DependencyInjection;
-// Swagger configuration
 using SchoolDemo.Application.Services;
 using SchoolDemo.Domain.Interfaces;
 using SchoolDemo.Infrastructure.Data;

@@ -48,7 +48,7 @@ namespace SchoolDemo.API.Controllers
                 userId = userId,
                 userName = userName,
                 role = role,
-                isAuthenticated = User.Identity.IsAuthenticated
+                isAuthenticated = User.Identity?.IsAuthenticated ?? false
             });
         }
 

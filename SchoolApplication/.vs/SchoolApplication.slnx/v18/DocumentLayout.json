@@ -3,6 +3,21 @@
   "WorkspaceRootPath": "E:\\Workspace\\SchoolApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\controllers\\periodclasscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\controllers\\timetablecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\controllers\\studentattendancedetailscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\interfaces\\istudentattendanceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53A190B0-2468-440B-7FDD-31F7A499034C}|..\\SchoolDemo.Application\\SchoolDemo.Application.csproj|e:\\workspace\\schooldemo.application\\services\\studentattendanceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{53A190B0-2468-440B-7FDD-31F7A499034C}|..\\SchoolDemo.Application\\SchoolDemo.Application.csproj|e:\\workspace\\schooldemo.application\\services\\parentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -13,17 +28,82 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TimeTableController.cs",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Controllers\\TimeTableController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\TimeTableController.cs",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Controllers\\TimeTableController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\TimeTableController.cs",
+              "ViewState": "AgIAAFgAAAAAAAAAAIAxwHIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-14T09:08:06.199Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "StudentAttendanceService.cs",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Application\\Services\\StudentAttendanceService.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Application\\Services\\StudentAttendanceService.cs",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.Application\\Services\\StudentAttendanceService.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Application\\Services\\StudentAttendanceService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-14T08:35:34.367Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IStudentAttendanceService.cs",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IStudentAttendanceService.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IStudentAttendanceService.cs",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IStudentAttendanceService.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Domain\\Interfaces\\IStudentAttendanceService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-14T08:35:23.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PeriodClassController.cs",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Controllers\\PeriodClassController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\PeriodClassController.cs",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Controllers\\PeriodClassController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\PeriodClassController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-14T05:58:41.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StudentAttendanceDetailsController.cs",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Controllers\\StudentAttendanceDetailsController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\StudentAttendanceDetailsController.cs",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Controllers\\StudentAttendanceDetailsController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\StudentAttendanceDetailsController.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAADkAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-14T08:34:54.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "ParentService.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Application\\Services\\ParentService.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Application\\Services\\ParentService.cs",
               "ToolTip": "E:\\Workspace\\SchoolDemo.Application\\Services\\ParentService.cs",
               "RelativeToolTip": "..\\SchoolDemo.Application\\Services\\ParentService.cs",
-              "ViewState": "AgIAAKwAAAAAAAAAAAAAALQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAowFIAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-14T05:48:04.923Z",
               "EditorCaption": ""
