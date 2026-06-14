@@ -34,7 +34,7 @@
     </item>
     <item id="students" label="Students" icon="bi-people" category="administrative">
         <item id="students" label="View Students" path="/students" icon="bi-mortarboard" />
-        <item id="parents" label="View Parents" path="/parent" icon="bi-person-plus" />
+        <item id="parents" label="View Parents" path="/parents" icon="bi-person-plus" />
         <item id="attendence" label="Attendence" path="/attendence" icon="bi-calendar-event" />
         <item id="absent" label="Absent" path="/absent" icon="bi-calendar-x" />
     </item>
