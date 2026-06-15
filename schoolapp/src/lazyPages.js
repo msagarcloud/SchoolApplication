@@ -30,6 +30,9 @@ export const ItemTypeDetail = lazy(() => import('./components/ItemType/ItemTypeD
 export const ItemList = lazy(() => import('./components/Item/ItemList'));
 export const ItemForm = lazy(() => import('./components/Item/ItemForm'));
 export const ItemDetail = lazy(() => import('./components/Item/ItemDetail'));
+export const ItemLocationList = lazy(() => import('./components/ItemLocation/ItemLocationList'));
+export const ItemLocationForm = lazy(() => import('./components/ItemLocation/ItemLocationForm'));
+export const ItemLocationDetail = lazy(() => import('./components/ItemLocation/ItemLocationDetail'));
 export const CountryList = lazy(() => import('./components/Country/CountryList'));
 export const CountryForm = lazy(() => import('./components/Country/CountryForm'));
 export const CountryDetail = lazy(() => import('./components/Country/CountryDetail'));

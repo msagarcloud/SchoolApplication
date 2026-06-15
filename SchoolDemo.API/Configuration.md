@@ -30,7 +30,7 @@ This project uses environment-specific configuration files for different deploym
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=SAGAR;Database=SchoolWebPortal;Trusted_Connection=true;TrustServerCertificate=true;"
+    "DefaultConnection": "Server=DESKTOP-NSCVSLM;Database=SchoolWebPortal;Trusted_Connection=true;TrustServerCertificate=true;"
   }
 }
 ```
@@ -48,7 +48,7 @@ This project uses environment-specific configuration files for different deploym
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=SAGAR;Database=SchoolWebPortal_Local;Trusted_Connection=true;TrustServerCertificate=true;"
+    "DefaultConnection": "Server=DESKTOP-NSCVSLM;Database=SchoolWebPortal_Local;Trusted_Connection=true;TrustServerCertificate=true;"
   }
 }
 ```

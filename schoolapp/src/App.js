@@ -37,6 +37,9 @@ import {
   ItemList,
   ItemForm,
   ItemDetail,
+  ItemLocationList,
+  ItemLocationForm,
+  ItemLocationDetail,
   CountryList,
   CountryForm,
   CountryDetail,
@@ -612,6 +615,46 @@ function App() {
               <ProtectedRoute>
                 <MainTemplate>
                   <ItemForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/itemlocations" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemLocationList />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/itemlocations/create" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemLocationForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/itemlocations/:id" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemLocationDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/itemlocations/:id/edit" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <ItemLocationForm />
                 </MainTemplate>
               </ProtectedRoute>
             } 
