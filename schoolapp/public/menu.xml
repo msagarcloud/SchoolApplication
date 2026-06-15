@@ -87,7 +87,7 @@
     <item id="inventory" label="Inventory" icon="bi-building" category="administrative">
       <item id="itemTypes" label="Item Types" path="/itemtypes" icon="bi-book" />
       <item id="inventoryitems" label="Inventory Items" path="/inventoryitems" icon="bi-book" />
-      <item id="inventorylocations" label="Inventory Locations" path="/inventorylocations" icon="bi-book" />
+      <item id="itemlocations" label="Item Locations" path="/itemlocations" icon="bi-geo-alt" />
       <item id="inventorytransactions" label="Inventory Transactions" path="/inventorytransactions" icon="bi-book" />
     </item>
     <item id="library" label="Library" icon="bi-building" category="administrative">

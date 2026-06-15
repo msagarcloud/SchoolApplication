@@ -2,33 +2,70 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { itemService } from '../../services/itemService';
 import { itemTypeService } from '../../services/itemTypeService';
+import { useSessionData } from '../../hooks/useSessionData';
+
+const emptyForm = {
+  id: '',
+  name: '',
+  code: '',
+  itemTypeId: '',
+  isActive: true,
+  companyId: '',
+  schoolId: '',
+  createdBy: '',
+  createdDate: '',
+  status: '',
+  statusMessage: '',
+};
 
 const ItemForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditing = Boolean(id);
+  const { sessionData } = useSessionData();
 
-  const [formData, setFormData] = useState({ name: '', code: '', itemTypeId: '', isActive: true });
+  const [formData, setFormData] = useState(emptyForm);
   const [itemTypes, setItemTypes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(isEditing);
   const [error, setError] = useState('');
 
+  const mapItemToForm = useCallback((item) => ({
+    id: item.id || '',
+    name: item.name || '',
+    code: item.code || item.description || '',
+    itemTypeId: item.itemTypeId || '',
+    isActive: item.isActive ?? true,
+    companyId: item.companyId || '',
+    schoolId: item.schoolId || '',
+    createdBy: item.createdBy || '',
+    createdDate: item.createdDate || '',
+    status: item.status || '',
+    statusMessage: item.statusMessage || '',
+  }), []);
+
   const fetchData = useCallback(async () => {
     try {
       setFetchLoading(true);
-      const [types, item] = await Promise.all([
-        itemTypeService.getAll(),
-        isEditing ? itemService.getById(id) : Promise.resolve(null)
-      ]);
+      const types = await itemTypeService.getAll();
       setItemTypes(types);
-      if (item) setFormData({ name: item.name || '', code: item.code || '', itemTypeId: item.itemTypeId || '', isActive: item.isActive ?? true });
+
+      if (isEditing) {
+        const item = await itemService.getById(id);
+        setFormData(mapItemToForm(item));
+      } else {
+        setFormData({
+          ...emptyForm,
+          companyId: sessionData.companyId || '',
+          schoolId: sessionData.schoolId || '',
+        });
+      }
     } catch (err) {
       setError(err.message || 'Failed to fetch');
     } finally {
       setFetchLoading(false);
     }
-  }, [id, isEditing]);
+  }, [id, isEditing, mapItemToForm, sessionData.companyId, sessionData.schoolId]);
 
   useEffect(() => {
     fetchData();
@@ -48,6 +85,12 @@ const ItemForm = () => {
     try {
       if (!formData.name.trim()) {
         setError('Name is required');
+        setLoading(false);
+        return;
+      }
+
+      if (!formData.itemTypeId) {
+        setError('Item type is required');
         setLoading(false);
         return;
       }
@@ -83,12 +126,12 @@ const ItemForm = () => {
                 <input name="name" value={formData.name} onChange={handleChange} className="form-control" required />
               </div>
               <div className="col-md-3">
-                <label className="form-label">Code</label>
+                <label className="form-label">Description</label>
                 <input name="code" value={formData.code} onChange={handleChange} className="form-control" />
               </div>
               <div className="col-md-3">
-                <label className="form-label">Type</label>
-                <select name="itemTypeId" value={formData.itemTypeId} onChange={handleChange} className="form-select">
+                <label className="form-label">Type <span className="text-danger">*</span></label>
+                <select name="itemTypeId" value={formData.itemTypeId} onChange={handleChange} className="form-select" required>
                   <option value="">Select type</option>
                   {itemTypes.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
                 </select>

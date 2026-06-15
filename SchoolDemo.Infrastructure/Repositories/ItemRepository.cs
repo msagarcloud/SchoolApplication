@@ -37,10 +37,39 @@ public class ItemRepository : IItemRepository
 
     public async Task<DomainItem> UpdateAsync(DomainItem entity)
     {
-        var infra = MapToInfra(entity);
-        _context.ItemMasters.Update(infra);
+        var existing = await _context.ItemMasters.FirstOrDefaultAsync(x => x.Id == entity.Id && x.IsDeleted != true);
+        if (existing == null)
+        {
+            throw new InvalidOperationException($"Item with ID {entity.Id} not found.");
+        }
+
+        if (!string.IsNullOrWhiteSpace(entity.ItemName))
+            existing.ItemName = entity.ItemName;
+
+        existing.Description = entity.Description;
+
+        if (entity.ItemTypeMasterId != Guid.Empty)
+            existing.ItemTypeMasterId = entity.ItemTypeMasterId;
+
+        existing.IsActive = entity.IsActive ?? existing.IsActive;
+
+        if (entity.CompanyId != Guid.Empty)
+            existing.CompanyId = entity.CompanyId;
+
+        if (entity.SchoolId != Guid.Empty)
+            existing.SchoolId = entity.SchoolId;
+
+        if (!string.IsNullOrWhiteSpace(entity.Status))
+            existing.Status = entity.Status;
+
+        if (!string.IsNullOrWhiteSpace(entity.StatusMessage))
+            existing.StatusMessage = entity.StatusMessage;
+
+        existing.ModifiedBy = entity.ModifiedBy ?? existing.ModifiedBy;
+        existing.ModifiedDate = DateTime.UtcNow;
+
         await _context.SaveChangesAsync();
-        return MapToDomain(infra);
+        return MapToDomain(existing);
     }
 
     public async Task DeleteAsync(Guid id)

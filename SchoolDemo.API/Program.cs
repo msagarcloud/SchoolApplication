@@ -95,19 +95,19 @@ string BuildConnectionString()
 
 	//DESKTOP-NSCVSLM
 	// Map machine names to SQL server instances
-	//if (machineName.Contains("SAGAR"))
-	//{
-	//	serverName = "SAGAR\\SQL2025";
-	//}
-	//else if (machineName.Contains("DESKTOP-NSCVSLM"))
-	//{
-	serverName = "DESKTOP-NSCVSLM";
-	//}
-	//else
-	//{
-	//	// Use local default SQL instance for non-listed machines.
-	//	serverName = ".\\SQLEXPRESS";
-	//}
+	if (machineName.Contains("SAGAR"))
+	{
+		serverName = "SAGAR\\SQL2025";
+	}
+	else if (machineName.Contains("DESKTOP-NSCVSLM"))
+	{
+		serverName = "DESKTOP-NSCVSLM";
+	}
+	else
+	{
+		// Use local default SQL instance for non-listed machines.
+		serverName = ".\\SQLEXPRESS";
+	}
 
 	string connectionString = $"Server={serverName};Database={databaseName};Trusted_Connection={useTrustedConnection};TrustServerCertificate={trustServerCertificate};Connect Timeout=5;";
 
@@ -316,6 +316,7 @@ builder.Services.AddScoped<SchoolDemo.Domain.Interfaces.IItemRepository, SchoolD
 // Item type repository
 builder.Services.AddScoped<SchoolDemo.Domain.Interfaces.IItemTypeRepository, SchoolDemo.Infrastructure.Repositories.ItemTypeRepository>();
 builder.Services.AddScoped<IItemLocationRepository, ItemLocationRepository>();
+builder.Services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();
 
 // Transport entity repositories
 builder.Services.AddScoped<IRouteMasterRepository, RouteMasterRepository>();
@@ -400,6 +401,7 @@ builder.Services.AddScoped<IAssesmentMasterService, AssesmentMasterService>();
 builder.Services.AddScoped<IStudentAttendanceRepository, StudentAttendanceRepository>();
 builder.Services.AddScoped<IStudentAttendanceService, StudentAttendanceService>();
 builder.Services.AddScoped<IItemLocationService, ItemLocationService>();
+builder.Services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
 
 var app = builder.Build();
 
