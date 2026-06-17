@@ -3,6 +3,9 @@
   "WorkspaceRootPath": "C:\\Sagar\\School-Application\\SchoolApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|c:\\sagar\\school-application\\schooldemo.infrastructure\\repositories\\routemasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -58,11 +61,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "RouteMasterRepository.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\RouteMasterRepository.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\RouteMasterRepository.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\RouteMasterRepository.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\RouteMasterRepository.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACIAAAB4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-16T09:07:46.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Properties\\launchSettings.json",
@@ -70,12 +86,11 @@
               "RelativeToolTip": "..\\SchoolDemo.API\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-06-15T07:18:53.598Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-15T07:18:53.598Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\appsettings.json",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\appsettings.json",
@@ -83,12 +98,11 @@
               "RelativeToolTip": "..\\SchoolDemo.API\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-06-15T07:10:12.85Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-15T07:10:12.85Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "web.config",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\web.config",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\web.config",
@@ -96,12 +110,11 @@
               "RelativeToolTip": "..\\SchoolDemo.API\\web.config",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2026-06-15T07:10:00.976Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-15T07:10:00.976Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "ItemRepository.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\ItemRepository.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\ItemRepository.cs",
@@ -113,7 +126,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "ItemTypeController.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\ItemTypeController.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\ItemTypeController.cs",
@@ -125,7 +138,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "ItemTypeRepository.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\ItemTypeRepository.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\ItemTypeRepository.cs",
@@ -137,7 +150,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ItemMaster.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
@@ -149,7 +162,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "ItemTypeMaster.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\ItemTypeMaster.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\ItemTypeMaster.cs",
@@ -161,20 +174,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Program.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Program.cs",
               "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Program.cs",
               "RelativeToolTip": "..\\SchoolDemo.API\\Program.cs",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAYwHoAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAYwHkAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T07:56:13.833Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-11T07:56:13.833Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Configuration.md",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Configuration.md",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Configuration.md",
@@ -182,12 +194,11 @@
               "RelativeToolTip": "..\\SchoolDemo.API\\Configuration.md",
               "ViewState": "AgIAADwAAAAAAAAAAAAAADIAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2026-06-15T07:14:26.507Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-15T07:14:26.507Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "DesigController.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\DesigController.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\DesigController.cs",
@@ -195,12 +206,11 @@
               "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\DesigController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-11T12:20:23.163Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-11T12:20:23.163Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "IItemRepository.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Interfaces\\IItemRepository.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IItemRepository.cs",
@@ -212,7 +222,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "IItemTypeRepository.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Interfaces\\IItemTypeRepository.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IItemTypeRepository.cs",
@@ -224,7 +234,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "DeptController.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\DeptController.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\DeptController.cs",
@@ -236,7 +246,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "SchoolDemo.API.csproj",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\SchoolDemo.API.csproj",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\SchoolDemo.API.csproj",
@@ -244,12 +254,11 @@
               "RelativeToolTip": "..\\SchoolDemo.API\\SchoolDemo.API.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-06-11T08:45:32.066Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-11T08:45:32.066Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ItemController.cs",
               "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\ItemController.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\ItemController.cs",

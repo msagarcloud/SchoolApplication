@@ -248,7 +248,7 @@ export const authServiceOptimized = {
 };
 
 // Enhanced interceptor with token validation
-api.interceptors.request.use(async (config) => {
+api.interceptors.request.use((config) => {
   const token = authServiceOptimized.getToken();
   
   if (token) {
@@ -263,9 +263,14 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Token expired or invalid
-      console.log('Authentication failed, logging out...');
-      await authServiceOptimized.logout();
+      // Token expired or invalid.
+      // Clear auth data without hard reloading the entire app.
+      try {
+        localStorage.clear();
+        sessionStorage.clear();
+      } catch (e) {
+        // ignore
+      }
     }
     return Promise.reject(error);
   }

@@ -5,6 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainTemplate from './components/layout/MainTemplate';
 import { authService } from './services/authService';
+import { authServiceOptimized } from './services/authServiceOptimized';
 import { sessionService } from './services/sessionService';
 import {
   Login,
@@ -2433,7 +2434,7 @@ function App() {
           <Route 
             path="*" 
             element={
-              authService.isAuthenticated() ? 
+              authServiceOptimized.isAuthenticated() ? 
               <Navigate to="/dashboard" replace /> : 
               <Navigate to="/login" replace />
             } 

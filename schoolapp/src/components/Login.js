@@ -96,9 +96,7 @@ const Login = () => {
       if (response.token && response.user) {
         authServiceOptimized.setAuthData(response.token, response.user, response.expiresIn);
         
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 300);
+        navigate('/dashboard', { replace: true });
       } else {
         dispatch({ type: 'SET_ERROR', payload: 'Invalid login response from server' });
       }

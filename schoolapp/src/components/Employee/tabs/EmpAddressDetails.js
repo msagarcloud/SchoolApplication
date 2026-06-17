@@ -1,11 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { countryService } from '../../../services/countryService';
 import { stateService } from '../../../services/stateService';
 import { cityService } from '../../../services/cityService';
+import { useAddress } from '../../../hooks/useAddress';
+
 
 const EmpAddressDetails = ({ employeeData, onInputChange, onDataChange }) => {
   const [errors, setErrors] = useState({});
   const [countries, setCountries] = useState([]);
+  
+  const { onChange: addressOnChange } = useAddress({
+
+    address1: employeeData?.address1 || employeeData?.currentAddress1 || '',
+    address2: employeeData?.address2 || employeeData?.currentAddress2 || '',
+    country: employeeData?.country || employeeData?.currentCountryId || '',
+    state: employeeData?.state || employeeData?.currentStateId || '',
+    city: employeeData?.city || employeeData?.currentCityId || '',
+    pincode: employeeData?.pincode || employeeData?.currentZipCode || ''
+  });
+
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [permanentStates, setPermanentStates] = useState([]);
@@ -127,17 +140,22 @@ const EmpAddressDetails = ({ employeeData, onInputChange, onDataChange }) => {
 
   const handleFieldChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // Keep the local reusable address hook in sync (if the field matches)
+    addressOnChange(e);
+
     const fieldValue = type === 'checkbox' ? checked : value;
-    
+
     // Call parent onChange
     onInputChange(e);
-    
+
     // Notify parent of data change
     onDataChange?.({
       ...employeeData,
       [name]: fieldValue
     });
   };
+
 
   const copyCurrentToPermanent = () => {
     const permanentData = {
