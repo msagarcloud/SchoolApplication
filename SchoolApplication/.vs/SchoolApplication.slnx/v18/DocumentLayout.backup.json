@@ -3,16 +3,19 @@
   "WorkspaceRootPath": "E:\\Workspace\\SchoolApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|e:\\workspace\\schooldemo.infrastructure\\repositories\\inventorymasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\entities\\inventorymaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\interfaces\\iinventorymasterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|e:\\workspace\\schooldemo.infrastructure\\repositories\\inventorymasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{53A190B0-2468-440B-7FDD-31F7A499034C}|..\\SchoolDemo.Application\\SchoolDemo.Application.csproj|e:\\workspace\\schooldemo.application\\services\\inventorymasterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\interfaces\\iinventorymasterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\entities\\inventorymaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\interfaces\\iitemlocationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -22,9 +25,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\entities\\itemmaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\controllers\\inventorymastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -46,11 +46,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 12,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "IItemLocationService.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IItemLocationService.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IItemLocationService.cs",
@@ -58,29 +62,24 @@
               "RelativeToolTip": "..\\SchoolDemo.Domain\\Interfaces\\IItemLocationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-16T18:31:30.514Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "WhenOpened": "2026-06-16T18:31:30.514Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "IInventoryMasterService.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IInventoryMasterService.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IInventoryMasterService.cs",
               "ToolTip": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IInventoryMasterService.cs",
               "RelativeToolTip": "..\\SchoolDemo.Domain\\Interfaces\\IInventoryMasterService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-16T18:33:05.915Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "ItemLocationService.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Application\\Services\\ItemLocationService.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Application\\Services\\ItemLocationService.cs",
@@ -88,12 +87,11 @@
               "RelativeToolTip": "..\\SchoolDemo.Application\\Services\\ItemLocationService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-16T18:31:25.811Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-16T18:31:25.811Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ItemMaster.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
@@ -101,44 +99,42 @@
               "RelativeToolTip": "..\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-16T18:22:37.589Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-16T18:22:37.589Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "InventoryMaster.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Entities\\InventoryMaster.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\InventoryMaster.cs",
               "ToolTip": "E:\\Workspace\\SchoolDemo.Domain\\Entities\\InventoryMaster.cs",
               "RelativeToolTip": "..\\SchoolDemo.Domain\\Entities\\InventoryMaster.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAUwBcAAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAmwBsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-16T18:22:30.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-16T18:22:30.396Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "InventoryMasterRepository.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Repositories\\InventoryMasterRepository.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\InventoryMasterRepository.cs",
               "ToolTip": "E:\\Workspace\\SchoolDemo.Infrastructure\\Repositories\\InventoryMasterRepository.cs",
               "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\InventoryMasterRepository.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAEwBMAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAEoAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-16T18:20:47.282Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "InventoryMasterService.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
               "ToolTip": "E:\\Workspace\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
               "RelativeToolTip": "..\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAqwFMAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-16T18:20:03.245Z",
               "EditorCaption": ""
@@ -153,8 +149,7 @@
               "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\InventoryMasterController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-16T18:18:10.773Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-16T18:18:10.773Z"
             },
             {
               "$type": "Document",
@@ -166,8 +161,7 @@
               "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\SupplierController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-16T16:05:21.271Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-16T16:05:21.271Z"
             },
             {
               "$type": "Document",
@@ -195,13 +189,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Program.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Program.cs",
               "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Program.cs",
               "RelativeToolTip": "..\\SchoolDemo.API\\Program.cs",
-              "ViewState": "AgIAALABAAAAAAAAAAAAALsBAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFcBAAAAAAAAAAAQwGABAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-15T15:58:07.427Z",
               "EditorCaption": ""

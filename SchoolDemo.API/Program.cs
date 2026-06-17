@@ -323,6 +323,7 @@ builder.Services.AddScoped<IRouteMasterRepository, RouteMasterRepository>();
 builder.Services.AddScoped<ITransportAssignmentRepository, TransportAssignmentRepository>();
 builder.Services.AddScoped<ITransportSettingRepository, TransportSettingRepository>();
 builder.Services.AddScoped<ITransportHelpRepository, TransportHelpRepository>();
+builder.Services.AddScoped<IInventoryMasterRepository, InventoryMasterRepository>();
 
 // Service registrations
 builder.Services.AddScoped<ILoginService, LoginService>();
@@ -349,6 +350,7 @@ builder.Services.AddScoped<ITeacherSectionDetailService, TeacherSectionDetailSer
 builder.Services.AddScoped<ITeacherSubjectDetailService, TeacherSubjectDetailService>();
 builder.Services.AddScoped<ITeacherMasterService, TeacherMasterService>();
 builder.Services.AddScoped<IDriverMasterService, DriverMasterService>();
+builder.Services.AddScoped<IInventoryMasterService, InventoryMasterService>();
 
 // Master entity services
 builder.Services.AddScoped<IBloodGroupService, BloodGroupService>();

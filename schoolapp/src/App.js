@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainTemplate from './components/layout/MainTemplate';
-import { authService } from './services/authService';
+
 import { authServiceOptimized } from './services/authServiceOptimized';
 import { sessionService } from './services/sessionService';
 import {
@@ -168,8 +168,12 @@ import {
   StudentAttendanceForm,
   StudentAttendanceDetail,
   PlaceholderPage,
+  InventoryMasterList,
+  InventoryMasterForm,
+  InventoryMasterDetail,
   NavigationDemo
 } from './lazyPages';
+
 
 function RouteLoadFallback() {
   return (
@@ -620,8 +624,52 @@ function App() {
               </ProtectedRoute>
             } 
           />
+
+          {/* Inventory Master Routes */}
+          <Route 
+            path="/inventory-masters" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <InventoryMasterList />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inventory-masters/create" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <InventoryMasterForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inventory-masters/:id" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <InventoryMasterDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inventory-masters/:id/edit" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <InventoryMasterForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+
           <Route 
             path="/itemlocations" 
+
             element={
               <ProtectedRoute>
                 <MainTemplate>

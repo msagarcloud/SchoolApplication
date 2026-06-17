@@ -17,17 +17,19 @@ public class InventoryMasterRepository : IInventoryMasterRepository
 	public async Task<SchoolDemo.Domain.Entities.InventoryMaster?> GetByIdAsync(Guid id)
 	{
 		var entity = await _context.InventoryMasters
-			.FirstOrDefaultAsync(d => d.Id == id && !d.IsDeleted);
+			.FirstOrDefaultAsync(d => d.Id == id && !(d.IsDeleted ?? false)); // fix
 		return MapToDomainEntity(entity);
 	}
 
 	public async Task<IEnumerable<SchoolDemo.Domain.Entities.InventoryMaster>> GetAllAsync()
 	{
 		var entities = await _context.InventoryMasters
-			.Where(d => !d.IsDeleted)
+			.Where(d => !(d.IsDeleted ?? false)) // fix
 			.ToListAsync();
+
 		return entities.Select(MapToDomainEntity).Where(e => e != null)!;
 	}
+
 
 	public async Task<SchoolDemo.Domain.Entities.InventoryMaster> AddAsync(SchoolDemo.Domain.Entities.InventoryMaster entity)
 	{
@@ -70,8 +72,8 @@ public class InventoryMasterRepository : IInventoryMasterRepository
 			CostPerItem = (decimal)entity.CostPerItem,
 			CompanyId = entity.CompanyId,
 			SchoolId = entity.SchoolId,
-			IsActive = entity.IsActive,
-			IsDeleted = (bool)entity.IsDeleted,
+			IsActive = entity.IsActive ?? false,   // fix for nullable bool
+			IsDeleted = entity.IsDeleted ?? false, // fix for nullable bool
 			CreatedBy = entity.CreatedBy,
 			CreatedDate = entity.CreatedDate,
 			ModifiedBy = entity.ModifiedBy,
