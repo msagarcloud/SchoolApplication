@@ -67,6 +67,7 @@ export const menuConfig = {
         { icon: 'bi-tags', label: 'Categories', path: '/categories', id: 'categories', category: 'administrative' },
         { icon: 'bi-box-seam', label: 'Item Types', path: '/itemtypes', id: 'itemtypes', category: 'inventory' },
         { icon: 'bi-box', label: 'Inventory Items', path: '/inventoryitems', id: 'inventoryitems', category: 'inventory' },
+        { icon: 'bi-box', label: 'Inventory Master', path: '/inventory-masters', id: 'inventorymaster', category: 'inventory' },
         { icon: 'bi-geo-alt', label: 'Item Locations', path: '/itemlocations', id: 'itemlocations', category: 'inventory' },
         { icon: 'bi-globe', label: 'Countries', path: '/countries', id: 'countries', category: 'administrative' },
         { icon: 'bi-geo-alt', label: 'States', path: '/states', id: 'states', category: 'administrative' },

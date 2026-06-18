@@ -424,6 +424,16 @@ public interface ICategoryService
     Task<bool> DeleteAsync(Guid id);
 }
 
+// BookTypeMaster Service
+public interface IBookTypeMasterService
+{
+    Task<BookTypeMasterResponse?> GetByIdAsync(Guid id);
+    Task<IEnumerable<BookTypeMasterResponse>> GetAllAsync();
+    Task<BookTypeMasterResponse> CreateAsync(BookTypeMasterRequest request);
+    Task<BookTypeMasterResponse?> UpdateAsync(Guid id, BookTypeMasterRequest request);
+    Task<bool> DeleteAsync(Guid id);
+}
+
 // FeesCategory Service
 public interface IFeesCategoryService
 {
@@ -528,6 +538,31 @@ public class CategoryResponse
     public string? StatusMessage { get; set; }
 }
 
+public class BookTypeMasterRequest
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string Description { get; set; } = null!; 
+    public bool IsActive { get; set; }
+    public bool IsDeleted { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime? ModifiedDate { get; set; }
+    public string Status { get; set; } = null!;
+    public string? StatusMessage { get; set; }
+}
+
+public class BookTypeMasterResponse
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string Description { get; set; } = null!; 
+    public bool IsActive { get; set; }
+    public bool IsDeleted { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public DateTime? ModifiedDate { get; set; }
+    public string Status { get; set; } = null!;
+    public string? StatusMessage { get; set; }
+}
 public class FeesCategoryResponse
 {
     public Guid Id { get; set; }

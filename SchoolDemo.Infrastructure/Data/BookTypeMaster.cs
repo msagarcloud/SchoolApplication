@@ -21,7 +21,7 @@ public partial class BookTypeMaster
 
     public Guid CreatedBy { get; set; }
 
-    public DateOnly CreatedDate { get; set; }
+    public DateTime CreatedDate { get; set; }
 
     public Guid? ModifiedBy { get; set; }
 

@@ -279,6 +279,7 @@ builder.Services.AddScoped<IEmpTypeRepository, EmpTypeRepository>();
 
 // Master entity repositories
 builder.Services.AddScoped<IBloodGroupRepository, BloodGroupRepository>();
+builder.Services.AddScoped<IBookTypeMasterRepository, BookTypeMasterRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IFeesCategoryRepository, FeesCategoryRepository>();
 builder.Services.AddScoped<IFeesDiscountCategoryRepository, FeesDiscountCategoryRepository>();
@@ -327,6 +328,7 @@ builder.Services.AddScoped<IInventoryMasterRepository, InventoryMasterRepository
 
 // Service registrations
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IBookTypeMasterService, BookTypeMasterService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
