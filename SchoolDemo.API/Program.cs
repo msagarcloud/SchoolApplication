@@ -280,6 +280,7 @@ builder.Services.AddScoped<IInventoryMasterRepository, InventoryMasterRepository
 
 // Master entity repositories
 builder.Services.AddScoped<IBloodGroupRepository, BloodGroupRepository>();
+builder.Services.AddScoped<IBookTypeMasterRepository, BookTypeMasterRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IFeesCategoryRepository, FeesCategoryRepository>();
 builder.Services.AddScoped<IFeesDiscountCategoryRepository, FeesDiscountCategoryRepository>();
@@ -324,9 +325,11 @@ builder.Services.AddScoped<IRouteMasterRepository, RouteMasterRepository>();
 builder.Services.AddScoped<ITransportAssignmentRepository, TransportAssignmentRepository>();
 builder.Services.AddScoped<ITransportSettingRepository, TransportSettingRepository>();
 builder.Services.AddScoped<ITransportHelpRepository, TransportHelpRepository>();
+builder.Services.AddScoped<IInventoryMasterRepository, InventoryMasterRepository>();
 
 // Service registrations
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IBookTypeMasterService, BookTypeMasterService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
@@ -350,6 +353,7 @@ builder.Services.AddScoped<ITeacherSectionDetailService, TeacherSectionDetailSer
 builder.Services.AddScoped<ITeacherSubjectDetailService, TeacherSubjectDetailService>();
 builder.Services.AddScoped<ITeacherMasterService, TeacherMasterService>();
 builder.Services.AddScoped<IDriverMasterService, DriverMasterService>();
+builder.Services.AddScoped<IInventoryMasterService, InventoryMasterService>();
 
 // Master entity services
 builder.Services.AddScoped<IBloodGroupService, BloodGroupService>();

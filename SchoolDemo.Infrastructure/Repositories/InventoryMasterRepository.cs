@@ -16,18 +16,20 @@ public class InventoryMasterRepository : IInventoryMasterRepository
 
 	public async Task<SchoolDemo.Domain.Entities.InventoryMaster?> GetByIdAsync(Guid id)
 	{
-        var entity = await _context.InventoryMasters
-							.FirstOrDefaultAsync(d => d.Id == id && d.IsDeleted != true);
-        return MapToDomainEntity(entity);
+		var entity = await _context.InventoryMasters
+			.FirstOrDefaultAsync(d => d.Id == id && !(d.IsDeleted ?? false)); // fix
+		return MapToDomainEntity(entity);
 	}
 
 	public async Task<IEnumerable<SchoolDemo.Domain.Entities.InventoryMaster>> GetAllAsync()
 	{
 		var entities = await _context.InventoryMasters
-			.Where(d => d.IsDeleted != true)
+			.Where(d => !(d.IsDeleted ?? false)) // fix
 			.ToListAsync();
+
 		return entities.Select(MapToDomainEntity).Where(e => e != null)!;
 	}
+
 
 	public async Task<SchoolDemo.Domain.Entities.InventoryMaster> AddAsync(SchoolDemo.Domain.Entities.InventoryMaster entity)
 	{
@@ -60,26 +62,26 @@ public class InventoryMasterRepository : IInventoryMasterRepository
 	private static SchoolDemo.Domain.Entities.InventoryMaster? MapToDomainEntity(SchoolDemo.Infrastructure.Data.InventoryMaster? entity)
 	{
 		if (entity == null) return null;
-        return new SchoolDemo.Domain.Entities.InventoryMaster
-        {
-            Id = entity.Id,
-            Name = entity.Name,
-            ItemId = entity.ItemId,
-            LocationId = entity.LocationId,
-            Quantity = entity.Quantity ?? 0,
-            CostPerItem = entity.CostPerItem ?? 0m,
-            CompanyId = entity.CompanyId,
-            SchoolId = entity.SchoolId,
-            IsActive = entity.IsActive ?? false,
-            IsDeleted = entity.IsDeleted ?? false,
-            CreatedBy = entity.CreatedBy,
-            CreatedDate = entity.CreatedDate,
-            ModifiedBy = entity.ModifiedBy,
-            ModifiedDate = entity.ModifiedDate,
-            Status = entity.Status,
-            StatusMessage = entity.StatusMessage
-        };
-    }
+		return new SchoolDemo.Domain.Entities.InventoryMaster
+		{
+			Id = entity.Id,
+			Name = entity.Name,
+			ItemId = entity.ItemId,
+			LocationId = entity.LocationId,
+			Quantity = (int)entity.Quantity,
+			CostPerItem = (decimal)entity.CostPerItem,
+			CompanyId = entity.CompanyId,
+			SchoolId = entity.SchoolId,
+			IsActive = entity.IsActive ?? false,   // fix for nullable bool
+			IsDeleted = entity.IsDeleted ?? false, // fix for nullable bool
+			CreatedBy = entity.CreatedBy,
+			CreatedDate = entity.CreatedDate,
+			ModifiedBy = entity.ModifiedBy,
+			ModifiedDate = entity.ModifiedDate,
+			Status = entity.Status,
+			StatusMessage = entity.StatusMessage
+		};
+	}
 
 	private static SchoolDemo.Infrastructure.Data.InventoryMaster MapToInfrastructureEntity(SchoolDemo.Domain.Entities.InventoryMaster entity)
 	{
@@ -97,8 +99,8 @@ public class InventoryMasterRepository : IInventoryMasterRepository
 			IsDeleted = entity.IsDeleted,
 			CreatedBy = entity.CreatedBy,
 			CreatedDate = entity.CreatedDate,
-            ModifiedBy = entity.ModifiedBy ?? Guid.Empty,
-            ModifiedDate = entity.ModifiedDate ?? entity.CreatedDate,
+			ModifiedBy = (Guid)entity.ModifiedBy,
+			ModifiedDate = (DateTime)entity.ModifiedDate,
 			Status = entity.Status!,
 			StatusMessage = entity.StatusMessage!
 		};

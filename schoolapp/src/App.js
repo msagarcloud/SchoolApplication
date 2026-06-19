@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainTemplate from './components/layout/MainTemplate';
-import { authService } from './services/authService';
+
 import { authServiceOptimized } from './services/authServiceOptimized';
 import { sessionService } from './services/sessionService';
 import {
@@ -168,10 +168,10 @@ import {
   StudentAttendanceForm,
   StudentAttendanceDetail,
   PlaceholderPage,
-  NavigationDemo,
   InventoryMasterList,
   InventoryMasterForm,
-  InventoryMasterDetail
+  InventoryMasterDetail,
+  NavigationDemo
 } from './lazyPages';
 
 
@@ -622,12 +622,12 @@ function App() {
                   <ItemForm />
                 </MainTemplate>
               </ProtectedRoute>
-            }
+            } 
           />
 
-          {/* InventoryMaster Routes */}
+          {/* Inventory Master Routes */}
           <Route 
-            path="/inventorymasters" 
+            path="/inventory-masters" 
             element={
               <ProtectedRoute>
                 <MainTemplate>
@@ -637,7 +637,7 @@ function App() {
             } 
           />
           <Route 
-            path="/inventorymasters/create" 
+            path="/inventory-masters/create" 
             element={
               <ProtectedRoute>
                 <MainTemplate>
@@ -647,7 +647,7 @@ function App() {
             } 
           />
           <Route 
-            path="/inventorymasters/:id" 
+            path="/inventory-masters/:id" 
             element={
               <ProtectedRoute>
                 <MainTemplate>
@@ -657,18 +657,19 @@ function App() {
             } 
           />
           <Route 
-            path="/inventorymasters/:id/edit" 
+            path="/inventory-masters/:id/edit" 
             element={
               <ProtectedRoute>
                 <MainTemplate>
                   <InventoryMasterForm />
                 </MainTemplate>
               </ProtectedRoute>
-            }
+            } 
           />
 
           <Route 
             path="/itemlocations" 
+
             element={
               <ProtectedRoute>
                 <MainTemplate>

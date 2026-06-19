@@ -1,50 +1,30 @@
 import apiService from './api';
+import { authService } from './authService';
 
-const normalizeInventoryMaster = (item) => {
-  if (!item || typeof item !== 'object') return item;
+const normalizeInventoryMaster = (row) => {
+  if (!row || typeof row !== 'object') return row;
 
-  const id = item.id ?? item.Id ?? item.inventoryMasterId ?? item.InventoryMasterId ?? item.ID;
-  const itemId = item.itemId ?? item.ItemId ?? item.ItemID ?? item.item_id ?? '';
-  const itemName = item.itemName ?? item.ItemName ?? '';
-
-  const itemLocationId =
-    item.itemLocationId ??
-    item.ItemLocationId ??
-    item.itemLocation_id ??
-    item.ItemLocationID ??
-    '';
-
-  const quantity = item.quantity ?? item.Quantity ?? item.qty ?? item.Qty ?? 0;
-  const minQuantity = item.minQuantity ?? item.MinQuantity ?? item.minQty ?? item.MinQty ?? '';
-
-  const isActive = item.isActive ?? item.IsActive;
-  const isDeleted = item.isDeleted ?? item.IsDeleted;
-
-  const createdBy = item.createdBy ?? item.CreatedBy ?? '';
-  const modifiedBy = item.modifiedBy ?? item.ModifiedBy ?? '';
-
-  const createdDate = item.createdDate ?? item.CreatedDate ?? item.createdAt ?? null;
-  const modifiedDate = item.modifiedDate ?? item.ModifiedDate ?? item.modifiedAt ?? null;
-
-  const status = item.status ?? item.Status ?? '';
-  const statusMessage = item.statusMessage ?? item.StatusMessage ?? '';
+  const id = row.Id ?? row.id ?? row.ID ?? '';
+  const name = row.Name ?? row.name ?? row.InventoryMasterName ?? row.itemName ?? row.itemNameValue ?? '';
 
   return {
-    ...item,
+    ...row,
     id,
-    itemId,
-    itemName,
-    itemLocationId,
-    quantity,
-    minQuantity,
-    isActive,
-    isDeleted,
-    createdBy,
-    modifiedBy,
-    createdDate,
-    modifiedDate,
-    status,
-    statusMessage,
+    name,
+    itemId: row.ItemId ?? row.itemId ?? row.itemID ?? '',
+    locationId: row.LocationId ?? row.locationId ?? '',
+    quantity: row.Quantity ?? row.quantity ?? 0,
+    costPerItem: row.CostPerItem ?? row.costPerItem ?? 0,
+    isActive: row.IsActive ?? row.isActive ?? true,
+    isDeleted: row.IsDeleted ?? row.isDeleted ?? false,
+    companyId: row.CompanyId ?? row.companyId ?? '',
+    schoolId: row.SchoolId ?? row.schoolId ?? '',
+    createdBy: row.CreatedBy ?? row.createdBy ?? '',
+    createdDate: row.CreatedDate ?? row.createdDate ?? null,
+    modifiedBy: row.ModifiedBy ?? row.modifiedBy ?? '',
+    modifiedDate: row.ModifiedDate ?? row.modifiedDate ?? null,
+    status: row.Status ?? row.status ?? '',
+    statusMessage: row.StatusMessage ?? row.statusMessage ?? '',
   };
 };
 
@@ -55,26 +35,28 @@ const normalizeInventoryMasterResponse = (response) => {
   return normalizeInventoryMaster(response);
 };
 
-const toPayload = (data, id) => {
-  const safeId = typeof id === 'string' ? id.trim() : id;
-  const payload = {
-    ...(safeId ? { id: safeId } : {}),
-    itemId: data.itemId || data.ItemId || '',
-    itemLocationId: data.itemLocationId || data.ItemLocationId || '',
-    quantity: data.quantity ?? data.Quantity ?? 0,
-    minQuantity: data.minQuantity ?? data.MinQuantity ?? null,
+const getSessionCompanyAndSchoolIds = () => {
+  // Keep consistent with other parts of the app that rely on authService helpers.
+  const companyId = authService?.getCompanyId?.() ?? '';
+  const schoolId = authService?.getSchoolId?.() ?? '';
+  return { companyId, schoolId };
+};
+
+const toApiPayload = (data) => {
+  const { companyId, schoolId } = getSessionCompanyAndSchoolIds();
+
+  return {
+    id: data.id || undefined,
+    name: (data.name ?? data.Name ?? data.itemName ?? '').trim() || undefined,
+    itemId: data.itemId || data.ItemId || undefined,
+    locationId: data.locationId || data.LocationId || undefined,
+    quantity: data.quantity != null ? Number(data.quantity) : undefined,
+    costPerItem: data.costPerItem != null ? Number(data.costPerItem) : undefined,
     isActive: data.isActive ?? true,
     isDeleted: data.isDeleted ?? false,
+    companyId: data.companyId || companyId || undefined,
+    schoolId: data.schoolId || schoolId || undefined,
   };
-
-  if (data.createdDate) payload.createdDate = data.createdDate;
-  if (data.modifiedDate) payload.modifiedDate = data.modifiedDate;
-  if (data.createdBy) payload.createdBy = data.createdBy;
-  if (data.modifiedBy) payload.modifiedBy = data.modifiedBy;
-  if (data.status) payload.status = data.status;
-  if (data.statusMessage) payload.statusMessage = data.statusMessage;
-
-  return payload;
 };
 
 export const inventoryMasterService = {
@@ -85,17 +67,18 @@ export const inventoryMasterService = {
 
   async getById(id) {
     const response = await apiService.get(`/InventoryMaster/${id}`);
-    return normalizeInventoryMaster(response);
+    return normalizeInventoryMasterResponse(response);
   },
 
   async create(data) {
-    const response = await apiService.post('/InventoryMaster', toPayload(data));
+    const response = await apiService.post('/InventoryMaster', toApiPayload(data));
     return normalizeInventoryMasterResponse(response);
   },
 
   async update(id, data) {
-    const response = await apiService.put(`/InventoryMaster/${id}`, toPayload(data, id));
-    return normalizeInventoryMaster(response);
+    const payload = toApiPayload({ ...data, id });
+    const response = await apiService.put(`/InventoryMaster/${id}`, payload);
+    return normalizeInventoryMasterResponse(response);
   },
 
   async delete(id) {

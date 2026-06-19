@@ -1,104 +1,105 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { inventoryMasterService } from '../../services/inventoryMasterService';
-import { itemService } from '../../services/itemService';
-import { itemLocationService } from '../../services/itemLocationService';
 import { authService } from '../../services/authService';
 
 const InventoryMasterList = () => {
   const [records, setRecords] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
-  const [items, setItems] = useState([]);
-  const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   const [filters, setFilters] = useState({
+    name: '',
     itemId: '',
-    itemLocationId: '',
-    minQuantity: '',
+    locationId: '',
     status: '',
+    isActive: '',
   });
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-
-  const itemMap = useMemo(() => {
-    return items.reduce((m, x) => {
-      m[String(x.id)] = x.name;
-      return m;
-    }, {});
-  }, [items]);
-
-  const locationMap = useMemo(() => {
-    return locations.reduce((m, x) => {
-      m[String(x.id)] = x.name ?? x.locationName ?? x.itemLocationName;
-      return m;
-    }, {});
-  }, [locations]);
-
-  const applyFilters = useCallback(() => {
-    let filtered = records;
-
-    if (filters.itemId) {
-      filtered = filtered.filter((r) => String(r.itemId) === String(filters.itemId));
-    }
-
-    if (filters.itemLocationId) {
-      filtered = filtered.filter((r) => String(r.itemLocationId) === String(filters.itemLocationId));
-    }
-
-    if (filters.minQuantity) {
-      const v = Number(filters.minQuantity);
-      if (!Number.isNaN(v)) filtered = filtered.filter((r) => Number(r.quantity ?? 0) >= v);
-    }
-
-    if (filters.status) {
-      if (filters.status === 'active') filtered = filtered.filter((r) => r.isActive === true);
-      if (filters.status === 'inactive') filtered = filtered.filter((r) => r.isActive === false);
-    }
-
-    setFilteredRecords(filtered);
-  }, [records, filters]);
-
-  useEffect(() => {
-    applyFilters();
-  }, [applyFilters]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [filters]);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const [masters, itemsData, locationsData] = await Promise.all([
-        inventoryMasterService.getAll(),
-        itemService.getAll(),
-        itemLocationService.getAll(),
-      ]);
-      setRecords(masters);
-      setFilteredRecords(masters);
-      setItems(itemsData);
-      setLocations(locationsData);
-    } catch (err) {
-      setError(err.message || 'Failed to fetch inventory masters');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
+  const applyFilters = useMemo(() => {
+    let filtered = records;
+
+    if (filters.name) {
+      const q = filters.name.toLowerCase();
+      filtered = filtered.filter((r) => (r.name || '').toLowerCase().includes(q));
+    }
+
+    if (filters.itemId) {
+      filtered = filtered.filter((r) => String(r.itemId || '') === String(filters.itemId));
+    }
+
+    if (filters.locationId) {
+      filtered = filtered.filter((r) => String(r.locationId || '') === String(filters.locationId));
+    }
+
+    if (filters.status) {
+      filtered = filtered.filter((r) => String(r.status || '') === String(filters.status));
+    }
+
+    if (filters.isActive) {
+      const desired = filters.isActive === 'active';
+      filtered = filtered.filter((r) => Boolean(r.isActive) === desired);
+    }
+
+    return filtered;
+  }, [records, filters]);
+
+  useEffect(() => {
+    setFilteredRecords(applyFilters);
+    setCurrentPage(1);
+  }, [applyFilters]);
+
+  const totalPages = Math.ceil(filteredRecords.length / itemsPerPage) || 0;
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedRecords = filteredRecords.slice(startIndex, endIndex);
 
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      const data = await inventoryMasterService.getAll();
+      setRecords(Array.isArray(data) ? data : []);
+      setFilteredRecords(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setError(err.message || 'Failed to fetch InventoryMaster records');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const clearFilters = () => {
+    setFilters({ name: '', itemId: '', locationId: '', status: '', isActive: '' });
+  };
+
+  const handleFilterChange = (field, value) => {
+    setFilters((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleDelete = async (id, name) => {
+    const targetName = name || id;
+    if (!window.confirm(`Are you sure you want to delete "${targetName}"? This action cannot be undone.`)) return;
+
+    try {
+      await inventoryMasterService.delete(id);
+      setRecords((prev) => prev.filter((r) => String(r.id) !== String(id)));
+      setFilteredRecords((prev) => prev.filter((r) => String(r.id) !== String(id)));
+    } catch (err) {
+      setError(err.message || 'Failed to delete');
+    }
+  };
+
   const getPaginationNumbers = () => {
+    if (totalPages <= 1) return [1];
     const delta = 2;
     const range = [];
     const rangeWithDots = [];
@@ -120,21 +121,6 @@ const InventoryMasterList = () => {
     });
 
     return rangeWithDots;
-  };
-
-  const handleDelete = async (id, name) => {
-    if (!window.confirm(`Delete "${name}"?`)) return;
-    try {
-      await inventoryMasterService.delete(id);
-      setRecords(records.filter((r) => r.id !== id));
-      setFilteredRecords(filteredRecords.filter((r) => r.id !== id));
-    } catch (err) {
-      setError(err.message || 'Failed to delete');
-    }
-  };
-
-  const clearFilters = () => {
-    setFilters({ itemId: '', itemLocationId: '', minQuantity: '', status: '' });
   };
 
   if (loading) {
@@ -173,10 +159,10 @@ const InventoryMasterList = () => {
       </div>
 
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Inventory Master</h2>
-        <Link to="/inventorymasters/create" className="btn btn-primary">
+        <h2>Inventory Master Management</h2>
+        <Link to="/inventory-masters/create" className="btn btn-primary">
           <i className="bi bi-plus-circle me-2"></i>
-          Add New
+          Add New Inventory Master
         </Link>
       </div>
 
@@ -193,54 +179,44 @@ const InventoryMasterList = () => {
         <div className="card-body">
           <div className="row g-2 align-items-end">
             <div className="col">
-              <label className="form-label small">Item</label>
-              <select
-                className="form-select form-select-sm"
-                value={filters.itemId}
-                onChange={(e) => setFilters((p) => ({ ...p, itemId: e.target.value }))}
-              >
-                <option value="">All Items</option>
-                {items.map((it) => (
-                  <option key={it.id} value={it.id}>
-                    {it.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="col">
-              <label className="form-label small">Location</label>
-              <select
-                className="form-select form-select-sm"
-                value={filters.itemLocationId}
-                onChange={(e) => setFilters((p) => ({ ...p, itemLocationId: e.target.value }))}
-              >
-                <option value="">All Locations</option>
-                {locations.map((loc) => (
-                  <option key={loc.id} value={loc.id}>
-                    {loc.name ?? loc.locationName ?? 'Location'}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="col">
-              <label className="form-label small">Min Quantity</label>
+              <label className="form-label small">Name</label>
               <input
-                type="number"
+                type="text"
                 className="form-control form-control-sm"
-                value={filters.minQuantity}
-                onChange={(e) => setFilters((p) => ({ ...p, minQuantity: e.target.value }))}
-                placeholder="0"
+                placeholder="Search name..."
+                value={filters.name}
+                onChange={(e) => handleFilterChange('name', e.target.value)}
               />
             </div>
 
             <div className="col">
-              <label className="form-label small">Status</label>
+              <label className="form-label small">ItemId</label>
+              <input
+                type="text"
+                className="form-control form-control-sm"
+                placeholder="Filter by ItemId..."
+                value={filters.itemId}
+                onChange={(e) => handleFilterChange('itemId', e.target.value)}
+              />
+            </div>
+
+            <div className="col">
+              <label className="form-label small">LocationId</label>
+              <input
+                type="text"
+                className="form-control form-control-sm"
+                placeholder="Filter by LocationId..."
+                value={filters.locationId}
+                onChange={(e) => handleFilterChange('locationId', e.target.value)}
+              />
+            </div>
+
+            <div className="col">
+              <label className="form-label small">IsActive</label>
               <select
                 className="form-select form-select-sm"
-                value={filters.status}
-                onChange={(e) => setFilters((p) => ({ ...p, status: e.target.value }))}
+                value={filters.isActive}
+                onChange={(e) => handleFilterChange('isActive', e.target.value)}
               >
                 <option value="">All</option>
                 <option value="active">Active</option>
@@ -261,15 +237,16 @@ const InventoryMasterList = () => {
         <div className="card-header d-flex justify-content-between align-items-center">
           <h5 className="mb-0">All Inventory Masters</h5>
           <span className="badge bg-secondary">
-            Showing {paginatedRecords.length} of {filteredRecords.length}
+            Showing {paginatedRecords.length} of {filteredRecords.length} records
           </span>
         </div>
+
         <div className="card-body">
           {filteredRecords.length === 0 ? (
             <div className="text-center py-4">
               <i className="bi bi-box display-4 text-muted"></i>
-              <p className="text-muted mt-3">No records found</p>
-              <Link to="/inventorymasters/create" className="btn btn-outline-primary">
+              <p className="text-muted mt-3">No inventory master records found</p>
+              <Link to="/inventory-masters/create" className="btn btn-outline-primary">
                 Create First Record
               </Link>
             </div>
@@ -278,49 +255,59 @@ const InventoryMasterList = () => {
               <table className="table table-striped table-hover">
                 <thead>
                   <tr>
-                    <th>Item</th>
-                    <th>Location</th>
+                    <th>Name</th>
+                    <th>ItemId</th>
+                    <th>LocationId</th>
                     <th>Quantity</th>
+                    <th>Cost/Item</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {paginatedRecords.map((r) => {
-                    const name = `${itemMap[String(r.itemId)] ?? 'Item'} @ ${locationMap[String(r.itemLocationId)] ?? 'Location'}`;
-                    return (
-                      <tr key={r.id}>
-                        <td>
+                  {paginatedRecords.map((r) => (
+                    <tr key={r.id || r.Name || `${r.itemId}-${r.locationId}`}> 
+                      <td>
+                        <Link to={`/inventory-masters/${r.id}`} className="text-decoration-none">
+                          {r.name || 'N/A'}
+                        </Link>
+                      </td>
+                      <td>{r.itemId || 'N/A'}</td>
+                      <td>{r.locationId || 'N/A'}</td>
+                      <td>{r.quantity ?? 'N/A'}</td>
+                      <td>{r.costPerItem ?? 'N/A'}</td>
+                      <td>
+                        <span className={`badge ${r.isActive ? 'bg-success' : 'bg-danger'}`}>
+                          {r.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="btn-group" role="group">
                           <Link
-                            to={`/inventorymasters/${r.id}`}
-                            className="text-decoration-none"
+                            to={`/inventory-masters/${r.id}`}
+                            className="btn btn-sm btn-outline-primary"
+                            title="View"
                           >
-                            {itemMap[String(r.itemId)] ?? 'N/A'}
+                            <i className="bi bi-eye"></i>
                           </Link>
-                        </td>
-                        <td>{locationMap[String(r.itemLocationId)] ?? 'N/A'}</td>
-                        <td>{r.quantity ?? 0}</td>
-                        <td>
-                          <span className={`badge ${r.isActive ? 'bg-success' : 'bg-danger'}`}>
-                            {r.isActive ? 'Active' : 'Inactive'}
-                          </span>
-                        </td>
-                        <td>
-                          <div className="btn-group" role="group">
-                            <Link to={`/inventorymasters/${r.id}`} className="btn btn-sm btn-outline-primary" title="View">
-                              <i className="bi bi-eye"></i>
-                            </Link>
-                            <Link to={`/inventorymasters/${r.id}/edit`} className="btn btn-sm btn-outline-warning" title="Edit">
-                              <i className="bi bi-pencil"></i>
-                            </Link>
-                            <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(r.id, name)} title="Delete">
-                              <i className="bi bi-trash"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          <Link
+                            to={`/inventory-masters/${r.id}/edit`}
+                            className="btn btn-sm btn-outline-warning"
+                            title="Edit"
+                          >
+                            <i className="bi bi-pencil"></i>
+                          </Link>
+                          <button
+                            className="btn btn-sm btn-outline-danger"
+                            onClick={() => handleDelete(r.id, r.name)}
+                            title="Delete"
+                          >
+                            <i className="bi bi-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -349,26 +336,36 @@ const InventoryMasterList = () => {
               <nav>
                 <ul className="pagination mb-0">
                   <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-                    <button className="page-link" onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} disabled={currentPage === 1}>
+                    <button
+                      className="page-link"
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                    >
                       Previous
                     </button>
                   </li>
-                  {getPaginationNumbers().map((p, idx) => (
+
+                  {getPaginationNumbers().map((page, idx) => (
                     <li
                       key={idx}
-                      className={`page-item ${p === currentPage ? 'active' : ''} ${p === '...' ? 'disabled' : ''}`}
+                      className={`page-item ${page === currentPage ? 'active' : ''} ${page === '...' ? 'disabled' : ''}`}
                     >
-                      {p === '...' ? (
+                      {page === '...' ? (
                         <span className="page-link">...</span>
                       ) : (
-                        <button className="page-link" onClick={() => setCurrentPage(p)}>
-                          {p}
+                        <button className="page-link" onClick={() => setCurrentPage(page)}>
+                          {page}
                         </button>
                       )}
                     </li>
                   ))}
+
                   <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                    <button className="page-link" onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages}>
+                    <button
+                      className="page-link"
+                      onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                      disabled={currentPage === totalPages}
+                    >
                       Next
                     </button>
                   </li>

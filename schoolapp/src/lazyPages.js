@@ -160,8 +160,8 @@ export const StudentAttendanceList = lazy(() => import('./components/StudentAtte
 export const StudentAttendanceForm = lazy(() => import('./components/StudentAttendance/StudentAttendanceForm'));
 export const StudentAttendanceDetail = lazy(() => import('./components/StudentAttendance/StudentAttendanceDetail'));
 export const PlaceholderPage = lazy(() => import('./components/Placeholder/PlaceholderPage'));
-export const NavigationDemo = lazy(() => import('./pages/NavigationDemo'));
 export const InventoryMasterList = lazy(() => import('./components/InventoryMaster/InventoryMasterList'));
 export const InventoryMasterForm = lazy(() => import('./components/InventoryMaster/InventoryMasterForm'));
 export const InventoryMasterDetail = lazy(() => import('./components/InventoryMaster/InventoryMasterDetail'));
+export const NavigationDemo = lazy(() => import('./pages/NavigationDemo'));
 

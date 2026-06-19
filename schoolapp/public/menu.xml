@@ -88,7 +88,8 @@
       <item id="itemTypes" label="Item Types" path="/itemtypes" icon="bi-book" />
       <item id="inventoryitems" label="Inventory Items" path="/inventoryitems" icon="bi-book" />
       <item id="itemlocations" label="Item Locations" path="/itemlocations" icon="bi-geo-alt" />
-      <item id="inventorytransactions" label="Inventory Transactions" path="/inventorytransactions" icon="bi-book" />
+      <item id="inventorytransactions" label="Inventory Transactions" path="/inventoryitems" icon="bi-book" />
+      <item id="inventorymaster" label="Inventory Master" path="/inventory-masters" icon="bi-book" />
     </item>
     <item id="library" label="Library" icon="bi-building" category="administrative">
       <item id="booktypes" label="Book Types" path="/booktypes" icon="bi-book" />
