@@ -168,8 +168,12 @@ import {
   StudentAttendanceForm,
   StudentAttendanceDetail,
   PlaceholderPage,
-  NavigationDemo
+  NavigationDemo,
+  InventoryMasterList,
+  InventoryMasterForm,
+  InventoryMasterDetail
 } from './lazyPages';
+
 
 function RouteLoadFallback() {
   return (
@@ -618,8 +622,51 @@ function App() {
                   <ItemForm />
                 </MainTemplate>
               </ProtectedRoute>
+            }
+          />
+
+          {/* InventoryMaster Routes */}
+          <Route 
+            path="/inventorymasters" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <InventoryMasterList />
+                </MainTemplate>
+              </ProtectedRoute>
             } 
           />
+          <Route 
+            path="/inventorymasters/create" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <InventoryMasterForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inventorymasters/:id" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <InventoryMasterDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inventorymasters/:id/edit" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <InventoryMasterForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+
           <Route 
             path="/itemlocations" 
             element={

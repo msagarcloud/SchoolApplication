@@ -51,7 +51,7 @@ public class InventoryMasterService : IInventoryMasterService
     public async Task<InventoryMasterResponse?> UpdateAsync(Guid id, InventoryMasterRequest request)
     {
         var existingEntity = await _repository.GetByIdAsync(id);
-        if (existingEntity == null || existingEntity.IsDeleted)
+        if (existingEntity == null || (existingEntity.IsDeleted ?? false))
         {
             return null;
         }
@@ -75,7 +75,7 @@ public class InventoryMasterService : IInventoryMasterService
     public async Task<bool> DeleteAsync(Guid id)
     {
         var entity = await _repository.GetByIdAsync(id);
-        if (entity == null || entity.IsDeleted)
+        if (entity == null || (entity.IsDeleted ?? false))
         {
             return false;
         }
@@ -98,7 +98,7 @@ public class InventoryMasterService : IInventoryMasterService
             SchoolId = entity.SchoolId,
             IsActive = entity.IsActive,
             CreatedDate = entity.CreatedDate,
-            ModifiedDate = (DateTime)entity.ModifiedDate,
+            ModifiedDate = entity.ModifiedDate ?? entity.CreatedDate,
             Status = entity.Status,
             StatusMessage = entity.StatusMessage
         };
