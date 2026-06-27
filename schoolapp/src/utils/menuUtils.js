@@ -242,34 +242,9 @@ export const flattenSidebarMenuItems = (items) => {
  * @returns {Promise<Array>} - Array of menu items
  */
 export const getMenuItemsForRole = async (role, userPermissions = {}) => {
+  // Simplified: menu is driven ONLY by public/menu.xml (role-based)
   const normalizedRole = normalizeRole(role);
-
-  // First try loading a text/XML menu definition from public/menu.xml.
-  const xmlItems = await getMenuItemsFromXmlFile(normalizedRole, userPermissions);
-  if (xmlItems.length > 0) {
-    return xmlItems;
-  }
-
-  try {
-    const raw = await menuService.getMenuHierarchyForRole(normalizedRole);
-    const menuRoots = Array.isArray(raw) ? raw : [];
-    let convertedItems = convertDatabaseMenuItems(menuRoots);
-    convertedItems = filterMenuByPermissions(convertedItems, userPermissions);
-
-    if (convertedItems.length === 0) {
-      console.warn(
-        `[menu] No active DB menu items found for role "${normalizedRole}". Falling back to static menuConfig.`
-      );
-      return getMenuItemsForRoleFromConfig(normalizedRole, userPermissions);
-    }
-
-    return mergeDbMenuItemsWithConfig(convertedItems, normalizedRole, userPermissions);
-  } catch (error) {
-    console.warn(
-      `[menu] Failed to load DB menu for role "${normalizedRole}" (${error.message || error}). Falling back to static menuConfig.`
-    );
-    return getMenuItemsForRoleFromConfig(normalizedRole, userPermissions);
-  }
+  return getMenuItemsFromXmlFile(normalizedRole, userPermissions);
 };
 
 /**

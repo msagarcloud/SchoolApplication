@@ -43,7 +43,7 @@ export const menuConfig = {
   // Role-specific menu configurations
   roles: {
     Accounts: {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-people', label: 'Employee Management', path: '/employees', id: 'employees', category: 'users' },
         { icon: 'bi-currency-dollar', label: 'Salary Management', path: '/salary', id: 'salary', category: 'financial' },
@@ -53,7 +53,7 @@ export const menuConfig = {
     },
 
     'Super Administrator': {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-people', label: 'Employee Management', path: '/employees', id: 'employees', category: 'users' },
         { icon: 'bi-mortarboard', label: 'Student Management', path: '/students', id: 'students', category: 'academic' },
@@ -89,7 +89,7 @@ export const menuConfig = {
     },
 
     'Admission Coordinator': {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-person-plus', label: 'New Admissions', path: '/admissions', id: 'admissions', category: 'academic' },
         { icon: 'bi-mortarboard', label: 'Student Management', path: '/students', id: 'students', category: 'academic' },
@@ -101,7 +101,7 @@ export const menuConfig = {
     },
 
     Librarian: {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-book', label: 'Book Management', path: '/books', id: 'books', category: 'library' },
         { icon: 'bi-people', label: 'Member Management', path: '/members', id: 'members', category: 'library' },
@@ -112,7 +112,7 @@ export const menuConfig = {
     },
 
     Management: {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-graph-up', label: 'Analytics', path: '/analytics', id: 'analytics', category: 'reports' },
         { icon: 'bi-people', label: 'Staff Management', path: '/staff', id: 'staff', category: 'users' },
@@ -125,7 +125,7 @@ export const menuConfig = {
     },
 
     Parent: {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-person', label: 'My Children', path: '/children', id: 'children', category: 'personal' },
         { icon: 'bi-journal-text', label: 'Academic Progress', path: '/progress', id: 'progress', category: 'academic' },
@@ -136,7 +136,7 @@ export const menuConfig = {
     },
 
     Reception: {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-person-check', label: 'Visitor Management', path: '/visitors', id: 'visitors', category: 'administrative' },
         { icon: 'bi-telephone', label: 'Phone Calls', path: '/calls', id: 'calls', category: 'communication' },
@@ -147,7 +147,7 @@ export const menuConfig = {
     },
 
     Student: {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-journal-text', label: 'My Grades', path: '/grades', id: 'grades', category: 'academic' },
         { icon: 'bi-calendar-check', label: 'Attendance', path: '/attendance', id: 'attendance', category: 'academic' },
@@ -174,7 +174,7 @@ export const menuConfig = {
     },
 
     Teachers: {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-people', label: 'My Students', path: '/students', id: 'students', category: 'academic' },
         { icon: 'bi-journal-text', label: 'Grade Management', path: '/grades', id: 'grades', category: 'academic' },
@@ -191,7 +191,7 @@ export const menuConfig = {
     },
 
     'Academic Incharge': {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-people', label: 'Teacher Management', path: '/teachers', id: 'teachers', category: 'users' },
         { icon: 'bi-mortarboard', label: 'Student Management', path: '/students', id: 'students', category: 'academic' },
@@ -204,7 +204,7 @@ export const menuConfig = {
     },
 
     'Transport Manager': {
-      inherits: ['base.common'],
+      inherits: ['base.common', 'base.userManagement'],
       items: [
         { icon: 'bi-people', label: 'Driver Management', path: '/drivers', id: 'drivers', category: 'transport' },
         { icon: 'bi-truck', label: 'Vehicle Management', path: '/vehicles', id: 'vehicles', category: 'transport' },

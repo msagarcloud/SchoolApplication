@@ -3,34 +3,10 @@
   "WorkspaceRootPath": "E:\\Workspace\\SchoolApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|e:\\workspace\\schooldemo.infrastructure\\repositories\\timetableperiodrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|e:\\workspace\\schooldemo.infrastructure\\repositories\\booktypemasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|e:\\workspace\\schooldemo.infrastructure\\data\\schooldbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|e:\\workspace\\schooldemo.infrastructure\\data\\booktypemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\interfaces\\iacademicservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\controllers\\booktypemastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{53A190B0-2468-440B-7FDD-31F7A499034C}|..\\SchoolDemo.Application\\SchoolDemo.Application.csproj|e:\\workspace\\schooldemo.application\\services\\booktypemasterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\interfaces\\ibooktypemasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\entities\\booktypemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\controllers\\bloodgroupcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -40,140 +16,36 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SchoolDbContext.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Data\\SchoolDbContext.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Data\\SchoolDbContext.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Infrastructure\\Data\\SchoolDbContext.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Data\\SchoolDbContext.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAwwCwAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:13:37.431Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BookTypeMaster.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Data\\BookTypeMaster.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Data\\BookTypeMaster.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Infrastructure\\Data\\BookTypeMaster.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Data\\BookTypeMaster.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAwwA8AAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:12:25.842Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "BookTypeMasterRepository.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Repositories\\BookTypeMasterRepository.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\BookTypeMasterRepository.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Infrastructure\\Repositories\\BookTypeMasterRepository.cs*",
-              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\BookTypeMasterRepository.cs*",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAcwBUAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:09:56.478Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IBookTypeMasterRepository.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IBookTypeMasterRepository.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IBookTypeMasterRepository.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IBookTypeMasterRepository.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Domain\\Interfaces\\IBookTypeMasterRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:04:55.624Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "BookTypeMaster.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Entities\\BookTypeMaster.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\BookTypeMaster.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Domain\\Entities\\BookTypeMaster.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Domain\\Entities\\BookTypeMaster.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:02:30.956Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BookTypeMasterService.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Application\\Services\\BookTypeMasterService.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Application\\Services\\BookTypeMasterService.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Application\\Services\\BookTypeMasterService.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Application\\Services\\BookTypeMasterService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAYwBcAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:01:39.45Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IAcademicServices.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IAcademicServices.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IAcademicServices.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IAcademicServices.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Domain\\Interfaces\\IAcademicServices.cs",
-              "ViewState": "AgIAACsCAAAAAAAAAAAawDECAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T03:56:25.859Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "CategoryController.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Controllers\\CategoryController.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\CategoryController.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Controllers\\CategoryController.cs",
-              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\CategoryController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T03:55:28.614Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BookTypeMasterController.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Controllers\\BookTypeMasterController.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\BookTypeMasterController.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Controllers\\BookTypeMasterController.cs",
-              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\BookTypeMasterController.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAAFsAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T03:55:22.767Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Program.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Program.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Program.cs",
-              "RelativeToolTip": "..\\SchoolDemo.API\\Program.cs",
-              "ViewState": "AgIAAAoBAAAAAAAAAAAawBQBAAA+AAAAAAAAAA==",
+              "Title": "TimeTablePeriodRepository.cs",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Repositories\\TimeTablePeriodRepository.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\TimeTablePeriodRepository.cs",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.Infrastructure\\Repositories\\TimeTablePeriodRepository.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\TimeTablePeriodRepository.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAYwBYAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-15T15:58:07.427Z",
+              "WhenOpened": "2026-06-27T06:01:44.21Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BloodGroupController.cs",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Controllers\\BloodGroupController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\BloodGroupController.cs",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Controllers\\BloodGroupController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\BloodGroupController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-24T19:22:41.685Z",
               "EditorCaption": ""
             }
           ]

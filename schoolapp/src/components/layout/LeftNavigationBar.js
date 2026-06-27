@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getMenuItemsForRole } from '../../utils/menuUtils';
+import { getMenuItemsForRoleFromConfig } from '../../utils/menuUtils';
+
 
 // Stable empty object reference to prevent unnecessary re-renders
 const EMPTY_PERMISSIONS = {};
@@ -137,8 +138,9 @@ const LeftNavigationBar = ({
 
       setLoading(true);
       try {
-        const items = await getMenuItemsForRole(userRole, stablePermissions);
+        const items = getMenuItemsForRoleFromConfig(userRole, stablePermissions);
         setCurrentMenuItems(items || []);
+
       } catch (error) {
         console.error('Error loading menu items:', error);
         setCurrentMenuItems([]);
