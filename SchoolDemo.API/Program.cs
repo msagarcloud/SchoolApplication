@@ -276,6 +276,7 @@ builder.Services.AddScoped<IEmpCategoryRepository, EmpCategoryRepository>();
 builder.Services.AddScoped<IDesigRepository, DesigRepository>();
 builder.Services.AddScoped<IDeptRepository, DeptRepository>();
 builder.Services.AddScoped<IEmpTypeRepository, EmpTypeRepository>();
+builder.Services.AddScoped<IInventoryMasterRepository, InventoryMasterRepository>();
 
 // Master entity repositories
 builder.Services.AddScoped<IBloodGroupRepository, BloodGroupRepository>();
