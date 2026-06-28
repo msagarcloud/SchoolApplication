@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { enquiryMasterService } from '../../services/enquiryMasterService';
+import enquiryTypeService from '../../services/enquiryTypeService';
+import responseTypeService from '../../services/responseTypeService';
 import { useSessionData } from '../../hooks/useSessionData';
 
 const EnquiryMasterForm = () => {
@@ -39,6 +41,9 @@ const EnquiryMasterForm = () => {
   const [loading, setLoading] = useState(false);
   const [fetchLoading, setFetchLoading] = useState(isEditing);
   const [error, setError] = useState('');
+  const [enquiryTypes, setEnquiryTypes] = useState([]);
+  const [responseTypes, setResponseTypes] = useState([]);
+  const [dropdownsLoading, setDropdownsLoading] = useState(true);
 
   const fetchEnquiry = useCallback(async () => {
     try {
@@ -81,6 +86,26 @@ const EnquiryMasterForm = () => {
     if (isEditing) fetchEnquiry();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditing, fetchEnquiry]);
+
+  useEffect(() => {
+    const fetchDropdownData = async () => {
+      try {
+        setDropdownsLoading(true);
+        const [enqTypes, respTypes] = await Promise.all([
+          enquiryTypeService.getAll(),
+          responseTypeService.getAll()
+        ]);
+        setEnquiryTypes(enqTypes);
+        setResponseTypes(respTypes);
+      } catch (err) {
+        console.error('Failed to fetch dropdown data:', err);
+      } finally {
+        setDropdownsLoading(false);
+      }
+    };
+
+    fetchDropdownData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -205,13 +230,20 @@ const EnquiryMasterForm = () => {
               <div className="col-md-6">
                 <div className="mb-3">
                   <label className="form-label">EnquiryType</label>
-                  <input
-                    type="text"
-                    className="form-control"
+                  <select
+                    className="form-select"
                     name="EnquiryType"
                     value={formData.EnquiryType}
                     onChange={handleChange}
-                  />
+                    disabled={dropdownsLoading}
+                  >
+                    <option value="">Select Enquiry Type</option>
+                    {enquiryTypes.map((type) => (
+                      <option key={type.id} value={type.enquiryTypeName}>
+                        {type.enquiryTypeName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -296,13 +328,20 @@ const EnquiryMasterForm = () => {
               <div className="col-md-4">
                 <div className="mb-3">
                   <label className="form-label">ResponseType</label>
-                  <input
-                    type="text"
-                    className="form-control"
+                  <select
+                    className="form-select"
                     name="ResponseType"
                     value={formData.ResponseType}
                     onChange={handleChange}
-                  />
+                    disabled={dropdownsLoading}
+                  >
+                    <option value="">Select Response Type</option>
+                    {responseTypes.map((type) => (
+                      <option key={type.id} value={type.responseTypeName}>
+                        {type.responseTypeName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 

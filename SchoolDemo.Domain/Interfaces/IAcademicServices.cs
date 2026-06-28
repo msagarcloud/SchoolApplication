@@ -554,13 +554,13 @@ public class BookTypeMasterRequest
 public class BookTypeMasterResponse
 {
     public Guid Id { get; set; }
-    public string Name { get; set; } = null!;
-    public string Description { get; set; } = null!; 
+    public string? Name { get; set; }
+    public string? Description { get; set; }
     public bool IsActive { get; set; }
     public bool IsDeleted { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime? ModifiedDate { get; set; }
-    public string Status { get; set; } = null!;
+    public string? Status { get; set; }
     public string? StatusMessage { get; set; }
 }
 public class FeesCategoryResponse

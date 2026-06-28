@@ -130,6 +130,8 @@ public partial class SchoolDbContext : DbContext
 
     public virtual DbSet<EmpTypeMaster> EmpTypeMasters { get; set; }
 
+    public virtual DbSet<EnquiryType> EnquiryTypes { get; set; }
+
     public virtual DbSet<EnquiryMaster> EnquiryMasters { get; set; }
 
     public virtual DbSet<Error> Errors { get; set; }
@@ -214,6 +216,7 @@ public partial class SchoolDbContext : DbContext
 
     public virtual DbSet<ReligionMaster> ReligionMasters { get; set; }
 
+    public virtual DbSet<ResponseType> ResponseTypes { get; set; }
     public virtual DbSet<RoleMaster> RoleMasters { get; set; }
 
     public virtual DbSet<RolePrivilege> RolePrivileges { get; set; }

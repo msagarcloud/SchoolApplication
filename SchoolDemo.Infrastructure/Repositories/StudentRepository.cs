@@ -169,10 +169,10 @@ public class StudentRepository : IStudentRepository
     }
 
     // Paginated method for large datasets
-    public async Task<PagedResult<DomainStudentMaster>> GetStudentsPagedAsync(int page, int pageSize)
+    public async Task<PagedResponse<DomainStudentMaster>> GetStudentsPagedAsync(int page, int pageSize)
     {
         var result = await GetPagedAsync(page, pageSize);
-        return new PagedResult<DomainStudentMaster>
+        return new PagedResponse<DomainStudentMaster>
         {
             Data = result.Data,
             TotalCount = result.TotalCount,

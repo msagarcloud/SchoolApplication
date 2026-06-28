@@ -104,7 +104,7 @@ public class InventoryMasterService : IInventoryMasterService
 			SchoolId = entity.SchoolId,
 			IsActive = entity.IsActive,
 			CreatedDate = entity.CreatedDate,
-			ModifiedDate = (DateTime)entity.ModifiedDate,
+			ModifiedDate = entity.ModifiedDate,
 			Status = entity.Status,
 			StatusMessage = entity.StatusMessage
 		};

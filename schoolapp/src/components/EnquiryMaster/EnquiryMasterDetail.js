@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { enquiryMasterService } from '../../services/enquiryMasterService';
+import enquiryTypeService from '../../services/enquiryTypeService';
+import responseTypeService from '../../services/responseTypeService';
 
 const EnquiryMasterDetail = () => {
   const { id } = useParams();
@@ -9,6 +11,9 @@ const EnquiryMasterDetail = () => {
   const [enquiry, setEnquiry] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [enquiryTypes, setEnquiryTypes] = useState([]);
+  const [responseTypes, setResponseTypes] = useState([]);
+  const [dropdownsLoading, setDropdownsLoading] = useState(true);
 
   const fetchEnquiry = async () => {
     try {
@@ -25,6 +30,26 @@ const EnquiryMasterDetail = () => {
   useEffect(() => {
     fetchEnquiry();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const fetchDropdownData = async () => {
+      try {
+        setDropdownsLoading(true);
+        const [enqTypes, respTypes] = await Promise.all([
+          enquiryTypeService.getAll(),
+          responseTypeService.getAll()
+        ]);
+        setEnquiryTypes(enqTypes);
+        setResponseTypes(respTypes);
+      } catch (err) {
+        console.error('Failed to fetch dropdown data:', err);
+      } finally {
+        setDropdownsLoading(false);
+      }
+    };
+
+    fetchDropdownData();
   }, []);
 
   const handleDelete = async () => {
@@ -116,26 +141,96 @@ const EnquiryMasterDetail = () => {
             </div>
 
             <div className="card-body">
-              {[
-                ['EnquirerName', enquiry.EnquirerName],
-                ['ContactNumber', enquiry.ContactNumber],
-                ['EmailAddress', enquiry.EmailAddress],
-                ['EnquiryType', enquiry.EnquiryType],
-                ['Subject', enquiry.Subject],
-                ['Message', enquiry.Message],
-                ['Priority', enquiry.Priority],
-                ['Status', enquiry.Status],
-                ['StatusMessage', enquiry.StatusMessage],
-                ['EnquiryDate', fmtDate(enquiry.EnquiryDate)],
-                ['ResponseType', enquiry.ResponseType],
-                ['ResponseDate', fmtDate(enquiry.ResponseDate)],
-                ['ResponseMessage', enquiry.ResponseMessage],
-              ].map(([label, value]) => (
-                <div className="row mb-3" key={label}>
-                  <div className="col-sm-3 fw-bold">{label}:</div>
-                  <div className="col-sm-9">{value || 'N/A'}</div>
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">EnquirerName:</div>
+                <div className="col-sm-9">{enquiry.EnquirerName || 'N/A'}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">ContactNumber:</div>
+                <div className="col-sm-9">{enquiry.ContactNumber || 'N/A'}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">EmailAddress:</div>
+                <div className="col-sm-9">{enquiry.EmailAddress || 'N/A'}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">EnquiryType:</div>
+                <div className="col-sm-9">
+                  <select
+                    className="form-select"
+                    value={enquiry.EnquiryType || ''}
+                    disabled
+                  >
+                    <option value="">Select Enquiry Type</option>
+                    {enquiryTypes.map((type) => (
+                      <option key={type.id} value={type.enquiryTypeName}>
+                        {type.enquiryTypeName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-              ))}
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">Subject:</div>
+                <div className="col-sm-9">{enquiry.Subject || 'N/A'}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">Message:</div>
+                <div className="col-sm-9">{enquiry.Message || 'N/A'}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">Priority:</div>
+                <div className="col-sm-9">{enquiry.Priority || 'N/A'}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">Status:</div>
+                <div className="col-sm-9">{enquiry.Status || 'N/A'}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">StatusMessage:</div>
+                <div className="col-sm-9">{enquiry.StatusMessage || 'N/A'}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">EnquiryDate:</div>
+                <div className="col-sm-9">{fmtDate(enquiry.EnquiryDate)}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">ResponseType:</div>
+                <div className="col-sm-9">
+                  <select
+                    className="form-select"
+                    value={enquiry.ResponseType || ''}
+                    disabled
+                  >
+                    <option value="">Select Response Type</option>
+                    {responseTypes.map((type) => (
+                      <option key={type.id} value={type.responseTypeName}>
+                        {type.responseTypeName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">ResponseDate:</div>
+                <div className="col-sm-9">{fmtDate(enquiry.ResponseDate)}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-3 fw-bold">ResponseMessage:</div>
+                <div className="col-sm-9">{enquiry.ResponseMessage || 'N/A'}</div>
+              </div>
             </div>
           </div>
         </div>

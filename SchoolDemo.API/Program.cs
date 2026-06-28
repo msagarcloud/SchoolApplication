@@ -319,6 +319,8 @@ builder.Services.AddScoped<SchoolDemo.Domain.Interfaces.IItemRepository, SchoolD
 builder.Services.AddScoped<SchoolDemo.Domain.Interfaces.IItemTypeRepository, SchoolDemo.Infrastructure.Repositories.ItemTypeRepository>();
 builder.Services.AddScoped<IItemLocationRepository, ItemLocationRepository>();
 builder.Services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();
+builder.Services.AddScoped<IResponseTypeRepository, ResponseTypeRepository>();
+builder.Services.AddScoped<IEnquiryTypeRepository, EnquiryTypeRepository>();
 
 // Transport entity repositories
 builder.Services.AddScoped<IRouteMasterRepository, RouteMasterRepository>();
@@ -407,6 +409,8 @@ builder.Services.AddScoped<IStudentAttendanceRepository, StudentAttendanceReposi
 builder.Services.AddScoped<IStudentAttendanceService, StudentAttendanceService>();
 builder.Services.AddScoped<IItemLocationService, ItemLocationService>();
 builder.Services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
+builder.Services.AddScoped<IResponseTypeService, ResponseTypeService>();
+builder.Services.AddScoped<IEnquiryTypeService, EnquiryTypeService>();
 
 var app = builder.Build();
 
@@ -451,5 +455,7 @@ app.MapControllers();
 app.MapGet("/api/health", () =>
 	Results.Json(new { status = "healthy", utc = DateTime.UtcNow }))
 	.WithTags("Diagnostics");
+
+await app.RunAsync();
 
 await app.RunAsync();

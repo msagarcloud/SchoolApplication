@@ -20,16 +20,16 @@ public class PeriodClassController : ControllerBase
 		_timeTableService = timeTableService;
 	}
 
-	[HttpPost("generate-all/{academicYearId}")]
-	[ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
-	[ProducesResponseType(StatusCodes.Status400BadRequest)]
-	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 	/// <summary>
 	/// Generate timetables for all active classes for the provided academic year.
 	/// This will create timetables and corresponding period allocations.
 	/// </summary>
 	/// <param name="academicYearId">Academic year identifier</param>
 	/// <returns>Summary of generated timetables</returns>
+	[HttpPost("generate-all/{academicYearId}")]
+	[ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+	[ProducesResponseType(StatusCodes.Status400BadRequest)]
+	[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 	public async Task<IActionResult> GenerateForAllClasses(Guid academicYearId)
 	{
 		if (academicYearId == Guid.Empty)
