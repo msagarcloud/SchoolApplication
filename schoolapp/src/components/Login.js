@@ -1,6 +1,6 @@
 import React, { useReducer, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authServiceOptimized } from '../services/authServiceOptimized';
+import { authServiceOptimized } from '../services/authService';
 import LoginHeader from './layout/LoginHeader';
 import LoginFooter from './layout/LoginFooter';
 

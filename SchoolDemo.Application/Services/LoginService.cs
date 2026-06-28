@@ -14,39 +14,50 @@ public class LoginService : ILoginService
 
     public async Task<LoginResponse?> AuthenticateAsync(LoginRequest request)
     {
-        // Early validation
         if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
         {
             return null;
         }
 
-        var user = await _userRepository.GetByUserNameWithRelatedDataAsync(request.UserName);
+        // Step 1: Quick authentication check (minimal data)
+        var user = await _userRepository.GetByUserNameAsync(request.UserName);
         
-        // Fast validation checks
-        if (user == null || !user.IsActive || user.IsDeleted || user.UserPassword != request.Password)
+        if (user == null || !user.IsActive || user.IsDeleted)
         {
             return null;
         }
 
-        // Optimized response creation - reuse existing objects
+        // Step 2: Password verification
+        if (user.UserPassword != request.Password)
+        {
+            return null;
+        }
+
+        // Step 3: Load full user data only after successful authentication
+        var fullUser = await _userRepository.GetByUserNameWithRelatedDataAsync(request.UserName);
+        if (fullUser == null)
+        {
+            return null;
+        }
+
         return new LoginResponse
         {
-            Id = user.Id,
-            UserName = user.UserName,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            EmailAddress = user.EmailAddress,
-            IsActive = user.IsActive,
-            DesignationId = user.DesignationId,
-            Designation = user.Designation?.Name,
-            UserRoleId = user.UserRoleId,
-            UserRole = user.UserRole?.Name,
-            CompanyId = user.CompanyId,
-            CompanyName = user.Company?.CompanyName,
-            SchoolId = user.SchoolId,
-            SchoolName = user.School?.Name,
-            IsSuperUser = user.IsSuperUser,
-            Privileges = user.UserRole?.Privileges ?? new List<string>()
+            Id = fullUser.Id,
+            UserName = fullUser.UserName,
+            FirstName = fullUser.FirstName,
+            LastName = fullUser.LastName,
+            EmailAddress = fullUser.EmailAddress,
+            IsActive = fullUser.IsActive,
+            DesignationId = fullUser.DesignationId,
+            Designation = fullUser.Designation?.Name,
+            UserRoleId = fullUser.UserRoleId,
+            UserRole = fullUser.UserRole?.Name,
+            CompanyId = fullUser.CompanyId,
+            CompanyName = fullUser.Company?.CompanyName,
+            SchoolId = fullUser.SchoolId,
+            SchoolName = fullUser.School?.Name,
+            IsSuperUser = fullUser.IsSuperUser,
+            Privileges = fullUser.UserRole?.Privileges ?? new List<string>()
         };
     }
 }

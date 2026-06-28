@@ -5,7 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainTemplate from './components/layout/MainTemplate';
 
-import { authServiceOptimized } from './services/authServiceOptimized';
+import { authServiceOptimized } from './services/authService';
 import { sessionService } from './services/sessionService';
 import {
   Login,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import routeService from '../../services/routeService';
 import routeLocationService from '../../services/routeLocationService';
-import { authServiceOptimized } from '../../services/authServiceOptimized';
+import { authServiceOptimized } from '../../services/authService';
 
 const ZERO_GUID = '00000000-0000-0000-0000-000000000000';
 

@@ -250,8 +250,8 @@ builder.Services.AddPooledDbContextFactory<SchoolDbContext>(
 	poolSize: 64);
 
 // Repository registrations
-builder.Services.AddScoped<IUserRepository, UserRepositoryOptimized>();
-builder.Services.AddScoped<IStudentRepository, StudentRepositoryOptimized>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 builder.Services.AddScoped<ISchoolRepository, SchoolRepository>();
