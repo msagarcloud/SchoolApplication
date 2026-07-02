@@ -74,7 +74,6 @@ public class InventoryMasterService : IInventoryMasterService
 		return MapToResponse(updatedEntity);
 	}
 
-
 	public async Task<bool> DeleteAsync(Guid id)
 	{
 		var entity = await _repository.GetByIdAsync(id);
@@ -88,7 +87,6 @@ public class InventoryMasterService : IInventoryMasterService
 		await _repository.DeleteAsync(id);
 		return true;
 	}
-
 
 	private static InventoryMasterResponse MapToResponse(SchoolDemo.Domain.Entities.InventoryMaster entity)
 	{

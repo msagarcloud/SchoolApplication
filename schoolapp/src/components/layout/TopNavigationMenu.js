@@ -2,7 +2,6 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getGroupedMenuItemsForRole, groupMenuItemsForHorizontalNav, normalizeRole } from '../../utils/menuUtils';
 import { authService } from '../../services/authService';
-import menuService from '../../services/menuService';
 
 // Stable empty object reference to prevent infinite re-renders
 const EMPTY_PERMISSIONS = {};
@@ -297,34 +296,14 @@ const TopNavigationMenu = ({
               </li>
             ) : Object.keys(filteredGroupedItems).length === 0 ? (
                 <li className="nav-item">
-                  {(() => {
-                    const fetchError = menuService.getLastFetchError(normalizeRole(userRole || ''));
-                    if (fetchError) {
-                      return (
-                        <span className="navbar-text text-warning">
-                          <i className="bi bi-exclamation-triangle me-2"></i>
-                          Failed to load menu from server for role: {userRole} — using fallback configuration
-                        </span>
-                      );
-                    }
-
-                    return (
-                      <span className="navbar-text text-warning">
-                        <i className="bi bi-exclamation-triangle me-2"></i>
-                        No menus assigned to role: {userRole}
-                      </span>
-                    );
-                  })()}
+                  <span className="navbar-text text-muted">
+                    <i className="bi bi-info-circle me-2"></i>
+                    No menu items configured for role: {userRole}
+                  </span>
                 </li>
               ) : (
               Object.entries(filteredGroupedItems).map(([categoryKey, category]) => {
-                // Check if this is a hierarchical menu structure from database
-                const hasHierarchicalItems = category.items.some(item => item.children && item.children.length > 0);
-                
-                if (hasHierarchicalItems) {
-                  // Render hierarchical menu for database-driven structure
-                  return renderHierarchicalMenu(category.items);
-                } else if (!useGrouping && category.items.length === 1) {
+                if (!useGrouping && category.items.length === 1) {
                   // Render as single item if category has only one item and useGrouping is false
                   return renderSingleItem(category.items[0]);
                 } else {

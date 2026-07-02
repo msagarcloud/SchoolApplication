@@ -3,6 +3,15 @@
   "WorkspaceRootPath": "E:\\Workspace\\SchoolApplication\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{53A190B0-2468-440B-7FDD-31F7A499034C}|..\\SchoolDemo.Application\\SchoolDemo.Application.csproj|e:\\workspace\\schooldemo.application\\services\\inventorymasterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -22,28 +31,67 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Properties\\launchSettings.json",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-07-02T19:50:27.882Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Program.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Program.cs",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Program.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Program.cs",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAMwGcAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-02T19:50:21.248Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\appsettings.json",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\appsettings.json",
+              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\appsettings.json",
+              "RelativeToolTip": "..\\SchoolDemo.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-07-02T19:48:39.377Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "InventoryMasterService.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
               "ToolTip": "E:\\Workspace\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
               "RelativeToolTip": "..\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAqwGoAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-28T12:52:12.857Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "EnquiryType.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Data\\EnquiryType.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Data\\EnquiryType.cs",
@@ -51,12 +99,11 @@
               "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Data\\EnquiryType.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAA+wCUAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-28T11:45:41.238Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-28T11:45:41.238Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "ResponseType.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Data\\ResponseType.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Data\\ResponseType.cs",
@@ -68,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "SchoolDbContext.cs",
               "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Data\\SchoolDbContext.cs",
               "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Data\\SchoolDbContext.cs",

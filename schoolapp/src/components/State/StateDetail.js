@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { stateService } from '../../services/stateService';
 import { countryService } from '../../services/countryService';
 
@@ -11,9 +11,28 @@ const StateDetail = () => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchState();
-  }, [fetchState]);
+    const run = async () => {
+      try {
+        setLoading(true);
+        const data = await stateService.getById(id);
+        setState(data);
+        
+        // Fetch country details
+        if (data.countryId) {
+          const countryData = await countryService.getById(data.countryId);
+          setCountry(countryData);
+        }
+      } catch (err) {
+        setError(err.message || 'Failed to fetch state details');
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    run();
+  }, [id]);
+
+  // kept for backward compatibility (unused)
   const fetchState = async () => {
     try {
       setLoading(true);

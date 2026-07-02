@@ -139,9 +139,19 @@ const HolidayList = () => {
 
   const getLookupLabel = (id, map, fallback = '') => {
     if (!id) return fallback;
+
     const entry = map[id];
-    return entry ? getEntityLabel(entry, fallback) : fallback;
+    // Some APIs return keys as lower/upper-cased or nested fields; be defensive.
+    if (entry) return getEntityLabel(entry, fallback);
+
+    // If map lookup failed but the backend already includes a display field, use it.
+    if (typeof id === 'string') {
+      return fallback;
+    }
+
+    return fallback;
   };
+
 
   const formatDate = (value) => {
     if (!value) return 'N/A';

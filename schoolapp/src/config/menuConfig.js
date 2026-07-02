@@ -1,8 +1,6 @@
 // Menu configuration for different user roles
 // This file centralizes all menu items and their properties
 
-import timeTablePeriodService from "../services/timeTablePeriodService";
-
 // Category definitions for horizontal navigation
 export const menuCategories = {
   dashboard: { label: 'Dashboard', icon: 'bi-speedometer2', order: 1 },
