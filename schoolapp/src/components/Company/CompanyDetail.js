@@ -1,30 +1,53 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { companyService } from '../../services/companyService';
+import { cityService } from '../../services/cityService';
+import { stateService } from '../../services/stateService';
+import { countryService } from '../../services/countryService';
 
 const CompanyDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [company, setCompany] = useState(null);
+  const [cities, setCities] = useState([]);
+  const [states, setStates] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const fetchCompany = async () => {
-    try {
-      setLoading(true);
-      const data = await companyService.getById(id);
-      setCompany(data);
-    } catch (err) {
-      setError(err.message || 'Failed to fetch company details');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchCompany = async () => {
+      try {
+        setLoading(true);
+        const data = await companyService.getById(id);
+        setCompany(data);
+      } catch (err) {
+        setError(err.message || 'Failed to fetch company details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchLocationData = async () => {
+      try {
+        const [citiesData, statesData, countriesData] = await Promise.all([
+          cityService.getAll(),
+          stateService.getAll(),
+          countryService.getAll()
+        ]);
+
+        setCities(citiesData || []);
+        setStates(statesData || []);
+        setCountries(countriesData || []);
+      } catch (err) {
+        console.error('Failed to fetch location data', err);
+      }
+    };
+
     fetchCompany();
-  }, []);
+    fetchLocationData();
+  }, [id]);
 
   const handleDelete = async () => {
     if (window.confirm(`Are you sure you want to delete "${company.companyName}"? This action cannot be undone.`)) {
@@ -35,6 +58,19 @@ const CompanyDetail = () => {
         setError(err.message || 'Failed to delete company');
       }
     }
+  };
+
+  const cityName = company?.cityName || cities.find(city => city.id === company?.cityId)?.cityName || 'N/A';
+  const stateName = company?.stateName || states.find(state => state.id === company?.stateId)?.stateName || 'N/A';
+  const countryName = company?.countryName || countries.find(country => country.id === company?.countryId)?.countryName || 'N/A';
+
+  const formatDateTime = (value) => {
+    if (!value) return 'N/A';
+
+    const parsedDate = new Date(value);
+    if (Number.isNaN(parsedDate.getTime())) return value;
+
+    return parsedDate.toLocaleString();
   };
 
   if (loading) {
@@ -148,10 +184,6 @@ const CompanyDetail = () => {
                 </div>
               </div>
 
-              <div className="row mb-3">
-                <div className="col-sm-3 fw-bold">Status Message:</div>
-                <div className="col-sm-9">{company.statusMessage || 'N/A'}</div>
-              </div>
             </div>
           </div>
         </div>
@@ -163,50 +195,33 @@ const CompanyDetail = () => {
             </div>
             <div className="card-body">
               <div className="row mb-3">
-                <div className="col-sm-4 fw-bold">Company ID:</div>
-                <div className="col-sm-8">
-                  <small className="text-muted font-monospace">{company.id}</small>
-                </div>
-              </div>
-
-              <div className="row mb-3">
                 <div className="col-sm-4 fw-bold">Created Date:</div>
-                <div className="col-sm-8">
-                  {new Date(company.createdDate).toLocaleDateString()} at{' '}
-                  {new Date(company.createdDate).toLocaleTimeString()}
-                </div>
+                <div className="col-sm-8">{formatDateTime(company.createdDate)}</div>
               </div>
 
               <div className="row mb-3">
                 <div className="col-sm-4 fw-bold">Modified Date:</div>
+                <div className="col-sm-8">{company.modifiedDate ? formatDateTime(company.modifiedDate) : 'Not modified'}</div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-sm-4 fw-bold">City:</div>
                 <div className="col-sm-8">
-                  {company.modifiedDate ? (
-                    <>
-                      {new Date(company.modifiedDate).toLocaleDateString()} at{' '}
-                      {new Date(company.modifiedDate).toLocaleTimeString()}
-                    </>
-                  ) : 'Not modified'}
+                  <small className="text-muted font-monospace">{cityName}</small>
                 </div>
               </div>
 
               <div className="row mb-3">
-                <div className="col-sm-4 fw-bold">City ID:</div>
+                <div className="col-sm-4 fw-bold">State:</div>
                 <div className="col-sm-8">
-                  <small className="text-muted font-monospace">{company.cityId}</small>
+                  <small className="text-muted font-monospace">{stateName}</small>
                 </div>
               </div>
 
               <div className="row mb-3">
-                <div className="col-sm-4 fw-bold">State ID:</div>
+                <div className="col-sm-4 fw-bold">Country:</div>
                 <div className="col-sm-8">
-                  <small className="text-muted font-monospace">{company.stateId}</small>
-                </div>
-              </div>
-
-              <div className="row mb-3">
-                <div className="col-sm-4 fw-bold">Country ID:</div>
-                <div className="col-sm-8">
-                  <small className="text-muted font-monospace">{company.countryId}</small>
+                  <small className="text-muted font-monospace">{countryName}</small>
                 </div>
               </div>
 

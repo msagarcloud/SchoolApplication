@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getGroupedMenuItemsForRole, groupMenuItemsForHorizontalNav, normalizeRole } from '../../utils/menuUtils';
+import { getGroupedMenuItemsForRole, groupMenuItemsForHorizontalNav } from '../../utils/menuUtils';
 import { authService } from '../../services/authService';
 
 // Stable empty object reference to prevent infinite re-renders
@@ -156,31 +156,14 @@ const TopNavigationMenu = ({
           } ${isDropdownActive ? 'show' : ''}`}
           onClick={() => toggleDropdown(categoryKey)}
           aria-expanded={isDropdownActive ? "true" : "false"}
+          type="button"
         >
           <i className={`bi ${category.icon} me-1`}></i>
           {category.label}
         </button>
         {isDropdownActive && (
           <ul className="dropdown-menu show">
-            {category.items.map((item, index) => (
-              <li key={item.id || item.path || index}>
-                <button
-                  className={`dropdown-item ${
-                    isActive(item.path) ? 'active' : ''
-                  } ${item.isLogout ? 'text-danger' : ''}`}
-                  onClick={() => handleNavigation(item.path, item)}
-                  disabled={item.disabled}
-                >
-                  <i className={`bi ${item.icon} me-2`}></i>
-                  {item.label}
-                  {item.badge && (
-                    <span className={`badge bg-${item.badge.color || 'secondary'} ms-2`}>
-                      {item.badge.text}
-                    </span>
-                  )}
-                </button>
-              </li>
-            ))}
+            {renderHierarchicalMenu(category.items)}
           </ul>
         )}
       </li>
@@ -360,8 +343,8 @@ const TopNavigationMenu = ({
           min-width: 200px;
         }
         .dropdown-item.active {
-          background-color: #0d6efd;
-          color: white;
+          background-color: #e5e7eb;
+          color: #111827;
         }
         @media (max-width: 768px) {
           .navbar-nav {

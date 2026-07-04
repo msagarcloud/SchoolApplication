@@ -288,7 +288,8 @@ const LeftNavigationBar = ({
           background-color: rgba(255, 255, 255, 0.1) !important;
         }
         .nav-link.active {
-          background-color: #0d6efd !important;
+          background-color: #e5e7eb !important;
+          color: #111827 !important;
         }
         @media (max-width: 768px) {
           .sidebar {
