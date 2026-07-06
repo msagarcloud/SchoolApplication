@@ -15,7 +15,15 @@ export const companyService = {
       const response = await api.get(`/company/${id}`);
       return response.data;
     } catch (error) {
-      throw error.response?.data || { message: 'Failed to fetch company' };
+      // axios keeps useful details in error.response
+      const details = {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      };
+      // eslint-disable-next-line no-console
+      console.error('[companyService.getById] failed:', details);
+      throw error.response?.data || { message: 'Failed to fetch company', details };
     }
   },
 
