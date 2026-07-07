@@ -68,6 +68,8 @@ export const menuConfig = {
             { icon: 'bi-mortarboard', label: 'Schools', id: 'super-schools', category: 'general', path: '/schools' },
             { icon: 'bi-people', label: 'Users', id: 'super-users', category: 'general', path: '/users' },
             { icon: 'bi-shield-check', label: 'Roles', id: 'super-roles', category: 'general', path: '/roles' },
+            { icon: 'bi-shield-check', label: 'Privileges', id: 'super-privileges', category: 'general', path: '/privileges' },
+            { icon: 'bi-shield-check', label: 'Role Privileges', id: 'super-role-privileges', category: 'general', path: '/roleprivileges' },
             { icon: 'bi-sliders', label: 'System Parameters', id: 'super-system-parameters', category: 'general', path: '/system-parameters' },
             { icon: 'bi-calendar3', label: 'Task Schedules', id: 'super-task-schedules', category: 'general', path: '/settings' },
             { icon: 'bi-calendar-event', label: 'Holidays', id: 'super-holidays', category: 'general', path: '/holidays' }

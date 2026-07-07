@@ -3,7 +3,7 @@ import api from './authService';
 export const privilegeService = {
   async getAll() {
     try {
-      const response = await api.get('/privilege');
+      const response = await api.get('/Privilege');
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'Failed to fetch privileges' };
@@ -12,7 +12,7 @@ export const privilegeService = {
 
   async getById(id) {
     try {
-      const response = await api.get(`/privilege/${id}`);
+      const response = await api.get(`/Privilege/${id}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'Failed to fetch privilege' };
@@ -21,7 +21,7 @@ export const privilegeService = {
 
   async create(privilegeData) {
     try {
-      const response = await api.post('/privilege', privilegeData);
+      const response = await api.post('/Privilege', privilegeData);
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'Failed to create privilege' };
@@ -30,7 +30,7 @@ export const privilegeService = {
 
   async update(id, privilegeData) {
     try {
-      const response = await api.put(`/privilege/${id}`, privilegeData);
+      const response = await api.put(`/Privilege/${id}`, privilegeData);
       return response.data;
     } catch (error) {
       throw error.response?.data || { message: 'Failed to update privilege' };
@@ -39,10 +39,12 @@ export const privilegeService = {
 
   async delete(id) {
     try {
-      await api.delete(`/privilege/${id}`);
+      await api.delete(`/Privilege/${id}`);
       return true;
     } catch (error) {
       throw error.response?.data || { message: 'Failed to delete privilege' };
     }
   }
 };
+
+
