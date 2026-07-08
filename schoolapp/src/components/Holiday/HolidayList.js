@@ -29,9 +29,9 @@ const HolidayList = () => {
       const fromDate = holiday.fromDate?.toLowerCase() || '';
       const toDate = holiday.toDate?.toLowerCase() || '';
       const typeLabel = getLookupLabel(
-        holiday.typeId || holiday.TypeId || holiday.typeID || holiday.TypeID,
+                          holiday.typeId || holiday.TypeId || holiday.typeID || holiday.TypeID || holiday.holidayTypeId || holiday.holidayTypeID || holiday.holidayType,
         holidayTypes,
-        holiday.typeName || holiday.typeId || ''
+        holiday.holidayTypeName || holiday.typeId || ''
       ).toLowerCase();
       const yearLabel = getLookupLabel(
         holiday.year || holiday.Year,
@@ -274,9 +274,9 @@ const HolidayList = () => {
                       <td>{formatDate(holiday.toDate)}</td>
                       <td>
                         {getLookupLabel(
-                          holiday.typeId || holiday.TypeId || holiday.typeID || holiday.TypeID,
+                          holiday.typeId || holiday.TypeId || holiday.typeID || holiday.TypeID || holiday.holidayTypeId || holiday.holidayTypeID || holiday.holidayType,
                           holidayTypes,
-                          holiday.typeName || holiday.typeId || 'N/A'
+                          holiday.holidayTypeName || holiday.holidayType || 'N/A'
                         )}
                       </td>
                       <td>
