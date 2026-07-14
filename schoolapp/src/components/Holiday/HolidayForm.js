@@ -26,6 +26,39 @@ const HolidayForm = () => {
   const [fetchLoading, setFetchLoading] = useState(isEditing);
   const [error, setError] = useState('');
   const [holidayTypes, setHolidayTypes] = useState([]);
+
+  const normalizeHolidayType = (t) => {
+    if (!t) return { id: '', name: '' };
+
+    const id =
+      t.id ??
+      t.Id ??
+      t.holidayTypeId ??
+      t.holidayTypeID ??
+      t.typeId ??
+      t.TypeId ??
+      t.value ??
+      t.Value ??
+      '';
+
+    const name =
+      t.holidayTypeName ??
+      t.HolidayTypeName ??
+      t.name ??
+      t.Name ??
+      t.typeName ??
+      t.TypeName ??
+      t.label ??
+      t.Label ??
+      '';
+
+    return { id, name };
+  };
+
+  const normalizedHolidayTypes = Array.isArray(holidayTypes)
+    ? holidayTypes.map(normalizeHolidayType).filter((t) => t.id)
+    : [];
+
   const [sessions, setSessions] = useState([]);
   const [typesLoading, setTypesLoading] = useState(true);
   const [sessionsLoading, setSessionsLoading] = useState(true);
@@ -81,14 +114,29 @@ const HolidayForm = () => {
     try {
       setFetchLoading(true);
       const holiday = await holidayService.getById(id);
+
+      const resolvedTypeId =
+        holiday.typeId ??
+        holiday.holidayTypeId ??
+        holiday.type_id ??
+        holiday.TypeId ??
+        holiday.typeID ??
+        holiday.holidayTypeID ??
+        holiday.holidayType?.id ??
+        holiday.type?.id ??
+        holiday.holidayType?.Id ??
+        holiday.type?.Id ??
+        holiday.value ??
+        holiday.Value ??
+        holiday.id ??
+        '';
+
       setFormData({
         name: holiday.name || '',
         description: holiday.description || '',
-        // Holiday API may return the selected holiday type identifier under different fields.
-        // Prefer explicit holiday type id/name fields if present.
-        typeId: holiday.typeId || holiday.holidayTypeId || holiday.type_id || holiday.TypeId || holiday.typeID || holiday.holidayTypeID || holiday.id || '',
+        // Resolved from multiple possible backend field names.
+        typeId: resolvedTypeId,
         fromDate: normalizeDate(holiday.fromDate),
-
         toDate: normalizeDate(holiday.toDate),
         year: holiday.year?.toString() || new Date().getFullYear().toString(),
         isStaffApplicable: holiday.isStaffApplicable !== undefined ? holiday.isStaffApplicable : false,
@@ -102,6 +150,7 @@ const HolidayForm = () => {
       setFetchLoading(false);
     }
   }, [id]);
+
 
   useEffect(() => {
     fetchHolidayTypes();
@@ -271,14 +320,14 @@ const HolidayForm = () => {
                     required
                   >
                     <option value="">-- Select Type --</option>
-                    {holidayTypes.length === 0 ? (
+                    {normalizedHolidayTypes.length === 0 ? (
                       <option disabled value="">
                         No holiday types available
                       </option>
                     ) : (
-                      holidayTypes.map((type, index) => {
-                        const optionValue = type.id ?? type.Id ?? type.holidayTypeId ?? type.holidayTypeID ?? type.value ?? type.Value ?? '';
-                        const optionLabel = type.holidayTypeName ?? type.HolidayTypeName ?? type.name ?? type.Name ?? 'Unnamed Type';
+                      normalizedHolidayTypes.map((type, index) => {
+                        const optionValue = type.id;
+                        const optionLabel = type.name || 'Unnamed Type';
                         return (
                           <option key={optionValue || index} value={optionValue}>
                             {optionLabel}
@@ -286,6 +335,7 @@ const HolidayForm = () => {
                         );
                       })
                     )}
+
                   </select>
                 </div>
               </div>
