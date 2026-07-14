@@ -1,33 +1,81 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\Workspace\\SchoolApplication\\",
+  "WorkspaceRootPath": "C:\\Sagar\\School-Application\\SchoolApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\controllers\\employeeleavecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|e:\\workspace\\schooldemo.infrastructure\\repositories\\booktypemasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\controllers\\inventorymastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|e:\\workspace\\schooldemo.infrastructure\\data\\booktypemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\interfaces\\iacademicservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\controllers\\booktypemastercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\configuration.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{53A190B0-2468-440B-7FDD-31F7A499034C}|..\\SchoolDemo.Application\\SchoolDemo.Application.csproj|e:\\workspace\\schooldemo.application\\services\\booktypemasterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\interfaces\\ibooktypemasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|e:\\workspace\\schooldemo.domain\\entities\\booktypemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\controllers\\periodclasscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|e:\\workspace\\schooldemo.api\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|c:\\sagar\\school-application\\schooldemo.infrastructure\\repositories\\studentrepositoryoptimized.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|c:\\sagar\\school-application\\schooldemo.infrastructure\\repositories\\inventorymasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53A190B0-2468-440B-7FDD-31F7A499034C}|..\\SchoolDemo.Application\\SchoolDemo.Application.csproj|c:\\sagar\\school-application\\schooldemo.application\\services\\inventorymasterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|c:\\sagar\\school-application\\schooldemo.domain\\entities\\inventorymaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|c:\\sagar\\school-application\\schooldemo.infrastructure\\repositories\\routemasterrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\controllers\\desigcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\controllers\\deptcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|c:\\sagar\\school-application\\schooldemo.infrastructure\\repositories\\itemrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\controllers\\itemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\controllers\\itemtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{675EB80B-CC0F-FE30-3980-EE249FF69D93}|..\\SchoolDemo.API\\SchoolDemo.API.csproj|c:\\sagar\\school-application\\schooldemo.api\\schooldemo.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F77F6F12-614E-11F2-2CC0-F8DFC9E7DF23}|..\\SchoolDemo.Infrastructure\\SchoolDemo.Infrastructure.csproj|c:\\sagar\\school-application\\schooldemo.infrastructure\\repositories\\itemtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|c:\\sagar\\school-application\\schooldemo.domain\\entities\\itemmaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|c:\\sagar\\school-application\\schooldemo.domain\\interfaces\\iitemtyperepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|c:\\sagar\\school-application\\schooldemo.domain\\interfaces\\iitemrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CDBE73C9-10C4-CF46-4A58-CAE1B88CEFCF}|..\\SchoolDemo.Domain\\SchoolDemo.Domain.csproj|c:\\sagar\\school-application\\schooldemo.domain\\entities\\itemtypemaster.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -37,128 +85,311 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BookTypeMaster.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Data\\BookTypeMaster.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Data\\BookTypeMaster.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Infrastructure\\Data\\BookTypeMaster.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Data\\BookTypeMaster.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAwwA8AAAAnAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "EmployeeLeaveController.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\EmployeeLeaveController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\EmployeeLeaveController.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\EmployeeLeaveController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\EmployeeLeaveController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:12:25.842Z",
+              "WhenOpened": "2026-06-19T05:14:21.906Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BookTypeMasterRepository.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Infrastructure\\Repositories\\BookTypeMasterRepository.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\BookTypeMasterRepository.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Infrastructure\\Repositories\\BookTypeMasterRepository.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\BookTypeMasterRepository.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAcwEcAAAArAAAAAAAAAA==",
+              "Title": "InventoryMasterController.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\InventoryMasterController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\InventoryMasterController.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\InventoryMasterController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\InventoryMasterController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:09:56.478Z",
+              "WhenOpened": "2026-06-17T05:07:31.674Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "IBookTypeMasterRepository.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IBookTypeMasterRepository.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IBookTypeMasterRepository.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IBookTypeMasterRepository.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Domain\\Interfaces\\IBookTypeMasterRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:04:55.624Z",
-              "EditorCaption": ""
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\appsettings.Development.json",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\appsettings.Development.json",
+              "RelativeToolTip": "..\\SchoolDemo.API\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-17T05:03:56.889Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "BookTypeMaster.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Entities\\BookTypeMaster.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\BookTypeMaster.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Domain\\Entities\\BookTypeMaster.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Domain\\Entities\\BookTypeMaster.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAsAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "InventoryMasterRepository.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\InventoryMasterRepository.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\InventoryMasterRepository.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\InventoryMasterRepository.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\InventoryMasterRepository.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAMwGoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:02:30.956Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-06-17T04:52:52.154Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "InventoryMasterService.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Application\\Services\\InventoryMasterService.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAMwGoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T04:49:18.138Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "RouteMasterRepository.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\RouteMasterRepository.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\RouteMasterRepository.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\RouteMasterRepository.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\RouteMasterRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-16T09:07:46.254Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "BookTypeMasterService.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Application\\Services\\BookTypeMasterService.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Application\\Services\\BookTypeMasterService.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Application\\Services\\BookTypeMasterService.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Application\\Services\\BookTypeMasterService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAYwBcAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T04:01:39.45Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IAcademicServices.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IAcademicServices.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IAcademicServices.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.Domain\\Interfaces\\IAcademicServices.cs",
-              "RelativeToolTip": "..\\SchoolDemo.Domain\\Interfaces\\IAcademicServices.cs",
-              "ViewState": "AgIAACsCAAAAAAAAAAAawDECAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T03:56:25.859Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CategoryController.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Controllers\\CategoryController.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\CategoryController.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Controllers\\CategoryController.cs",
-              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\CategoryController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAgAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T03:55:28.614Z",
-              "EditorCaption": ""
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\appsettings.json",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\appsettings.json",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\appsettings.json",
+              "RelativeToolTip": "..\\SchoolDemo.API\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-15T07:10:12.85Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "BookTypeMasterController.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Controllers\\BookTypeMasterController.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\BookTypeMasterController.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Controllers\\BookTypeMasterController.cs",
-              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\BookTypeMasterController.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAAFsAAAAJAAAAAAAAAA==",
+              "Title": "Configuration.md",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Configuration.md",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Configuration.md",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Configuration.md",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Configuration.md",
+              "ViewState": "AgIAABcAAAAAAAAAAAArwDQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-06-15T07:14:26.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Program.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Program.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Program.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Program.cs",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAjwGEAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-18T03:55:22.767Z",
+              "WhenOpened": "2026-06-11T07:56:13.833Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "E:\\Workspace\\SchoolDemo.API\\Program.cs",
-              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Program.cs",
-              "ToolTip": "E:\\Workspace\\SchoolDemo.API\\Program.cs",
-              "RelativeToolTip": "..\\SchoolDemo.API\\Program.cs",
-              "ViewState": "AgIAAAoBAAAAAAAAAAAawBQBAAA+AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-06-15T07:18:53.598Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "InventoryMaster.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\InventoryMaster.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\InventoryMaster.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\InventoryMaster.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Domain\\Entities\\InventoryMaster.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAABMAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-15T15:58:07.427Z",
+              "WhenOpened": "2026-06-17T04:55:56.043Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StudentRepositoryOptimized.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\StudentRepositoryOptimized.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\StudentRepositoryOptimized.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\StudentRepositoryOptimized.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\StudentRepositoryOptimized.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAjwCkAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T04:58:30.639Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PeriodClassController.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\PeriodClassController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\PeriodClassController.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\PeriodClassController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\PeriodClassController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAACEAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-17T04:59:21.564Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "web.config",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\web.config",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\web.config",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\web.config",
+              "RelativeToolTip": "..\\SchoolDemo.API\\web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-06-15T07:10:00.976Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ItemRepository.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\ItemRepository.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\ItemRepository.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\ItemRepository.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\ItemRepository.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAqwGIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T10:46:05.6Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "ItemTypeController.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\ItemTypeController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\ItemTypeController.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\ItemTypeController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\ItemTypeController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T10:22:24.519Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ItemTypeRepository.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\ItemTypeRepository.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Infrastructure\\Repositories\\ItemTypeRepository.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Infrastructure\\Repositories\\ItemTypeRepository.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Infrastructure\\Repositories\\ItemTypeRepository.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAowFAAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T10:01:51.443Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ItemMaster.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Domain\\Entities\\ItemMaster.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T10:01:28.742Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ItemTypeMaster.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\ItemTypeMaster.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Entities\\ItemTypeMaster.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Entities\\ItemTypeMaster.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Domain\\Entities\\ItemTypeMaster.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T10:01:18.279Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "DesigController.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\DesigController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\DesigController.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\DesigController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\DesigController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T12:20:23.163Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IItemRepository.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Interfaces\\IItemRepository.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IItemRepository.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Interfaces\\IItemRepository.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Domain\\Interfaces\\IItemRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T10:01:00.199Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "IItemTypeRepository.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Interfaces\\IItemTypeRepository.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.Domain\\Interfaces\\IItemTypeRepository.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.Domain\\Interfaces\\IItemTypeRepository.cs",
+              "RelativeToolTip": "..\\SchoolDemo.Domain\\Interfaces\\IItemTypeRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T10:00:44.645Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "DeptController.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\DeptController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\DeptController.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\DeptController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\DeptController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T11:08:47.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "SchoolDemo.API.csproj",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\SchoolDemo.API.csproj",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\SchoolDemo.API.csproj",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\SchoolDemo.API.csproj",
+              "RelativeToolTip": "..\\SchoolDemo.API\\SchoolDemo.API.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-06-11T08:45:32.066Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ItemController.cs",
+              "DocumentMoniker": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\ItemController.cs",
+              "RelativeDocumentMoniker": "..\\SchoolDemo.API\\Controllers\\ItemController.cs",
+              "ToolTip": "C:\\Sagar\\School-Application\\SchoolDemo.API\\Controllers\\ItemController.cs",
+              "RelativeToolTip": "..\\SchoolDemo.API\\Controllers\\ItemController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-06-11T10:22:31.649Z"
             }
           ]
         }
