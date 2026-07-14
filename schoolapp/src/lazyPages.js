@@ -163,5 +163,8 @@ export const PlaceholderPage = lazy(() => import('./components/Placeholder/Place
 export const InventoryMasterList = lazy(() => import('./components/InventoryMaster/InventoryMasterList'));
 export const InventoryMasterForm = lazy(() => import('./components/InventoryMaster/InventoryMasterForm'));
 export const InventoryMasterDetail = lazy(() => import('./components/InventoryMaster/InventoryMasterDetail'));
+export const EmpLeaveDetailsList = lazy(() => import('./components/EmpLeaveDetails/EmpLeaveDetailsList'));
+export const EmpLeaveDetailsForm = lazy(() => import('./components/EmpLeaveDetails/EmpLeaveDetailsForm'));
+export const EmpLeaveDetailsDetail = lazy(() => import('./components/EmpLeaveDetails/EmpLeaveDetailsDetail'));
 export const NavigationDemo = lazy(() => import('./pages/NavigationDemo'));
 

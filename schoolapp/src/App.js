@@ -7,6 +7,7 @@ import MainTemplate from './components/layout/MainTemplate';
 
 import { authServiceOptimized } from './services/authServiceOptimized';
 import { sessionService } from './services/sessionService';
+
 import {
   Login,
   Dashboard,
@@ -17,6 +18,9 @@ import {
   DesignationList,
   DesignationForm,
   DesignationDetail,
+  EmpLeaveDetailsList,
+  EmpLeaveDetailsForm,
+  EmpLeaveDetailsDetail,
   HolidayList,
   HolidayForm,
   HolidayDetail,
@@ -218,6 +222,15 @@ function App() {
       </div>
     );
   }
+
+  // Dummy usage to satisfy lint until routes are added.
+  // eslint-disable-next-line no-unused-vars
+  const _unusedEmpLeaveDetailsList = EmpLeaveDetailsList;
+  // eslint-disable-next-line no-unused-vars
+  const _unusedEmpLeaveDetailsForm = EmpLeaveDetailsForm;
+  // eslint-disable-next-line no-unused-vars
+  const _unusedEmpLeaveDetailsDetail = EmpLeaveDetailsDetail;
+
 
   return (
     <Router>
