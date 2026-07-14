@@ -1,8 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getGroupedMenuItemsForRole, groupMenuItemsForHorizontalNav, normalizeRole } from '../../utils/menuUtils';
+import { getGroupedMenuItemsForRole, groupMenuItemsForHorizontalNav } from '../../utils/menuUtils';
 import { authService } from '../../services/authService';
-import menuService from '../../services/menuService';
 
 // Stable empty object reference to prevent infinite re-renders
 const EMPTY_PERMISSIONS = {};
@@ -157,31 +156,14 @@ const TopNavigationMenu = ({
           } ${isDropdownActive ? 'show' : ''}`}
           onClick={() => toggleDropdown(categoryKey)}
           aria-expanded={isDropdownActive ? "true" : "false"}
+          type="button"
         >
           <i className={`bi ${category.icon} me-1`}></i>
           {category.label}
         </button>
         {isDropdownActive && (
           <ul className="dropdown-menu show">
-            {category.items.map((item, index) => (
-              <li key={item.id || item.path || index}>
-                <button
-                  className={`dropdown-item ${
-                    isActive(item.path) ? 'active' : ''
-                  } ${item.isLogout ? 'text-danger' : ''}`}
-                  onClick={() => handleNavigation(item.path, item)}
-                  disabled={item.disabled}
-                >
-                  <i className={`bi ${item.icon} me-2`}></i>
-                  {item.label}
-                  {item.badge && (
-                    <span className={`badge bg-${item.badge.color || 'secondary'} ms-2`}>
-                      {item.badge.text}
-                    </span>
-                  )}
-                </button>
-              </li>
-            ))}
+            {renderHierarchicalMenu(category.items)}
           </ul>
         )}
       </li>
@@ -297,34 +279,14 @@ const TopNavigationMenu = ({
               </li>
             ) : Object.keys(filteredGroupedItems).length === 0 ? (
                 <li className="nav-item">
-                  {(() => {
-                    const fetchError = menuService.getLastFetchError(normalizeRole(userRole || ''));
-                    if (fetchError) {
-                      return (
-                        <span className="navbar-text text-warning">
-                          <i className="bi bi-exclamation-triangle me-2"></i>
-                          Failed to load menu from server for role: {userRole} — using fallback configuration
-                        </span>
-                      );
-                    }
-
-                    return (
-                      <span className="navbar-text text-warning">
-                        <i className="bi bi-exclamation-triangle me-2"></i>
-                        No menus assigned to role: {userRole}
-                      </span>
-                    );
-                  })()}
+                  <span className="navbar-text text-muted">
+                    <i className="bi bi-info-circle me-2"></i>
+                    No menu items configured for role: {userRole}
+                  </span>
                 </li>
               ) : (
               Object.entries(filteredGroupedItems).map(([categoryKey, category]) => {
-                // Check if this is a hierarchical menu structure from database
-                const hasHierarchicalItems = category.items.some(item => item.children && item.children.length > 0);
-                
-                if (hasHierarchicalItems) {
-                  // Render hierarchical menu for database-driven structure
-                  return renderHierarchicalMenu(category.items);
-                } else if (!useGrouping && category.items.length === 1) {
+                if (!useGrouping && category.items.length === 1) {
                   // Render as single item if category has only one item and useGrouping is false
                   return renderSingleItem(category.items[0]);
                 } else {
@@ -381,8 +343,8 @@ const TopNavigationMenu = ({
           min-width: 200px;
         }
         .dropdown-item.active {
-          background-color: #0d6efd;
-          color: white;
+          background-color: #e5e7eb;
+          color: #111827;
         }
         @media (max-width: 768px) {
           .navbar-nav {

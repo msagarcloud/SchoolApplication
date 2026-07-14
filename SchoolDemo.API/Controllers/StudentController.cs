@@ -18,6 +18,7 @@ public class StudentController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [OutputCache(Duration = 300)]
     public async Task<IActionResult> GetById(Guid id)
     {
         var entity = await _service.GetByIdAsync(id);

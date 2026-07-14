@@ -21,7 +21,7 @@ const CompanyForm = () => {
     isActive: true,
     isDeleted: false,
     establishmentYear: '',
-    JudistrictionArea: ''
+    judistrictionArea: ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -50,7 +50,7 @@ const CompanyForm = () => {
         isActive: company.isActive !== undefined ? company.isActive : true,
         isDeleted: company.isDeleted !== undefined ? company.isDeleted : false,
         establishmentYear: company.establishmentYear || '',
-        JudistrictionArea: company.JudistrictionArea || ''
+        judistrictionArea: company.judistrictionArea || company.JudistrictionArea || ''
       });
       
       // Load states and cities if country and state are selected
@@ -90,7 +90,7 @@ const CompanyForm = () => {
         countryId: finalValue,
         stateId: '',
         cityId: '',
-        JudistrictionArea: ''
+        judistrictionArea: ''
       }));
       if (finalValue) {
         fetchStates(finalValue);
@@ -103,7 +103,7 @@ const CompanyForm = () => {
         ...prev,
         stateId: finalValue,
         cityId: '',
-        JudistrictionArea: ''
+        judistrictionArea: ''
       }));
       if (finalValue) {
         fetchCities(finalValue);
@@ -114,7 +114,7 @@ const CompanyForm = () => {
       setFormData(prev => ({
         ...prev,
         cityId: finalValue,
-        JudistrictionArea: finalValue // Jurisdiction Area mirrors City
+        judistrictionArea: finalValue // Jurisdiction Area mirrors City
       }));
     }
     
@@ -149,11 +149,17 @@ const CompanyForm = () => {
       }
 
       const companyData = {
-        ...formData,
+        companyName: formData.companyName.trim(),
+        description: formData.description,
+        address: formData.address,
         cityId: formData.cityId || '00000000-0000-0000-0000-000000000000',
         stateId: formData.stateId || '00000000-0000-0000-0000-000000000000',
         countryId: formData.countryId || '00000000-0000-0000-0000-000000000000',
-        JudistrictionArea: formData.JudistrictionArea || '00000000-0000-0000-0000-000000000000'
+        zipCode: formData.zipCode,
+        email: formData.email.trim(),
+        establishmentYear: formData.establishmentYear ? String(formData.establishmentYear) : '',
+        // JurisdictionArea mirrors City (UI label); keep consistent with backend field name.
+        judistrictionArea: formData.judistrictionArea || '00000000-0000-0000-0000-000000000000'
       };
 
       if (isEditing) {
@@ -403,14 +409,14 @@ const CompanyForm = () => {
             <div className="row">
               <div className="col-md-4">
                 <div className="mb-3">
-                  <label htmlFor="JudistrictionArea" className="form-label">
+                  <label htmlFor="judistrictionArea" className="form-label">
                     Jurisdiction Area
                   </label>
                   <select
                     className="form-select"
-                    id="JudistrictionArea"
-                    name="JudistrictionArea"
-                    value={formData.JudistrictionArea}
+                    id="judistrictionArea"
+                    name="judistrictionArea"
+                    value={formData.judistrictionArea}
                     onChange={handleChange}
                     disabled={locationLoading || !formData.stateId}
                   >

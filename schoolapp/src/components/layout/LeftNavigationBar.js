@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getMenuItemsForRole } from '../../utils/menuUtils';
+import { getMenuItemsForRoleFromConfig } from '../../utils/menuUtils';
+
 
 // Stable empty object reference to prevent unnecessary re-renders
 const EMPTY_PERMISSIONS = {};
@@ -137,8 +138,9 @@ const LeftNavigationBar = ({
 
       setLoading(true);
       try {
-        const items = await getMenuItemsForRole(userRole, stablePermissions);
+        const items = getMenuItemsForRoleFromConfig(userRole, stablePermissions);
         setCurrentMenuItems(items || []);
+
       } catch (error) {
         console.error('Error loading menu items:', error);
         setCurrentMenuItems([]);
@@ -286,7 +288,8 @@ const LeftNavigationBar = ({
           background-color: rgba(255, 255, 255, 0.1) !important;
         }
         .nav-link.active {
-          background-color: #0d6efd !important;
+          background-color: #e5e7eb !important;
+          color: #111827 !important;
         }
         @media (max-width: 768px) {
           .sidebar {

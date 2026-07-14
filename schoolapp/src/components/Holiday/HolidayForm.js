@@ -52,6 +52,8 @@ const HolidayForm = () => {
     try {
       setTypesLoading(true);
       const data = await holidayTypeService.getAll();
+      // Debugging: verify response shape used to populate dropdown
+      console.log('holidayTypes raw:', data);
       setHolidayTypes(data || []);
     } catch (err) {
       console.log('Holiday types unavailable:', err.message);
@@ -82,8 +84,11 @@ const HolidayForm = () => {
       setFormData({
         name: holiday.name || '',
         description: holiday.description || '',
-        typeId: holiday.typeId || '',
+        // Holiday API may return the selected holiday type identifier under different fields.
+        // Prefer explicit holiday type id/name fields if present.
+        typeId: holiday.typeId || holiday.holidayTypeId || holiday.type_id || holiday.TypeId || holiday.typeID || holiday.holidayTypeID || holiday.id || '',
         fromDate: normalizeDate(holiday.fromDate),
+
         toDate: normalizeDate(holiday.toDate),
         year: holiday.year?.toString() || new Date().getFullYear().toString(),
         isStaffApplicable: holiday.isStaffApplicable !== undefined ? holiday.isStaffApplicable : false,
@@ -272,8 +277,8 @@ const HolidayForm = () => {
                       </option>
                     ) : (
                       holidayTypes.map((type, index) => {
-                        const optionValue = type.Id ?? type.id ?? type.value ?? type.Value ?? '';
-                        const optionLabel = type.HolidayTypeName ?? type.holidayTypeName ?? type.name ?? type.Name ?? 'Unnamed Type';
+                        const optionValue = type.id ?? type.Id ?? type.holidayTypeId ?? type.holidayTypeID ?? type.value ?? type.Value ?? '';
+                        const optionLabel = type.holidayTypeName ?? type.HolidayTypeName ?? type.name ?? type.Name ?? 'Unnamed Type';
                         return (
                           <option key={optionValue || index} value={optionValue}>
                             {optionLabel}

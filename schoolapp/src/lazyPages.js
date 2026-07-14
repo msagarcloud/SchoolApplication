@@ -147,7 +147,20 @@ export const StudyMaterialDetail = lazy(() => import('./components/StudyMaterial
 export const VisitorList = lazy(() => import('./components/Visitor/VisitorList'));
 export const VisitorForm = lazy(() => import('./components/Visitor/VisitorForm'));
 export const VisitorDetail = lazy(() => import('./components/Visitor/VisitorDetail'));
+
+// Reception pages
+export const CallsList = lazy(() => import('./components/Reception/CallsList'));
+export const MailList = lazy(() => import('./components/Reception/MailList'));
+export const AppointmentsList = lazy(() => import('./components/Reception/AppointmentsList'));
+export const InquiriesList = lazy(() => import('./components/Reception/InquiriesList'));
+
+// EnquiryMaster CRUD
+export const EnquiryMasterList = lazy(() => import('./components/EnquiryMaster/EnquiryMasterList'));
+export const EnquiryMasterForm = lazy(() => import('./components/EnquiryMaster/EnquiryMasterForm'));
+export const EnquiryMasterDetail = lazy(() => import('./components/EnquiryMaster/EnquiryMasterDetail'));
+
 export const FeeCategoryList = lazy(() => import('./components/FeeCategory/FeeCategoryList'));
+
 export const FeeCategoryForm = lazy(() => import('./components/FeeCategory/FeeCategoryForm'));
 export const FeeCategoryDetail = lazy(() => import('./components/FeeCategory/FeeCategoryDetail'));
 export const DiscountCategoryList = lazy(() => import('./components/DiscountCategory/DiscountCategoryList'));
@@ -167,4 +180,7 @@ export const EmpLeaveDetailsList = lazy(() => import('./components/EmpLeaveDetai
 export const EmpLeaveDetailsForm = lazy(() => import('./components/EmpLeaveDetails/EmpLeaveDetailsForm'));
 export const EmpLeaveDetailsDetail = lazy(() => import('./components/EmpLeaveDetails/EmpLeaveDetailsDetail'));
 export const NavigationDemo = lazy(() => import('./pages/NavigationDemo'));
+
+
+
 

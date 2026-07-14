@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using SchoolDemo.Domain.Entities;
 using SchoolDemo.Domain.Interfaces;
 using SchoolDemo.Infrastructure.Data;
@@ -8,96 +9,117 @@ namespace SchoolDemo.Infrastructure.Repositories;
 public class UserRepository : IUserRepository
 {
     private readonly SchoolDbContext _context;
+    private readonly IMemoryCache _cache;
 
-    public UserRepository(SchoolDbContext context)
+    public UserRepository(SchoolDbContext context, IMemoryCache cache)
     {
         _context = context;
+        _cache = cache;
     }
 
     public async Task<User?> GetByUserNameAsync(string userName)
     {
+        var cacheKey = $"user_basic_{userName}";
+        if (_cache.TryGetValue(cacheKey, out User? cachedUser))
+        {
+            return cachedUser;
+        }
+
         var userDetail = await _context.UserDetails
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.UserName == userName);
         
-        return MapToDomainEntity(userDetail);
+        var user = MapToDomainEntity(userDetail);
+        
+        if (user != null)
+        {
+            _cache.Set(cacheKey, user, TimeSpan.FromMinutes(30));
+        }
+        
+        return user;
     }
 
     public async Task<User?> GetByUserNameWithRelatedDataAsync(string userName)
     {
-        // Single optimized query with selective includes
+        var cacheKey = $"user_full_{userName}";
+        if (_cache.TryGetValue(cacheKey, out User? cachedUser))
+        {
+            return cachedUser;
+        }
+
+        // First, get basic user data for authentication (optimized query)
         var userDetail = await _context.UserDetails
             .AsNoTracking()
-            .Where(u => u.UserName == userName && u.IsActive && !u.IsDeleted)
-            .Select(u => new
-            {
-                // Basic user fields for authentication
-                u.Id,
-                u.UserName,
-                u.UserPassword,
-                u.FirstName,
-                u.LastName,
-                u.EmailAddress,
-                u.IsActive,
-                u.IsDeleted,
-                u.DesignationId,
-                u.UserRoleId,
-                u.CompanyId,
-                u.SchoolId,
-                u.IsSuperUser,
-                
-                // Only include essential related data
-                DesignationName = u.Designation != null ? u.Designation.Name : null,
-                UserRoleName = u.UserRole != null ? u.UserRole.Name : null,
-                CompanyName = u.Company != null ? u.Company.CompanyName : null,
-                SchoolName = u.School != null ? u.School.Name : null,
-                
-                // Only include privilege names (not full objects)
-                PrivilegeNames = u.UserRole != null ? 
-                    u.UserRole.RolePrivileges.Select(rp => rp.Privilege != null ? rp.Privilege.PrivilegeName : null).ToList() 
-                    : new List<string?>()
-            })
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(u => u.UserName == userName);
         
-        if (userDetail == null)
+        if (userDetail == null || !userDetail.IsActive || userDetail.IsDeleted)
             return null;
         
-        return new User
+        // Only load related data if authentication passes
+        userDetail = await _context.UserDetails
+            .AsNoTracking()
+            .Include(u => u.Designation)
+            .Include(u => u.UserRole)
+                .ThenInclude(r => r!.RolePrivileges)
+                    .ThenInclude(rp => rp.Privilege)
+            .Include(u => u.Company)
+            .Include(u => u.School)
+            .FirstOrDefaultAsync(u => u.Id == userDetail.Id);
+        
+        var user = MapToDomainEntityWithRelatedDataOptimized(userDetail);
+        
+        if (user != null)
         {
-            Id = userDetail.Id,
-            UserName = userDetail.UserName,
-            FirstName = userDetail.FirstName,
-            LastName = userDetail.LastName,
-            EmailAddress = userDetail.EmailAddress,
-            IsActive = userDetail.IsActive,
-            IsDeleted = userDetail.IsDeleted,
-            DesignationId = userDetail.DesignationId,
-            UserRoleId = userDetail.UserRoleId,
-            CompanyId = userDetail.CompanyId,
-            SchoolId = userDetail.SchoolId,
-            IsSuperUser = userDetail.IsSuperUser,
-            Designation = userDetail.DesignationName != null ? new Designation { Name = userDetail.DesignationName } : null,
-            UserRole = userDetail.UserRoleName != null ? new Role { Name = userDetail.UserRoleName, Privileges = userDetail.PrivilegeNames.Where(p => p != null).Select(p => p!).ToList() } : null,
-            Company = userDetail.CompanyName != null ? new Company { CompanyName = userDetail.CompanyName } : null,
-            School = userDetail.SchoolName != null ? new School { Name = userDetail.SchoolName } : null
-        };
+            _cache.Set(cacheKey, user, TimeSpan.FromMinutes(15));
+        }
+        
+        return user;
     }
 
     public async Task<User?> GetByIdAsync(Guid id)
     {
+        var cacheKey = $"user_by_id_{id}";
+        if (_cache.TryGetValue(cacheKey, out User? cachedUser))
+        {
+            return cachedUser;
+        }
+
         var userDetail = await _context.UserDetails
+            .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Id == id);
         
-        return MapToDomainEntity(userDetail);
+        var user = MapToDomainEntity(userDetail);
+        
+        if (user != null)
+        {
+            _cache.Set(cacheKey, user, TimeSpan.FromMinutes(30));
+        }
+        
+        return user;
     }
 
     public async Task<IEnumerable<User>> GetAllAsync()
     {
+        var cacheKey = "users_all";
+        if (_cache.TryGetValue(cacheKey, out IEnumerable<User>? cachedUsers))
+        {
+            return cachedUsers!;
+        }
+
         var userDetails = await _context.UserDetails
+            .AsNoTracking()
             .Where(u => !u.IsDeleted)
             .ToListAsync();
         
-        return userDetails.Select(MapToDomainEntity).Where(u => u != null)!;
+        var users = userDetails
+            .Select(MapToDomainEntity)
+            .Where(u => u != null)
+            .Select(u => u!)
+            .ToList();
+
+        _cache.Set(cacheKey, users, TimeSpan.FromMinutes(10));
+        
+        return users;
     }
 
     public async Task<User> AddAsync(User user)
@@ -105,6 +127,10 @@ public class UserRepository : IUserRepository
         var userDetail = MapToInfrastructureEntity(user);
         await _context.UserDetails.AddAsync(userDetail);
         await _context.SaveChangesAsync();
+        
+        // Clear cache
+        ClearUserCache(user.UserName);
+        
         return MapToDomainEntity(userDetail)!;
     }
 
@@ -113,6 +139,10 @@ public class UserRepository : IUserRepository
         var userDetail = MapToInfrastructureEntity(user);
         _context.UserDetails.Update(userDetail);
         await _context.SaveChangesAsync();
+        
+        // Clear cache
+        ClearUserCache(user.UserName);
+        
         return MapToDomainEntity(userDetail)!;
     }
 
@@ -125,7 +155,17 @@ public class UserRepository : IUserRepository
         {
             userDetail.IsDeleted = true;
             await UpdateAsync(MapToDomainEntity(userDetail)!);
+            
+            // Clear cache
+            ClearUserCache(userDetail.UserName);
         }
+    }
+
+    private void ClearUserCache(string userName)
+    {
+        _cache.Remove($"user_basic_{userName}");
+        _cache.Remove($"user_full_{userName}");
+        _cache.Remove("users_all");
     }
 
     private static User? MapToDomainEntity(UserDetail? userDetail)
@@ -182,31 +222,20 @@ public class UserRepository : IUserRepository
         };
     }
 
-    private static User? MapToDomainEntityWithRelatedData(UserDetail? userDetail)
+    private static User? MapToDomainEntityWithRelatedDataOptimized(UserDetail? userDetail)
     {
         if (userDetail == null) return null;
 
         var user = MapToDomainEntity(userDetail);
         if (user == null) return null;
 
-        // Map related entities
+        // Optimized mapping - only map essential data
         if (userDetail.Designation != null)
         {
             user.Designation = new Designation
             {
                 Id = userDetail.Designation.Id,
-                Code = userDetail.Designation.Code,
-                Name = userDetail.Designation.Name,
-                CompanyId = userDetail.Designation.CompanyId,
-                SchoolId = userDetail.Designation.SchoolId,
-                IsActive = userDetail.Designation.IsActive,
-                IsDeleted = userDetail.Designation.IsDeleted,
-                CreatedBy = userDetail.Designation.CreatedBy,
-                CreatedDate = userDetail.Designation.CreatedDate,
-                ModifiedBy = userDetail.Designation.ModifiedBy,
-                ModifiedDate = userDetail.Designation.ModifiedDate,
-                Status = userDetail.Designation.Status,
-                StatusMessage = userDetail.Designation.StatusMessage
+                Name = userDetail.Designation.Name
             };
         }
 
@@ -217,18 +246,8 @@ public class UserRepository : IUserRepository
                 Id = userDetail.UserRole.Id,
                 Name = userDetail.UserRole.Name,
                 Description = userDetail.UserRole.Description,
-                CompanyId = userDetail.UserRole.CompanyId,
-                SchoolId = userDetail.UserRole.SchoolId,
-                IsActive = userDetail.UserRole.IsActive,
-                IsDeleted = userDetail.UserRole.IsDeleted,
-                CreatedBy = userDetail.UserRole.CreatedBy,
-                CreatedDate = userDetail.UserRole.CreatedDate,
-                ModifiedBy = userDetail.UserRole.ModifiedBy,
-                ModifiedDate = userDetail.UserRole.ModifiedDate,
-                Status = userDetail.UserRole.Status,
-                StatusMessage = userDetail.UserRole.StatusMessage,
                 Privileges = userDetail.UserRole.RolePrivileges
-                    .Where(rp => rp.Privilege != null && rp.Privilege.PrivilegeName != null)
+                    .Where(rp => rp.Privilege != null)
                     .Select(rp => rp.Privilege!.PrivilegeName!)
                     .ToList()
             };
@@ -239,22 +258,7 @@ public class UserRepository : IUserRepository
             user.Company = new Company
             {
                 Id = userDetail.Company.Id,
-                CompanyName = userDetail.Company.CompanyName,
-                Description = userDetail.Company.Description,
-                Address = userDetail.Company.Address,
-                CityId = userDetail.Company.CityId,
-                StateId = userDetail.Company.StateId,
-                CountryId = userDetail.Company.CountryId,
-                ZipCode = userDetail.Company.ZipCode,
-                Email = userDetail.Company.Email,
-                IsActive = userDetail.Company.IsActive,
-                IsDeleted = userDetail.Company.IsDeleted,
-                CreatedBy = userDetail.Company.CreatedBy,
-                CreatedDate = userDetail.Company.CreatedDate,
-                ModifiedBy = userDetail.Company.ModifiedBy,
-                ModifiedDate = userDetail.Company.ModifiedDate,
-                Status = userDetail.Company.Status,
-                StatusMessage = userDetail.Company.StatusMessage
+                CompanyName = userDetail.Company.CompanyName
             };
         }
 
@@ -263,25 +267,7 @@ public class UserRepository : IUserRepository
             user.School = new School
             {
                 Id = userDetail.School.Id,
-                Name = userDetail.School.Name,
-                Description = userDetail.School.Description,
-                Email = userDetail.School.Email,
-                Address1 = userDetail.School.Address1,
-                Address2 = userDetail.School.Address2,
-                CityId = userDetail.School.CityId,
-                StateId = userDetail.School.StateId,
-                CountryId = userDetail.School.CountryId,
-                ZipCode = userDetail.School.ZipCode,
-                Phone = userDetail.School.Phone,
-                EstablishmentYear = userDetail.School.EstablishmentYear,
-                IsActive = userDetail.School.IsActive,
-                IsDeleted = userDetail.School.IsDeleted,
-                CreatedBy = userDetail.School.CreatedBy,
-                CreatedDate = userDetail.School.CreatedDate,
-                ModifiedBy = userDetail.School.ModifiedBy,
-                ModifiedDate = userDetail.School.ModifiedDate,
-                Status = userDetail.School.Status,
-                StatusMessage = userDetail.School.StatusMessage
+                Name = userDetail.School.Name
             };
         }
 

@@ -121,6 +121,25 @@
     </item>
   </role>
 
+  <role name="Administrator">
+    <item id="dashboard" label="Dashboard" path="/dashboard" icon="bi-speedometer2" />
+    <item id="academics" label="Academic" icon="bi-mortarboard" category="academic">
+      <item id="grades" label="Grade Management" path="/grades" icon="bi-journal-text" />
+      <item id="schedule" label="Class Schedule" path="/schedule" icon="bi-calendar-event" />
+      <item id="assignments" label="Assignments" path="/assignments" icon="bi-assignment" />
+      <item id="communication" label="Parent Communication" path="/communication" icon="bi-chat-dots" category="communication" />
+      <item id="materials" label="Study Materials" path="/materials" icon="bi-book" category="academic" />
+    </item>
+    <item id="Leaves" label="Leaves" icon="bi-building" category="administrative">
+      <item id="leaves" label="Leaves" path="/leaves" icon="bi-book" />
+      <item id="applyleaves" label="Apply Leaves" path="/applyleaves" icon="bi-book" />
+      <item id="aproveleaves" label="Approve Leave" path="/approveleaves" icon="bi-book" />
+    </item>
+    <item id="Reports" label="Reports" icon="bi-building" category="administrative">
+      <item id="reports" label="Reports" path="/reports" icon="bi-book" />
+    </item>
+  </role>
+
   <role name="Teachers">
     <item id="dashboard" label="Dashboard" path="/dashboard" icon="bi-speedometer2" />
     <item id="academics" label="Academic" icon="bi-mortarboard" category="academic">

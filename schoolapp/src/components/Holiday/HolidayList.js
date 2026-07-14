@@ -29,9 +29,9 @@ const HolidayList = () => {
       const fromDate = holiday.fromDate?.toLowerCase() || '';
       const toDate = holiday.toDate?.toLowerCase() || '';
       const typeLabel = getLookupLabel(
-        holiday.typeId || holiday.TypeId || holiday.typeID || holiday.TypeID,
+                          holiday.typeId || holiday.TypeId || holiday.typeID || holiday.TypeID || holiday.holidayTypeId || holiday.holidayTypeID || holiday.holidayType,
         holidayTypes,
-        holiday.typeName || holiday.typeId || ''
+        holiday.holidayTypeName || holiday.typeId || ''
       ).toLowerCase();
       const yearLabel = getLookupLabel(
         holiday.year || holiday.Year,
@@ -139,9 +139,19 @@ const HolidayList = () => {
 
   const getLookupLabel = (id, map, fallback = '') => {
     if (!id) return fallback;
+
     const entry = map[id];
-    return entry ? getEntityLabel(entry, fallback) : fallback;
+    // Some APIs return keys as lower/upper-cased or nested fields; be defensive.
+    if (entry) return getEntityLabel(entry, fallback);
+
+    // If map lookup failed but the backend already includes a display field, use it.
+    if (typeof id === 'string') {
+      return fallback;
+    }
+
+    return fallback;
   };
+
 
   const formatDate = (value) => {
     if (!value) return 'N/A';
@@ -264,9 +274,9 @@ const HolidayList = () => {
                       <td>{formatDate(holiday.toDate)}</td>
                       <td>
                         {getLookupLabel(
-                          holiday.typeId || holiday.TypeId || holiday.typeID || holiday.TypeID,
+                          holiday.typeId || holiday.TypeId || holiday.typeID || holiday.TypeID || holiday.holidayTypeId || holiday.holidayTypeID || holiday.holidayType,
                           holidayTypes,
-                          holiday.typeName || holiday.typeId || 'N/A'
+                          holiday.holidayTypeName || holiday.holidayType || 'N/A'
                         )}
                       </td>
                       <td>

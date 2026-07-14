@@ -1,34 +1,74 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using SchoolDemo.Domain.Entities;
 using SchoolDemo.Domain.Interfaces;
 using SchoolDemo.Infrastructure.Data;
+using DomainStudentMaster = SchoolDemo.Domain.Entities.StudentMaster;
+using InfrastructureStudentMaster = SchoolDemo.Infrastructure.Data.StudentMaster;
 
 namespace SchoolDemo.Infrastructure.Repositories;
 
 public class StudentRepository : IStudentRepository
 {
     private readonly SchoolDbContext _context;
+    private readonly IMemoryCache _cache;
+    private static long _cacheVersion;
 
-    public StudentRepository(SchoolDbContext context)
+    public StudentRepository(SchoolDbContext context, IMemoryCache cache)
     {
         _context = context;
+        _cache = cache;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.StudentMaster?> GetByIdAsync(Guid id)
+    public async Task<DomainStudentMaster?> GetByIdAsync(Guid id)
     {
+        var cacheKey = $"students_v{_cacheVersion}_by_id_{id}";
+        if (_cache.TryGetValue(cacheKey, out DomainStudentMaster? cachedStudent))
+        {
+            return cachedStudent;
+        }
+
         var entity = await _context.StudentMasters
+            .AsNoTracking()
             .Include(s => s.Class)
             .Include(s => s.Section)
             .Include(s => s.Category)
             .Include(s => s.School)
             .Include(s => s.Company)
             .FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted);
-        return MapToDomainEntity(entity);
+
+        var student = MapToDomainEntity(entity);
+
+        // If parent info exists, prefer parent's record for father's name
+        if (student != null)
+        {
+            var father = await _context.ParentMasters
+                .AsNoTracking()
+                .Include(p => p.RelationType)
+                .FirstOrDefaultAsync(p => p.StudentGuid == entity.Id && !p.IsDeleted && p.RelationType != null && p.RelationType.Name == "Father");
+
+            if (father != null)
+            {
+                var parts = new[] { father.ParentFirstName, father.ParentLastName };
+                student.FathersName = string.Join(" ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
+            }
+
+            _cache.Set(cacheKey, student, TimeSpan.FromMinutes(30));
+        }
+
+        return student;
     }
 
-    public async Task<IEnumerable<SchoolDemo.Domain.Entities.StudentMaster>> GetAllAsync()
+    public async Task<IEnumerable<DomainStudentMaster>> GetAllAsync()
     {
+        var cacheKey = $"students_v{_cacheVersion}_all";
+        if (_cache.TryGetValue(cacheKey, out IEnumerable<DomainStudentMaster>? cachedStudents))
+        {
+            return cachedStudents!;
+        }
+
         var entities = await _context.StudentMasters
+            .AsNoTracking()
             .Include(s => s.Class)
             .Include(s => s.Section)
             .Include(s => s.Category)
@@ -36,42 +76,80 @@ public class StudentRepository : IStudentRepository
             .Include(s => s.Company)
             .Where(s => !s.IsDeleted)
             .ToListAsync();
+        
+        var students = entities
+            .Select(MapToDomainEntity)
+            .Where(e => e != null)
+            .Select(e => e!)
+            .ToList();
 
-        var studentIds = entities.Select(e => e.Id).ToList();
-        var parents = await _context.ParentMasters
-            .AsNoTracking()
-            .Include(p => p.RelationType)
-            .Where(p => studentIds.Contains(p.StudentGuid) && !p.IsDeleted)
-            .ToListAsync();
+        // Assign fathers' names from ParentMaster table
+        await AssignFatherNamesAsync(students);
 
-        var fatherRelationIds = parents.Where(p => p.RelationType != null && p.RelationType.Name == "Father")
-            .GroupBy(p => p.StudentGuid)
-            .ToDictionary(g => g.Key, g => g.First());
+        _cache.Set(cacheKey, students, TimeSpan.FromMinutes(10));
 
-        var result = new List<SchoolDemo.Domain.Entities.StudentMaster>();
-        foreach (var entity in entities)
-        {
-            var domainEntity = MapToDomainEntity(entity);
-            if (domainEntity != null)
-            {
-                if (fatherRelationIds.TryGetValue(entity.Id, out var father))
-                {
-                    var parts = new[] { father.ParentFirstName, father.ParentLastName };
-                    domainEntity.FathersName = string.Join(" ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
-                }
-                result.Add(domainEntity);
-            }
-        }
-
-        return result;
+        return students;
     }
 
-    public async Task<IEnumerable<SchoolDemo.Domain.Entities.StudentMaster>> GetMinimalAsync()
+    public async Task<DomainStudentMaster> AddAsync(DomainStudentMaster entity)
     {
-        var entities = await _context.StudentMasters
+        var infraEntity = MapToInfrastructureEntity(entity);
+        await _context.StudentMasters.AddAsync(infraEntity);
+        await _context.SaveChangesAsync();
+        
+        // Clear cache
+        ClearStudentCache();
+        
+        return MapToDomainEntity(infraEntity)!;
+    }
+
+    public async Task<DomainStudentMaster> UpdateAsync(DomainStudentMaster entity)
+    {
+        var infraEntity = MapToInfrastructureEntity(entity);
+        _context.StudentMasters.Update(infraEntity);
+        await _context.SaveChangesAsync();
+        
+        // Clear cache
+        ClearStudentCache();
+        _cache.Remove($"students_v{_cacheVersion}_by_id_{entity.Id}");
+        
+        return MapToDomainEntity(infraEntity)!;
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var entity = await _context.StudentMasters
+            .FirstOrDefaultAsync(s => s.Id == id);
+        if (entity != null)
+        {
+            entity.IsDeleted = true;
+            entity.ModifiedDate = DateTime.UtcNow;
+            await _context.SaveChangesAsync();
+            
+            // Clear cache
+            ClearStudentCache();
+            _cache.Remove($"students_v{_cacheVersion}_by_id_{id}");
+        }
+    }
+
+    // Optimized method for getting students with projection (less data transfer)
+    public async Task<IEnumerable<DomainStudentMaster>> GetStudentsMinimalAsync()
+    {
+        return await GetMinimalAsync();
+    }
+
+    public async Task<IEnumerable<DomainStudentMaster>> GetMinimalAsync()
+    {
+        var cacheKey = $"students_v{_cacheVersion}_minimal";
+        if (_cache.TryGetValue(cacheKey, out IEnumerable<DomainStudentMaster>? cachedStudents))
+        {
+            return cachedStudents!;
+        }
+
+        var students = await _context.StudentMasters
             .AsNoTracking()
             .Where(s => !s.IsDeleted)
-            .Select(s => new SchoolDemo.Infrastructure.Data.StudentMaster
+            .Select(s => new DomainStudentMaster
             {
                 Id = s.Id,
                 RollNumber = s.RollNumber,
@@ -85,13 +163,35 @@ public class StudentRepository : IStudentRepository
             })
             .ToListAsync();
 
-        return entities.Select(MapToDomainEntity).Where(e => e != null)!;
+        _cache.Set(cacheKey, students, TimeSpan.FromMinutes(15));
+        
+        return students;
     }
 
-    public async Task<PagedResponse<SchoolDemo.Domain.Entities.StudentMaster>> GetPagedAsync(int page, int pageSize)
+    // Paginated method for large datasets
+    public async Task<PagedResponse<DomainStudentMaster>> GetStudentsPagedAsync(int page, int pageSize)
+    {
+        var result = await GetPagedAsync(page, pageSize);
+        return new PagedResponse<DomainStudentMaster>
+        {
+            Data = result.Data,
+            TotalCount = result.TotalCount,
+            Page = result.Page,
+            PageSize = result.PageSize,
+            TotalPages = result.TotalPages
+        };
+    }
+
+    public async Task<PagedResponse<DomainStudentMaster>> GetPagedAsync(int page, int pageSize)
     {
         page = Math.Max(1, page);
         pageSize = pageSize is < 1 or > 100 ? 20 : pageSize;
+
+        var cacheKey = $"students_v{_cacheVersion}_paged_{page}_{pageSize}";
+        if (_cache.TryGetValue(cacheKey, out PagedResponse<DomainStudentMaster>? cachedResult))
+        {
+            return cachedResult!;
+        }
 
         var query = _context.StudentMasters
             .AsNoTracking()
@@ -105,22 +205,40 @@ public class StudentRepository : IStudentRepository
             .Take(pageSize)
             .ToListAsync();
 
-        return new PagedResponse<SchoolDemo.Domain.Entities.StudentMaster>
+        var students = entities
+            .Select(MapToDomainEntity)
+            .Where(e => e != null)
+            .Select(e => e!)
+            .ToList();
+
+        await AssignFatherNamesAsync(students);
+
+        var result = new PagedResponse<DomainStudentMaster>
         {
-            Data = entities.Select(MapToDomainEntity).Where(e => e != null).Select(e => e!),
+            Data = students,
             TotalCount = totalCount,
             Page = page,
             PageSize = pageSize,
             TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
         };
+
+        _cache.Set(cacheKey, result, TimeSpan.FromMinutes(5));
+        
+        return result;
     }
 
-    public async Task<PagedResponse<SchoolDemo.Domain.Entities.StudentMaster>> SearchAsync(string query, int page, int pageSize)
+    public async Task<PagedResponse<DomainStudentMaster>> SearchAsync(string query, int page, int pageSize)
     {
         page = Math.Max(1, page);
         pageSize = pageSize is < 1 or > 100 ? 20 : pageSize;
         query = query.Trim();
         var hasRollNumberQuery = Guid.TryParse(query, out var rollNumberQuery);
+
+        var cacheKey = $"students_v{_cacheVersion}_search_{query}_{page}_{pageSize}";
+        if (_cache.TryGetValue(cacheKey, out PagedResponse<DomainStudentMaster>? cachedResult))
+        {
+            return cachedResult!;
+        }
 
         var studentsQuery = _context.StudentMasters
             .AsNoTracking()
@@ -139,48 +257,37 @@ public class StudentRepository : IStudentRepository
             .Take(pageSize)
             .ToListAsync();
 
-        return new PagedResponse<SchoolDemo.Domain.Entities.StudentMaster>
+        var mapped = entities
+            .Select(MapToDomainEntity)
+            .Where(e => e != null)
+            .Select(e => e!)
+            .ToList();
+
+        await AssignFatherNamesAsync(mapped);
+
+        var result = new PagedResponse<DomainStudentMaster>
         {
-            Data = entities.Select(MapToDomainEntity).Where(e => e != null).Select(e => e!),
+            Data = mapped,
             TotalCount = totalCount,
             Page = page,
             PageSize = pageSize,
             TotalPages = (int)Math.Ceiling((double)totalCount / pageSize)
         };
+
+        _cache.Set(cacheKey, result, TimeSpan.FromMinutes(5));
+        return result;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.StudentMaster> AddAsync(SchoolDemo.Domain.Entities.StudentMaster entity)
+    private void ClearStudentCache()
     {
-        var infraEntity = MapToInfrastructureEntity(entity);
-        await _context.StudentMasters.AddAsync(infraEntity);
-        await _context.SaveChangesAsync();
-        return MapToDomainEntity(infraEntity)!;
+        System.Threading.Interlocked.Increment(ref _cacheVersion);
     }
 
-    public async Task<SchoolDemo.Domain.Entities.StudentMaster> UpdateAsync(SchoolDemo.Domain.Entities.StudentMaster entity)
-    {
-        var infraEntity = MapToInfrastructureEntity(entity);
-        _context.StudentMasters.Update(infraEntity);
-        await _context.SaveChangesAsync();
-        return MapToDomainEntity(infraEntity)!;
-    }
-
-    public async Task DeleteAsync(Guid id)
-    {
-        var entity = await _context.StudentMasters
-            .FirstOrDefaultAsync(s => s.Id == id);
-        if (entity != null)
-        {
-            entity.IsDeleted = true;
-            entity.ModifiedDate = DateTime.UtcNow;
-            await _context.SaveChangesAsync();
-        }
-    }
-
-    private static SchoolDemo.Domain.Entities.StudentMaster? MapToDomainEntity(SchoolDemo.Infrastructure.Data.StudentMaster? entity)
+    private static DomainStudentMaster? MapToDomainEntity(SchoolDemo.Infrastructure.Data.StudentMaster? entity)
     {
         if (entity == null) return null;
-        return new SchoolDemo.Domain.Entities.StudentMaster
+        
+        return new DomainStudentMaster
         {
             Id = entity.Id,
             RollNumber = entity.RollNumber,
@@ -245,11 +352,12 @@ public class StudentRepository : IStudentRepository
             Status = entity.Status,
             StatusMessage = entity.StatusMessage,
             HouseAllotted = entity.HouseAllotted,
-            AdditionalNotes = entity.AdditionalNotes
+            AdditionalNotes = entity.AdditionalNotes,
+            FathersName = entity.FathersName
         };
     }
 
-    private static SchoolDemo.Infrastructure.Data.StudentMaster MapToInfrastructureEntity(SchoolDemo.Domain.Entities.StudentMaster entity)
+    private static SchoolDemo.Infrastructure.Data.StudentMaster MapToInfrastructureEntity(DomainStudentMaster entity)
     {
         return new SchoolDemo.Infrastructure.Data.StudentMaster
         {
@@ -316,7 +424,34 @@ public class StudentRepository : IStudentRepository
             Status = entity.Status,
             StatusMessage = entity.StatusMessage,
             HouseAllotted = entity.HouseAllotted,
-            AdditionalNotes = entity.AdditionalNotes
+            AdditionalNotes = entity.AdditionalNotes,
+            FathersName = entity.FathersName
         };
+    }
+
+    private async Task AssignFatherNamesAsync(List<DomainStudentMaster> students)
+    {
+        if (students == null || students.Count == 0) return;
+
+        var studentIds = students.Select(s => s.Id).ToList();
+
+        var parents = await _context.ParentMasters
+            .AsNoTracking()
+            .Where(p => studentIds.Contains(p.StudentGuid) && !p.IsDeleted)
+            .Include(p => p.RelationType)
+            .ToListAsync();
+
+        var fatherRelationIds = parents.Where(p => p.RelationType != null && p.RelationType.Name == "Father")
+            .GroupBy(p => p.StudentGuid)
+            .ToDictionary(g => g.Key, g => g.First());
+
+        foreach (var s in students)
+        {
+            if (fatherRelationIds.TryGetValue(s.Id, out var father))
+            {
+                var parts = new[] { father.ParentFirstName, father.ParentLastName };
+                s.FathersName = string.Join(" ", parts.Where(p => !string.IsNullOrWhiteSpace(p)));
+            }
+        }
     }
 }

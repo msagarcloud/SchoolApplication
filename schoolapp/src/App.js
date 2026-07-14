@@ -5,7 +5,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainTemplate from './components/layout/MainTemplate';
 
-import { authServiceOptimized } from './services/authServiceOptimized';
+import { authServiceOptimized } from './services/authService';
 import { sessionService } from './services/sessionService';
 
 import {
@@ -175,7 +175,14 @@ import {
   InventoryMasterList,
   InventoryMasterForm,
   InventoryMasterDetail,
-  NavigationDemo
+  NavigationDemo,
+  CallsList,
+  MailList,
+  AppointmentsList,
+  InquiriesList,
+  EnquiryMasterList,
+  EnquiryMasterForm,
+  EnquiryMasterDetail
 } from './lazyPages';
 
 
@@ -237,10 +244,95 @@ function App() {
       <div className="App">
         <Suspense fallback={<RouteLoadFallback />}>
         <Routes>
+          {/* Reception routes */}
+          <Route 
+            path="/calls" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <CallsList />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/mail" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <MailList />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/appointments" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <AppointmentsList />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/inquiries" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <InquiriesList />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* EnquiryMaster CRUD routes */}
+          <Route 
+            path="/enquiry-masters" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <EnquiryMasterList />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/enquiry-masters/create" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <EnquiryMasterForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/enquiry-masters/:id" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <EnquiryMasterDetail />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+          <Route 
+            path="/enquiry-masters/:id/edit" 
+            element={
+              <ProtectedRoute>
+                <MainTemplate>
+                  <EnquiryMasterForm />
+                </MainTemplate>
+              </ProtectedRoute>
+            }
+          />
+
           <Route 
             path="/login" 
             element={<Login />}
           />
+
           <Route 
             path="/dashboard" 
             element={

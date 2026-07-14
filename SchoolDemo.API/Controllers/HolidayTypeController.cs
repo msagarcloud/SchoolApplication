@@ -5,7 +5,7 @@ namespace SchoolDemo.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[AllowAnonymous]
 
 public class HolidayTypeController : ControllerBase
 {

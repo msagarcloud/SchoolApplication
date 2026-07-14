@@ -68,12 +68,12 @@ public class InventoryMasterRepository : IInventoryMasterRepository
 			Name = entity.Name,
 			ItemId = entity.ItemId,
 			LocationId = entity.LocationId,
-			Quantity = (int)entity.Quantity,
-			CostPerItem = (decimal)entity.CostPerItem,
+			Quantity = entity.Quantity ?? 0,
+			CostPerItem = entity.CostPerItem ?? 0,
 			CompanyId = entity.CompanyId,
 			SchoolId = entity.SchoolId,
-			IsActive = entity.IsActive ?? false,   // fix for nullable bool
-			IsDeleted = entity.IsDeleted ?? false, // fix for nullable bool
+			IsActive = entity.IsActive ?? false,
+			IsDeleted = entity.IsDeleted ?? false,
 			CreatedBy = entity.CreatedBy,
 			CreatedDate = entity.CreatedDate,
 			ModifiedBy = entity.ModifiedBy,
@@ -99,10 +99,10 @@ public class InventoryMasterRepository : IInventoryMasterRepository
 			IsDeleted = entity.IsDeleted,
 			CreatedBy = entity.CreatedBy,
 			CreatedDate = entity.CreatedDate,
-			ModifiedBy = (Guid)entity.ModifiedBy,
-			ModifiedDate = (DateTime)entity.ModifiedDate,
-			Status = entity.Status!,
-			StatusMessage = entity.StatusMessage!
+			ModifiedBy = entity.ModifiedBy ?? Guid.Empty,
+			ModifiedDate = entity.ModifiedDate ?? DateTime.MinValue,
+			Status = entity.Status ?? string.Empty,
+			StatusMessage = entity.StatusMessage ?? string.Empty
 		};
 	}
 }
