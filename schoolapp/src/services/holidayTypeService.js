@@ -26,8 +26,10 @@ const getErrorMessage = (error, fallbackMessage) => {
 export const holidayTypeService = {
   async getAll() {
     try {
-      const response = await api.get('/holidaytype');
-      const data = response.data;
+      // `api.get` returns the parsed response body directly (not an Axios
+      // response object). Reading `.data` here discarded the array returned
+      // by the API, leaving the Holiday Type dropdown empty on initial load.
+      const data = await api.get('/holidaytype');
       if (Array.isArray(data)) {
         return data;
       }
@@ -48,8 +50,7 @@ export const holidayTypeService = {
 
   async getById(id) {
     try {
-      const response = await api.get(`/holidaytype/${id}`);
-      return response.data;
+      return await api.get(`/holidaytype/${id}`);
     } catch (error) {
       throw new Error(getErrorMessage(error, 'Failed to fetch holiday type'));
     }
@@ -57,8 +58,7 @@ export const holidayTypeService = {
 
   async create(holidayTypeData) {
     try {
-      const response = await api.post('/holidaytype', holidayTypeData);
-      return response.data;
+      return await api.post('/holidaytype', holidayTypeData);
     } catch (error) {
       throw new Error(getErrorMessage(error, 'Failed to create holiday type'));
     }
@@ -66,8 +66,7 @@ export const holidayTypeService = {
 
   async update(id, holidayTypeData) {
     try {
-      const response = await api.put(`/holidaytype/${id}`, holidayTypeData);
-      return response.data;
+      return await api.put(`/holidaytype/${id}`, holidayTypeData);
     } catch (error) {
       throw new Error(getErrorMessage(error, 'Failed to update holiday type'));
     }
