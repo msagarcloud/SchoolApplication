@@ -4,10 +4,30 @@ import { authService } from '../services/authService';
 export const useSessionData = () => {
   const [sessionData, setSessionData] = useState(() => {
     const currentUser = authService.getCurrentUser();
+    const isGuid = (value) => {
+      return typeof value === 'string' && /^[0-9a-fA-F-]{36}$/.test(value);
+    };
+
+    const resolveUserId = (u) => {
+      const candidates = [
+        u?.Id,
+        u?.id,
+        u?.UserId,
+        u?.UserID,
+        u?.userId,
+        u?.userID,
+        u?.UserIDValue,
+        u?.userIDValue
+      ];
+
+      const firstValid = candidates.find((c) => isGuid(c));
+      return firstValid || (candidates.find((c) => c !== undefined && c !== null) || '');
+    };
+
     return {
       companyId: currentUser?.CompanyId || currentUser?.companyId || '',
       schoolId: currentUser?.SchoolId || currentUser?.schoolId || '',
-      userId: currentUser?.Id || currentUser?.id || '',
+      userId: resolveUserId(currentUser),
       userName: currentUser?.UserName || currentUser?.userName || '',
       roleName: currentUser?.UserRole || currentUser?.userRole || currentUser?.roleName || '',
       email: currentUser?.EmailAddress || currentUser?.emailAddress || currentUser?.email || ''
@@ -16,14 +36,34 @@ export const useSessionData = () => {
 
   const updateSessionData = useCallback(() => {
     const currentUser = authService.getCurrentUser();
+
+    const candidates = [
+      currentUser?.Id,
+      currentUser?.id,
+      currentUser?.UserId,
+      currentUser?.UserID,
+      currentUser?.userId,
+      currentUser?.userID,
+      currentUser?.UserIDValue,
+      currentUser?.userIDValue
+    ];
+
+    const isGuid = (value) => {
+      return typeof value === 'string' && /^[0-9a-fA-F-]{36}$/.test(value);
+    };
+
+    const firstValid = candidates.find((c) => isGuid(c));
+    const resolvedUserId = firstValid || (candidates.find((c) => c !== undefined && c !== null) || '');
+
     const newSessionData = {
       companyId: currentUser?.CompanyId || currentUser?.companyId || '',
       schoolId: currentUser?.SchoolId || currentUser?.schoolId || '',
-      userId: currentUser?.Id || currentUser?.id || '',
+      userId: resolvedUserId,
       userName: currentUser?.UserName || currentUser?.userName || '',
       roleName: currentUser?.UserRole || currentUser?.userRole || currentUser?.roleName || '',
       email: currentUser?.EmailAddress || currentUser?.emailAddress || currentUser?.email || ''
     };
+
     setSessionData(newSessionData);
     return newSessionData;
   }, []);

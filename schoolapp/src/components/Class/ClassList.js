@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { classService } from '../../services/classService';
+import { useSessionData } from '../../hooks/useSessionData';
 
 const ClassList = () => {
+  const { sessionData } = useSessionData();
   const [classes, setClasses] = useState([]);
   const [filteredClasses, setFilteredClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
 
   // Filter states
   const [filters, setFilters] = useState({
@@ -22,7 +25,9 @@ const ClassList = () => {
 
   useEffect(() => {
     fetchClasses();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionData?.schoolId]);
+
 
   useEffect(() => {
     applyFilters();
@@ -41,15 +46,25 @@ const ClassList = () => {
   const fetchClasses = async () => {
     try {
       setLoading(true);
-      const data = await classService.getAll();
+
+      if (!sessionData?.schoolId) {
+        setClasses([]);
+        setFilteredClasses([]);
+        setError('SchoolId not found for the current session.');
+        return;
+      }
+
+      const data = await classService.getBySchoolId(sessionData.schoolId);
       setClasses(data);
       setFilteredClasses(data);
+      setError('');
     } catch (err) {
       setError(err.message || 'Failed to fetch classes');
     } finally {
       setLoading(false);
     }
   };
+
 
   const applyFilters = () => {
     let filtered = classes;

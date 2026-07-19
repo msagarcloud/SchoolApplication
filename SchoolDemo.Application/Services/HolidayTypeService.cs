@@ -24,7 +24,7 @@ public class HolidayTypeService : IHolidayTypeService
         return entities.Select(MapToResponse);
     }
 
-    public async Task<HolidayTypeResponse> CreateAsync(HolidayTypeRequest request)
+        public async Task<HolidayTypeResponse> CreateAsync(HolidayTypeRequest request)
     {
         var entity = new SchoolDemo.Domain.Entities.HolidayTypeMaster
         {
@@ -35,7 +35,8 @@ public class HolidayTypeService : IHolidayTypeService
             SchoolId = request.SchoolId,
             IsActive = true,
             IsDeleted = false,
-            CreatedBy = Guid.NewGuid(),
+                // Use CreatedBy from request (set by controller from session) when available
+                CreatedBy = request.CreatedBy ?? Guid.NewGuid(),
             CreatedDate = DateTime.UtcNow,
             Status = "Active",
             StatusMessage = "Holiday type created successfully"
@@ -57,7 +58,8 @@ public class HolidayTypeService : IHolidayTypeService
         existingEntity.HolidayTypeDescription = request.HolidayTypeDescription ?? existingEntity.HolidayTypeDescription;
         existingEntity.CompanyId = request.CompanyId != Guid.Empty ? request.CompanyId : existingEntity.CompanyId;
         existingEntity.SchoolId = request.SchoolId != Guid.Empty ? request.SchoolId : existingEntity.SchoolId;
-        existingEntity.ModifiedBy = Guid.NewGuid();
+        // Use ModifiedBy from request (set by controller from session) when available
+        existingEntity.ModifiedBy = request.ModifiedBy ?? Guid.NewGuid();
         existingEntity.ModifiedDate = DateTime.UtcNow;
         existingEntity.Status = "Updated";
         existingEntity.StatusMessage = "Holiday type updated successfully";

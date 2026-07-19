@@ -5,7 +5,7 @@ namespace SchoolDemo.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
+[AllowAnonymous]
 
 public class HolidayController : ControllerBase
 {
@@ -42,15 +42,8 @@ public class HolidayController : ControllerBase
 			return BadRequest(ModelState);
 		}
 
-		try
-		{
-			var entity = await _service.CreateAsync(request);
-			return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
-		}
-		catch (Exception ex)
-		{
-			return StatusCode(500, $"An error occurred while creating holiday: {ex.Message}");
-		}
+		var entity = await _service.CreateAsync(request);
+		return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
 	}
 
 	[HttpPut("{id}")]
@@ -61,19 +54,12 @@ public class HolidayController : ControllerBase
 			return BadRequest(ModelState);
 		}
 
-		try
+		var entity = await _service.UpdateAsync(id, request);
+		if (entity == null)
 		{
-			var entity = await _service.UpdateAsync(id, request);
-			if (entity == null)
-			{
-				return NotFound($"Holiday with ID {id} not found.");
-			}
-			return Ok(entity);
+			return NotFound($"Holiday with ID {id} not found.");
 		}
-		catch (Exception ex)
-		{
-			return StatusCode(500, $"An error occurred while updating holiday: {ex.Message}");
-		}
+		return Ok(entity);
 	}
 
 	[HttpDelete("{id}")]

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { holidayService } from '../../services/holidayService';
 import { holidayTypeService } from '../../services/holidayTypeService';
@@ -8,7 +9,7 @@ import { useSessionData } from '../../hooks/useSessionData';
 const HolidayForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const isEditing = Boolean(id);
+  const isEdit = Boolean(id);
   const sessionData = useSessionData();
   const [formData, setFormData] = useState({
     name: '',
@@ -23,9 +24,10 @@ const HolidayForm = () => {
     isDeleted: false
   });
   const [loading, setLoading] = useState(false);
-  const [fetchLoading, setFetchLoading] = useState(isEditing);
+  const [fetchLoading, setFetchLoading] = useState(isEdit);
   const [error, setError] = useState('');
   const [holidayTypes, setHolidayTypes] = useState([]);
+
 
   const normalizeHolidayType = (t) => {
     if (!t) return { id: '', name: '' };
@@ -155,10 +157,11 @@ const HolidayForm = () => {
   useEffect(() => {
     fetchHolidayTypes();
     fetchSessions();
-    if (isEditing) {
+    if (isEdit) {
       fetchHoliday();
     }
-  }, [isEditing, fetchHoliday, fetchHolidayTypes, fetchSessions]);
+  }, [isEdit, fetchHoliday, fetchHolidayTypes, fetchSessions]);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -232,27 +235,37 @@ const HolidayForm = () => {
         typeId: formData.typeId,
         fromDate: fromDateObj.toISOString(),
         toDate: toDateObj.toISOString(),
-        // Backend expects a GUID for `Year` (AcademicYear). Use selected session id as a GUID
-        // when an academic year GUID isn't provided from the form.
-        year: formData.year && formData.year.match(/^[0-9a-fA-F-]{36}$/) ? formData.year : (formData.sessionId || ''),
+        // Backend expects a GUID for the academic year.
+        // Do NOT fallback to sessionId here; sessionId is a different FK.
+        year:
+          formData.year && formData.year.match(/^[0-9a-fA-F-]{36}$/)
+            ? formData.year
+            : '',
+
         isStaffApplicable: formData.isStaffApplicable,
         sessionId: formData.sessionId,
         companyId: sessionData.companyId,
         schoolId: sessionData.schoolId,
+        // Audit fields (backend expected ModifiedBy)
+        ModifiedBy: sessionData.userId,
+        modifiedBy: sessionData.userId,
         isActive: formData.isActive,
         isDeleted: formData.isDeleted
       };
 
-      if (isEditing) {
+      if (isEdit) {
         await holidayService.update(id, payload);
       } else {
         await holidayService.create(payload);
       }
 
+
+
       navigate('/holidays');
     } catch (err) {
-      const errorMessage = err?.message || (typeof err === 'string' ? err : `Failed to ${isEditing ? 'update' : 'create'} holiday`);
+      const errorMessage = err?.message || (typeof err === 'string' ? err : `Failed to ${isEdit ? 'update' : 'create'} holiday`);
       setError(errorMessage);
+
     } finally {
       setLoading(false);
     }
@@ -272,14 +285,15 @@ const HolidayForm = () => {
     <div className="container-fluid">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
-          <h2>{isEditing ? 'Edit Holiday' : 'Create Holiday'}</h2>
-          <p className="text-muted mb-0">{isEditing ? 'Update holiday details.' : 'Add a new holiday.'}</p>
+          <h2>{isEdit ? 'Edit Holiday' : 'Create Holiday'}</h2>
+          <p className="text-muted mb-0">{isEdit ? 'Update holiday details.' : 'Add a new holiday.'}</p>
         </div>
         <Link to="/holidays" className="btn btn-outline-secondary">
           <i className="bi bi-arrow-left me-2"></i>
           Back to Holidays
         </Link>
       </div>
+
 
       {error && (
         <div className="alert alert-danger" role="alert">
@@ -480,8 +494,9 @@ const HolidayForm = () => {
                     Saving...
                   </>
                 ) : (
-                  isEditing ? 'Update Holiday' : 'Create Holiday'
+                  isEdit ? 'Update Holiday' : 'Create Holiday'
                 )}
+
               </button>
               <Link to="/holidays" className="btn btn-outline-secondary">Cancel</Link>
             </div>

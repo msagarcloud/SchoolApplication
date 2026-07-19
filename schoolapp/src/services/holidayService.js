@@ -1,27 +1,47 @@
 import api from './authService';
 
 const getErrorMessage = (error, fallbackMessage) => {
+  // Our api wrapper (src/services/api.js) throws plain Error instances.
+  // Sometimes it may include server payload information; also handle axios-like shapes.
+  if (!error) return fallbackMessage;
+
+  // Axios-ish shape
   if (error.response) {
     const data = error.response.data;
-    if (!data) {
-      return fallbackMessage;
-    }
-    if (typeof data === 'string') {
-      return data;
-    }
-    if (data.message) {
-      return data.message;
-    }
-    if (data.error) {
-      return data.error;
-    }
-    return JSON.stringify(data);
+    if (!data) return fallbackMessage;
+    if (typeof data === 'string') return data;
+
+    const candidates = [
+      data?.message,
+      data?.error,
+      data?.title,
+      data?.detail,
+      data?.innerException,
+      data?.InnerException,
+      data?.exception,
+      data?.Exception,
+      data?.trace,
+      data?.stack,
+      data?.errors,
+      data?.Errors,
+      data,
+    ];
+
+    const firstMeaningful = candidates.find((c) => c !== undefined && c !== null && c !== '');
+    if (typeof firstMeaningful === 'string') return firstMeaningful;
+    return JSON.stringify(firstMeaningful);
   }
-  if (error.request) {
-    return 'No response from server. Please check your network connection.';
+
+  // Fetch/api wrapper: either message only, or sometimes attaches response payload
+  const embedded = error?.data || error?.response?.data || error?.body;
+  if (embedded) {
+    if (typeof embedded === 'string') return embedded;
+    return JSON.stringify(embedded);
   }
+
   return error.message || fallbackMessage;
 };
+
 
 export const holidayService = {
   async getAll() {

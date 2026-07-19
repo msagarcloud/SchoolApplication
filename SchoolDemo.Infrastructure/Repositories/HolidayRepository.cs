@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using SchoolDemo.Domain.Entities;
 using SchoolDemo.Domain.Interfaces;
 using SchoolDemo.Infrastructure.Data;
+using System;
+using System.Threading.Tasks;
 
 namespace SchoolDemo.Infrastructure.Repositories;
 
@@ -50,9 +52,22 @@ public class HolidayRepository : IHolidayRepository
 			return MapToDomainEntity(infraEntity)!;
 		}
 
-		// Update the tracked entity's current values to avoid tracking conflicts
-		var updatedValues = MapToInfrastructureEntity(entity);
-		_context.Entry(existing).CurrentValues.SetValues(updatedValues);
+		// Update only scalar properties on the tracked entity to avoid duplicate-tracking issues
+		existing.Name = entity.Name;
+		existing.Description = entity.Description;
+		existing.TypeId = entity.TypeId;
+		existing.FromDate = entity.FromDate;
+		existing.ToDate = entity.ToDate;
+		existing.Year = entity.Year;
+		existing.CompanyId = entity.CompanyId;
+		existing.SchoolId = entity.SchoolId;
+		existing.IsStaffApplicable = entity.IsStaffApplicable;
+		existing.SessionId = entity.SessionId;
+		existing.ModifiedBy = entity.ModifiedBy;
+		existing.ModifiedDate = entity.ModifiedDate;
+		existing.Status = entity.Status;
+		existing.StatusMessage = entity.StatusMessage;
+
 		await _context.SaveChangesAsync();
 		return MapToDomainEntity(existing)!;
 	}
@@ -96,29 +111,26 @@ public class HolidayRepository : IHolidayRepository
 		};
 	}
 
-	private static SchoolDemo.Infrastructure.Data.HolidayMaster MapToInfrastructureEntity(SchoolDemo.Domain.Entities.HolidayMaster entity)
+	private static SchoolDemo.Infrastructure.Data.HolidayMaster MapToInfrastructureEntity(SchoolDemo.Domain.Entities.HolidayMaster src)
 	{
 		return new SchoolDemo.Infrastructure.Data.HolidayMaster
 		{
-			Id = entity.Id,
-			Name = entity.Name,
-			Description = entity.Description,
-			TypeId = entity.TypeId,
-			FromDate = entity.FromDate,
-			ToDate = entity.ToDate,
-			Year = entity.Year,
-			CompanyId = entity.CompanyId,
-			SchoolId = entity.SchoolId,
-			IsStaffApplicable = entity.IsStaffApplicable,
-			SessionId = entity.SessionId,
-			IsActive = entity.IsActive,
-			IsDeleted = entity.IsDeleted,
-			CreatedBy = entity.CreatedBy,
-			CreatedDate = entity.CreatedDate,
-			ModifiedBy = entity.ModifiedBy,
-			ModifiedDate = entity.ModifiedDate,
-			Status = entity.Status,
-			StatusMessage = entity.StatusMessage
+			Id = src.Id,
+			Name = src.Name,
+			Description = src.Description,
+			TypeId = src.TypeId,
+			FromDate = src.FromDate,
+			ToDate = src.ToDate,
+			Year = src.Year,
+			CompanyId = src.CompanyId,
+			SchoolId = src.SchoolId,
+			IsStaffApplicable = src.IsStaffApplicable,
+			SessionId = src.SessionId,
+			ModifiedBy = src.ModifiedBy, // only FK scalar
+			ModifiedDate = src.ModifiedDate,
+			Status = src.Status,
+			StatusMessage = src.StatusMessage
+			// Do NOT set navigation properties (e.g. UserDetails) here
 		};
 	}
 }
