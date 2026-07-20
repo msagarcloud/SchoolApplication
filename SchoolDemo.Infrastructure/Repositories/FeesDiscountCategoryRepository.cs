@@ -42,7 +42,7 @@ public class FeesDiscountCategoryRepository : IFeesDiscountCategoryRepository
         return MapToDomainEntity(infraEntity)!;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster> UpdateAsync(SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster entity)
+public async Task<SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster> UpdateAsync(SchoolDemo.Domain.Entities.FeesDiscountCategoryMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
         infraEntity.CreatedBy = await ResolveUserAsync(entity.CreatedBy, entity.CompanyId, entity.SchoolId);
@@ -50,6 +50,14 @@ public class FeesDiscountCategoryRepository : IFeesDiscountCategoryRepository
         {
             infraEntity.ModifiedBy = await ResolveUserAsync(entity.ModifiedBy.Value, entity.CompanyId, entity.SchoolId);
         }
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.FeesDiscountCategoryMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.FeesDiscountCategoryMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

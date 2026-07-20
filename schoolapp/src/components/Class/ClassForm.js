@@ -8,12 +8,14 @@ const ClassForm = () => {
   const navigate = useNavigate();
   const isEditing = Boolean(id);
 
+  const currentUser = authService.getCurrentUser();
+
   const [formData, setFormData] = useState({
     name: '',
     examAssessment: '',
     isGradePointApplicable: false,
-    companyId: '',
-    schoolId: ''
+    companyId: currentUser?.CompanyId || currentUser?.companyId || '',
+    schoolId: currentUser?.SchoolId || currentUser?.schoolId || ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -66,22 +68,8 @@ const ClassForm = () => {
         return;
       }
 
-      if (!formData.companyId.trim()) {
-        setError('Company is required');
-        setLoading(false);
-        return;
-      }
-
-      if (!formData.schoolId.trim()) {
-        setError('School is required');
-        setLoading(false);
-        return;
-      }
-
       const classData = {
-        ...formData,
-        companyId: formData.companyId || '00000000-0000-0000-0000-000000000000',
-        schoolId: formData.schoolId || '00000000-0000-0000-0000-000000000000'
+        ...formData
       };
 
       if (isEditing) {
@@ -186,40 +174,6 @@ const ClassForm = () => {
                     value={formData.examAssessment}
                     onChange={handleChange}
                     placeholder="Enter exam assessment details"
-                  />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="mb-3">
-                  <label htmlFor="companyId" className="form-label">
-                    Company ID <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="companyId"
-                    name="companyId"
-                    value={formData.companyId}
-                    onChange={handleChange}
-                    required
-                    placeholder="Enter company ID"
-                  />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="mb-3">
-                  <label htmlFor="schoolId" className="form-label">
-                    School ID <span className="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="schoolId"
-                    name="schoolId"
-                    value={formData.schoolId}
-                    onChange={handleChange}
-                    required
-                    placeholder="Enter school ID"
                   />
                 </div>
               </div>

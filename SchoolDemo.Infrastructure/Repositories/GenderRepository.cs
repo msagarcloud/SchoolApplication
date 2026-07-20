@@ -40,6 +40,14 @@ public class GenderRepository : IGenderRepository
     public async Task<SchoolDemo.Domain.Entities.GenderMaster> UpdateAsync(SchoolDemo.Domain.Entities.GenderMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.GenderMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.GenderMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

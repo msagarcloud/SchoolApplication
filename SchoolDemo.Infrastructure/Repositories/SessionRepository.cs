@@ -37,9 +37,17 @@ public class SessionRepository : ISessionRepository
         return MapToDomainEntity(infraEntity)!;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.SessionMaster> UpdateAsync(SchoolDemo.Domain.Entities.SessionMaster entity)
+public async Task<SchoolDemo.Domain.Entities.SessionMaster> UpdateAsync(SchoolDemo.Domain.Entities.SessionMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.SessionMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.SessionMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

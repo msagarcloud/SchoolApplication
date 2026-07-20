@@ -33,6 +33,13 @@ public class CleanerMasterRepository : ICleanerMasterRepository
 
     public async Task<SchoolDemo.Domain.Entities.CleanerMaster> UpdateAsync(SchoolDemo.Domain.Entities.CleanerMaster cleanerMaster)
     {
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.CleanerMasterDomain.Local.FirstOrDefault(e => e.Id == cleanerMaster.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.CleanerMasterDomain.Update(cleanerMaster);
         await _context.SaveChangesAsync();
         return cleanerMaster;

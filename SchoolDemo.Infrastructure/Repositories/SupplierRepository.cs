@@ -39,9 +39,17 @@ public class SupplierRepository : ISupplierRepository
         return MapToDomainEntity(supplierDetail)!;
     }
 
-    public async Task<Supplier> UpdateAsync(Supplier supplier)
+public async Task<Supplier> UpdateAsync(Supplier supplier)
     {
         var supplierDetail = MapToInfrastructureEntity(supplier);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.SupplierMasters.Local.FirstOrDefault(e => e.Id == supplierDetail.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.SupplierMasters.Update(supplierDetail);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(supplierDetail)!;

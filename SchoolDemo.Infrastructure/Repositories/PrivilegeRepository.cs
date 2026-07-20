@@ -43,6 +43,14 @@ public class PrivilegeRepository : IPrivilegeRepository
     public async Task<DomainPrivilege> UpdateAsync(DomainPrivilege privilege)
     {
         var privilegeDetail = MapToInfrastructureEntity(privilege);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.Privileges.Local.FirstOrDefault(e => e.Id == privilegeDetail.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.Privileges.Update(privilegeDetail);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(privilegeDetail)!;

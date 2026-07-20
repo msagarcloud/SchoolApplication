@@ -40,6 +40,14 @@ public class EmployeeLeaveRepository : IEmployeeLeaveRepository
     public async Task<EmployeeLeave> UpdateAsync(EmployeeLeave employeeLeave)
     {
         var entity = MapToInfrastructureEntity(employeeLeave);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.EmpLeaveDetails.Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.EmpLeaveDetails.Update(entity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(entity)!;

@@ -40,6 +40,14 @@ public class HolidayTypeRepository : IHolidayTypeRepository
     public async Task<SchoolDemo.Domain.Entities.HolidayTypeMaster> UpdateAsync(SchoolDemo.Domain.Entities.HolidayTypeMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.HolidayTypeMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.HolidayTypeMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

@@ -37,9 +37,17 @@ public class VendorRepository : IVendorRepository
         return MapToDomainEntity(infraEntity)!;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.VendorMaster> UpdateAsync(SchoolDemo.Domain.Entities.VendorMaster entity)
+public async Task<SchoolDemo.Domain.Entities.VendorMaster> UpdateAsync(SchoolDemo.Domain.Entities.VendorMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.VendorMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.VendorMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

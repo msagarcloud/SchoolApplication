@@ -40,13 +40,21 @@ public class EmployeeRepository : IEmployeeRepository
 		return MapToDomainEntity(empDetail)!;
 	}
 
-	public async Task<Employee> UpdateAsync(Employee employee)
-	{
-		var empDetail = MapToInfrastructureEntity(employee);
-		_context.EmpMasters.Update(empDetail);
-		await _context.SaveChangesAsync();
-		return MapToDomainEntity(empDetail)!;
-	}
+    public async Task<Employee> UpdateAsync(Employee employee)
+    {
+        var empDetail = MapToInfrastructureEntity(employee);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.EmpMasters.Local.FirstOrDefault(e => e.Id == empDetail.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
+        _context.EmpMasters.Update(empDetail);
+        await _context.SaveChangesAsync();
+        return MapToDomainEntity(empDetail)!;
+    }
 
 	public async Task DeleteAsync(Guid id)
 	{

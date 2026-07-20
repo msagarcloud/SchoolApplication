@@ -41,9 +41,17 @@ public class EnquiryTypeRepository : IEnquiryTypeRepository
         return MapToDomainEntity(infraEntity)!;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.EnquiryType> UpdateAsync(SchoolDemo.Domain.Entities.EnquiryType entity)
+public async Task<SchoolDemo.Domain.Entities.EnquiryType> UpdateAsync(SchoolDemo.Domain.Entities.EnquiryType entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.EnquiryTypes.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.EnquiryTypes.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

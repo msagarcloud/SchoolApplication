@@ -48,9 +48,17 @@ public class RolePrivilegeRepository : IRolePrivilegeRepository
         return MapToDomainEntity(rolePrivilegeDetail)!;
     }
 
-    public async Task<DomainRolePrivilege> UpdateAsync(DomainRolePrivilege rolePrivilege)
+public async Task<DomainRolePrivilege> UpdateAsync(DomainRolePrivilege rolePrivilege)
     {
         var rolePrivilegeDetail = MapToInfrastructureEntity(rolePrivilege);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.RolePrivileges.Local.FirstOrDefault(e => e.Id == rolePrivilegeDetail.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.RolePrivileges.Update(rolePrivilegeDetail);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(rolePrivilegeDetail)!;

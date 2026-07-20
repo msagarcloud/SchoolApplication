@@ -39,13 +39,21 @@ public class InventoryMasterRepository : IInventoryMasterRepository
 		return MapToDomainEntity(infraEntity)!;
 	}
 
-	public async Task<SchoolDemo.Domain.Entities.InventoryMaster> UpdateAsync(SchoolDemo.Domain.Entities.InventoryMaster entity)
-	{
-		var infraEntity = MapToInfrastructureEntity(entity);
-		_context.InventoryMasters.Update(infraEntity);
-		await _context.SaveChangesAsync();
-		return MapToDomainEntity(infraEntity)!;
-	}
+    public async Task<SchoolDemo.Domain.Entities.InventoryMaster> UpdateAsync(SchoolDemo.Domain.Entities.InventoryMaster entity)
+    {
+        var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.InventoryMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
+        _context.InventoryMasters.Update(infraEntity);
+        await _context.SaveChangesAsync();
+        return MapToDomainEntity(infraEntity)!;
+    }
 
 	public async Task DeleteAsync(Guid id)
 	{

@@ -40,6 +40,14 @@ public class CategoryRepository : ICategoryRepository
     public async Task<SchoolDemo.Domain.Entities.CategoryMaster> UpdateAsync(SchoolDemo.Domain.Entities.CategoryMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.CategoryMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.CategoryMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

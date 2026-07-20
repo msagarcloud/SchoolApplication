@@ -37,9 +37,17 @@ public class ProfessionRepository : IProfessionRepository
         return MapToDomainEntity(infraEntity)!;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.ProfessionMaster> UpdateAsync(SchoolDemo.Domain.Entities.ProfessionMaster entity)
+public async Task<SchoolDemo.Domain.Entities.ProfessionMaster> UpdateAsync(SchoolDemo.Domain.Entities.ProfessionMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.ProfessionMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.ProfessionMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

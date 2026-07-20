@@ -40,6 +40,14 @@ public class SectionRepository : ISectionRepository
     public async Task<Section> UpdateAsync(Section section)
     {
         var entity = MapToInfrastructureEntity(section);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.SectionMasters.Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.SectionMasters.Update(entity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(entity)!;

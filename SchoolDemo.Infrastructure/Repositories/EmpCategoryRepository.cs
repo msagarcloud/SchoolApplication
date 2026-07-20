@@ -40,6 +40,14 @@ public class EmpCategoryRepository : IEmpCategoryRepository
     public async Task<SchoolDemo.Domain.Entities.EmpCategoryMaster> UpdateAsync(SchoolDemo.Domain.Entities.EmpCategoryMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.EmpCategoryMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.EmpCategoryMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

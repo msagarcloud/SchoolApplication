@@ -40,6 +40,14 @@ public class BookTypeMasterRepository : IBookTypeMasterRepository
     public async Task<SchoolDemo.Domain.Entities.BookTypeMaster> UpdateAsync(SchoolDemo.Domain.Entities.BookTypeMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.BookTypeMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.BookTypeMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

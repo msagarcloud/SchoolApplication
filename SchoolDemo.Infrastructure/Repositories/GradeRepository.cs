@@ -40,6 +40,14 @@ public class GradeRepository : IGradeRepository
     public async Task<SchoolDemo.Domain.Entities.GradeMaster> UpdateAsync(SchoolDemo.Domain.Entities.GradeMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.GradeMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.GradeMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

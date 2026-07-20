@@ -50,6 +50,14 @@ public class ClassSubjectDetailRepository : IClassSubjectDetailRepository
     public async Task<DomainClassSubjectDetail> UpdateAsync(DomainClassSubjectDetail classSubjectDetail)
     {
         var entity = MapToInfrastructureEntity(classSubjectDetail);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.ClassSubjectDetails.Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.ClassSubjectDetails.Update(entity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(entity)!;

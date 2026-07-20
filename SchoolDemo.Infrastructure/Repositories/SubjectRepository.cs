@@ -37,9 +37,17 @@ public class SubjectRepository : ISubjectRepository
         return MapToDomainEntity(entity)!;
     }
 
-    public async Task<Subject> UpdateAsync(Subject subject)
+public async Task<Subject> UpdateAsync(Subject subject)
     {
         var entity = MapToInfrastructureEntity(subject);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.SubjectMasters.Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.SubjectMasters.Update(entity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(entity)!;

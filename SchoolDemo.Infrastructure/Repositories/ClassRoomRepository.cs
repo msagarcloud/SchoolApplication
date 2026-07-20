@@ -40,6 +40,14 @@ public class ClassRoomRepository : IClassRoomRepository
     public async Task<ClassRoom> UpdateAsync(ClassRoom classRoom)
     {
         var entity = MapToInfrastructureEntity(classRoom);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.ClassRoomMasters.Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.ClassRoomMasters.Update(entity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(entity)!;

@@ -40,6 +40,14 @@ public class PaymentModeRepository : IPaymentModeRepository
     public async Task<SchoolDemo.Domain.Entities.PaymentModeMaster> UpdateAsync(SchoolDemo.Domain.Entities.PaymentModeMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.PaymentModeMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.PaymentModeMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

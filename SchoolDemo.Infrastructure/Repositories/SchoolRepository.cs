@@ -42,6 +42,14 @@ public class SchoolRepository : ISchoolRepository
     public async Task<School> UpdateAsync(School school)
     {
         var schoolDetail = MapToInfrastructureEntity(school);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.SchoolMasters.Local.FirstOrDefault(e => e.Id == schoolDetail.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.SchoolMasters.Update(schoolDetail);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(schoolDetail)!;

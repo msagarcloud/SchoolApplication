@@ -45,9 +45,17 @@ public class EmployeeSalaryStructureDetailRepository : IEmployeeSalaryStructureD
         return MapToDomainEntity(entity)!;
     }
 
-    public async Task<EmployeeSalaryStructureDetail> UpdateAsync(EmployeeSalaryStructureDetail employeeSalaryStructureDetail)
+public async Task<EmployeeSalaryStructureDetail> UpdateAsync(EmployeeSalaryStructureDetail employeeSalaryStructureDetail)
     {
         var entity = MapToInfrastructureEntity(employeeSalaryStructureDetail);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.EmpSalaryStructureDetails.Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.EmpSalaryStructureDetails.Update(entity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(entity)!;

@@ -37,13 +37,21 @@ public class DeptRepository : IDeptRepository
 		return MapToDomainEntity(infraEntity)!;
 	}
 
-	public async Task<SchoolDemo.Domain.Entities.DeptMaster> UpdateAsync(SchoolDemo.Domain.Entities.DeptMaster entity)
-	{
-		var infraEntity = MapToInfrastructureEntity(entity);
-		_context.DeptMasters.Update(infraEntity);
-		await _context.SaveChangesAsync();
-		return MapToDomainEntity(infraEntity)!;
-	}
+    public async Task<SchoolDemo.Domain.Entities.DeptMaster> UpdateAsync(SchoolDemo.Domain.Entities.DeptMaster entity)
+    {
+        var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.DeptMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
+        _context.DeptMasters.Update(infraEntity);
+        await _context.SaveChangesAsync();
+        return MapToDomainEntity(infraEntity)!;
+    }
 
 	public async Task DeleteAsync(Guid id)
 	{

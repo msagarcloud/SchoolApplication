@@ -37,9 +37,17 @@ public class RelationTypeRepository : IRelationTypeRepository
         return MapToDomainEntity(infraEntity)!;
     }
 
-    public async Task<SchoolDemo.Domain.Entities.RelationTypeMaster> UpdateAsync(SchoolDemo.Domain.Entities.RelationTypeMaster entity)
+public async Task<SchoolDemo.Domain.Entities.RelationTypeMaster> UpdateAsync(SchoolDemo.Domain.Entities.RelationTypeMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.RelationTypeMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.RelationTypeMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

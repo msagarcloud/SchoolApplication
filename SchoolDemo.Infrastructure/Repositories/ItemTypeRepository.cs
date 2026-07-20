@@ -38,6 +38,14 @@ public class ItemTypeRepository : IItemTypeRepository
     public async Task<DomainItemType> UpdateAsync(DomainItemType entity)
     {
         var infra = MapToInfra(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.ItemTypeMasters.Local.FirstOrDefault(e => e.Id == infra.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.ItemTypeMasters.Update(infra);
         await _context.SaveChangesAsync();
         return MapToDomain(infra);

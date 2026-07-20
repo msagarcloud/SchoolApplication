@@ -40,6 +40,14 @@ public class EmpTypeRepository : IEmpTypeRepository
     public async Task<SchoolDemo.Domain.Entities.EmpTypeMaster> UpdateAsync(SchoolDemo.Domain.Entities.EmpTypeMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.EmpTypeMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.EmpTypeMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;

@@ -48,6 +48,14 @@ public class RoleRepository : IRoleRepository
     public async Task<SchoolDemo.Domain.Entities.RoleMaster> UpdateAsync(SchoolDemo.Domain.Entities.RoleMaster entity)
     {
         var infraEntity = MapToInfrastructureEntity(entity);
+
+        // Detach any existing tracked entity with the same key to avoid EF Core tracking conflict
+        var tracked = _context.RoleMasters.Local.FirstOrDefault(e => e.Id == infraEntity.Id);
+        if (tracked != null)
+        {
+            _context.Entry(tracked).State = EntityState.Detached;
+        }
+
         _context.RoleMasters.Update(infraEntity);
         await _context.SaveChangesAsync();
         return MapToDomainEntity(infraEntity)!;
