@@ -144,6 +144,7 @@ const NonTeachingStaffList = () => {
       setFilteredEmployees(data);
     } catch (err) {
       console.error('Error fetching non-teaching staff:', err);
+      console.error('Full error object:', JSON.stringify(err, Object.getOwnPropertyNames(err)));
       setError(err.message || 'Failed to fetch non-teaching staff');
     } finally {
       setLoading(false);

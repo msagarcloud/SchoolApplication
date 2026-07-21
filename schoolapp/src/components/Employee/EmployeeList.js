@@ -144,6 +144,7 @@ const EmployeeList = () => {
       setFilteredEmployees(data);
     } catch (err) {
       console.error('Error fetching employees:', err);
+      console.error('Full error object:', JSON.stringify(err, Object.getOwnPropertyNames(err)));
       setError(err.message || 'Failed to fetch employees');
     } finally {
       setLoading(false);

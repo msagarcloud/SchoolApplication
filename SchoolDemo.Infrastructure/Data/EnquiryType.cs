@@ -33,8 +33,6 @@ public partial class EnquiryType
 
     public virtual UserDetail CreatedByNavigation { get; set; } = null!;
 
-    public virtual ICollection<EmpMaster> EmpMasters { get; set; } = new List<EmpMaster>();
-
     public virtual UserDetail? ModifiedByNavigation { get; set; }
 
     public virtual SchoolMaster School { get; set; } = null!;

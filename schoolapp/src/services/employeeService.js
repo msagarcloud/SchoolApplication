@@ -1,7 +1,4 @@
-import { authService } from './authService';
 import api from './authService';
-
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5260/api/';
 
 // Use the configured API instance from authService which includes auth interceptors
 
@@ -9,13 +6,30 @@ const employeeService = {
   // Get all employees
   getAll: async () => {
     try {
-      console.log('Making API call to /employee');
+      const baseUrl = api.defaults?.baseURL || 'unknown';
+      console.log(`Making API call to: ${baseUrl}/employee`);
       const response = await api.get('/employee');
       console.log('API response received:', response);
       return response.data;
     } catch (error) {
-      console.error('API error:', error);
-      throw new Error(error.response?.data?.message || 'Failed to fetch employees');
+      console.error('=== API Error Details ===');
+      console.error('Error message:', error.message);
+      console.error('Error response status:', error.response?.status);
+      console.error('Error response statusText:', error.response?.statusText);
+      console.error('Error response headers:', error.response?.headers);
+      console.error('Error response data:', error.response?.data);
+      console.error('Request URL:', error.config?.url);
+      console.error('Request baseURL:', error.config?.baseURL);
+      console.error('Request method:', error.config?.method);
+      console.error('Request headers:', error.config?.headers);
+      console.error('========================');
+
+      // Extract the most descriptive error message
+      const serverMessage = error.response?.data?.message || error.response?.data?.title || error.response?.data;
+      const detailMessage = typeof serverMessage === 'string' ? serverMessage : 
+        error.response?.data ? JSON.stringify(error.response.data) : null;
+      
+      throw new Error(detailMessage || `Server error (${error.response?.status || 'unknown'}): Failed to fetch employees`);
     }
   },
 
@@ -200,7 +214,7 @@ const employeeService = {
   // Export employees
   export: async (format = 'excel') => {
     try {
-      const response = await api.get('/employee/export?format=${format}', {
+      const response = await api.get(`/employee/export?format=${format}`, {
         responseType: 'blob'
       });
       return response.data;
@@ -231,8 +245,19 @@ const employeeService = {
       console.log('Non-teaching staff filtered:', nonTeachingEmployees);
       return nonTeachingEmployees;
     } catch (error) {
-      console.error('API error:', error);
-      throw new Error(error.response?.data?.message || 'Failed to fetch non-teaching staff');
+      console.error('=== API Error Details (getNonTeachingStaff) ===');
+      console.error('Error message:', error.message);
+      console.error('Error response status:', error.response?.status);
+      console.error('Error response data:', error.response?.data);
+      console.error('Request URL:', error.config?.url);
+      console.error('Request baseURL:', error.config?.baseURL);
+      console.error('===========================================');
+
+      const serverMessage = error.response?.data?.message || error.response?.data?.title || error.response?.data;
+      const detailMessage = typeof serverMessage === 'string' ? serverMessage : 
+        error.response?.data ? JSON.stringify(error.response.data) : null;
+      
+      throw new Error(detailMessage || `Server error (${error.response?.status || 'unknown'}): Failed to fetch non-teaching staff`);
     }
   }
 };
